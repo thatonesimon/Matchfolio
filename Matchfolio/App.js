@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, StatusBar, Image } from 'react-native';
+import { StatusBar, StyleSheet, Image } from 'react-native';
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
 import { Drawer, Container, Header, View, DeckSwiper, Card, CardItem, Thumbnail, Text, Left, Right, Body, Title, Button, Content, Footer, FooterTab, Icon, Spinner } from 'native-base';
 import { Login, Signup } from './components/Login_Signup';
@@ -16,18 +16,18 @@ const styles = StyleSheet.create({
 });
 
 const cards = require('./res/property-info.json');
+const baseUrl = 'http://pa.cdn.appfolio.com/';
 
 export class CardSwiper extends React.Component {
 
   static navigationOptions = {
     header: null,
-    statusBarHidden: true,
   }
 
   constructor(props)
   {
     super(props);
-    this.state = {loading: true}
+    this.state = {loading: true};
   }
 
   async componentWillMount() {
@@ -37,77 +37,87 @@ export class CardSwiper extends React.Component {
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
     });
     StatusBar.setHidden(true);
-    this.setState({loading: false})
+    this.setState({loading: false});
   }
 
-    render() {
-      if (this.state.loading)
-        return <Spinner />;
-      else
-      {
-        return (
-          <Container>
-            <Header>
-              <Left>
-                <Button transparent>
-                  <Icon name='menu' />
-                </Button>
-              </Left>
+  render() {
+    if (this.state.loading) {
+      return <Spinner />;
+    }
+    else {
+      return (
+        <Container>
+          <Header>
+            <Left>
+              <Button transparent>
+                <Icon name='menu' />
+              </Button>
+            </Left>
             <Body>
-              <Title>Swipe!</Title>
+              <Title>MatchFolio</Title>
             </Body>
             <Right />
-            </Header>
-            <View>
+          </Header>
+          <View>
             <DeckSwiper
                 //onSwipeRight={item => alert(item.text)}
                 looping={false}
                 ref={(c) => this._deckSwiper = c}
                 dataSource={cards}
-                renderEmpty={() =>
-                  <View style={{ alignSelf: "center" }}>
-                  <Text>Over</Text>
-                  </View>}
-                  renderItem={item =>
-                    <Card style={{ elevation: 3 }}>
-                      <CardItem>
-                        <Left>
-                        <Thumbnail source={
-                          {uri: 'http://pa.cdn.appfolio.com/' + item.image_urls.split(',')[1]}} />
-                          <Body>
-                            <Text>{item.marketing_title}</Text>
-                            <Text note>{item.property_type}</Text>
-                          </Body>
-                        </Left>
-                        </CardItem>
-                          <CardItem cardBody>
-                            <Image style={{ height: 300, flex: 1 }} source={{uri: 'http://pa.cdn.appfolio.com/' + item.image_urls.split(',')[0]}} />
-                          </CardItem>
-                        <CardItem>
-                          <Text>{item.address_address1}</Text>
-                        </CardItem>
-                      </Card>
-                    }
-                    />
-                    </View>
-            <View style={{ flexDirection: "column", flex: 1, position: "absolute", bottom: 0, left: 0, right: 0, justifyContent: 'space-between'}}>
+                renderEmpty={ () => <View style={{ alignSelf: "center" }}>
+                                      <Text>Over</Text>
+                                    </View>
+                            }
+                renderItem={item => <Card style={{ elevation: 3 }}>
+                                      <CardItem>
+                                        <Left>
+                                          <Thumbnail source={{uri: baseUrl + item.image_urls.split(',')[1]}} />
+                                          <Body>
+                                            <Text>{item.marketing_title}</Text>
+                                            <Text note>{item.property_type}</Text>
+                                          </Body>
+                                        </Left>
+                                      </CardItem>
+                                      <CardItem cardBody>
+                                        <Image style={{ height: 300, flex: 1 }} source={{uri: 'http://pa.cdn.appfolio.com/' + item.image_urls.split(',')[0]}} />
+                                      </CardItem>
+                                      <CardItem>
+                                        <Text>{item.address_address1}</Text>
+                                      </CardItem>
+                                    </Card>
+                           }
+            />
+          </View>
+          <View style={{ flexDirection: "column", flex: 1, position: "absolute", bottom: 0, left: 0, right: 0, justifyContent: 'space-around'}}>
+            <View style={{ flexDirection: "row", bottom: 10, justifyContent: "space-around" }}>
+              <Button rounded danger onPress={() => this._deckSwiper._root.swipeLeft()} >
+                <Text>Not Interested</Text>
+              </Button>
+              <Button rounded info>
+                <Text>More Info</Text>
+              </Button>
+              <Button rounded success onPress={() => this._deckSwiper._root.swipeRight()} >
+                <Text>Interested</Text>
+              </Button>
+            </View>
             <Footer>
               <FooterTab>
                 <Button vertical active>
                   <Icon active name="navigate" />
-                  <Text>Navigate</Text>
+                  <Text>Find Properties</Text>
                 </Button>
                 <Button vertical>
                   <Icon name="person" />
-                  <Text>Contact</Text>
+                  <Text>Matched Properties</Text>
                 </Button>
               </FooterTab>
             </Footer>
-            </View>
-          </Container>
-        );
-      }
+          </View>
+        </Container>
+      );
     }
+  }
+
 }
 
 export const Matchfolio = StackNavigator({
