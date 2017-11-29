@@ -3,7 +3,9 @@ import { Alert,
          Dimensions, 
          StatusBar, 
          StyleSheet, 
-         Image } from 'react-native';
+         Image,
+         TouchableHighlight,
+         TouchableWithoutFeedback } from 'react-native';
 import { StackNavigator, 
          DrawerNavigator } from 'react-navigation';
 import { Drawer, 
@@ -135,7 +137,8 @@ export class CardSwiper extends React.Component {
                                     <Text>Over</Text>
                                   </View>
                           }
-              renderItem={item => <Card style={{ elevation: 3 }}>
+              renderItem={item => 
+              					<Card style={{ elevation: 3 }}>
                                     <CardItem>
                                       <Left>
                                         <Thumbnail source={{uri: baseUrl + item.image_urls.split(',')[1]}} />
@@ -145,9 +148,11 @@ export class CardSwiper extends React.Component {
                                         </Body>
                                       </Left>
                                     </CardItem>
-                                    <CardItem cardBody>
-                                      <Image style={{ height: 300, flex: 1 }} source={{uri: 'http://pa.cdn.appfolio.com/' + item.image_urls.split(',')[0]}} />
-                                    </CardItem>
+                                    <TouchableHighlight onPress={this._onMoreInfo} underlayColor="white">
+                                      <CardItem cardBody>
+                                        <Image style={{ height: 300, flex: 1 }} source={{uri: 'http://pa.cdn.appfolio.com/' + item.image_urls.split(',')[0]}} />
+                                      </CardItem>
+                                    </TouchableHighlight>
                                     <CardItem>
                                       <View style={styles.horizontalHolder}>
                                         <Text style={styles.propertyInfo}>{"Square Feet: \n" + item.square_feet + " sq ft." }</Text>
