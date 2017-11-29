@@ -182,11 +182,11 @@ export class CardSwiper extends React.Component {
             <Footer>
               <FooterTab>
                 <Button vertical active>
-                  <Icon active name="navigate" />
+                  <Icon active name="search" />
                   <Text>Find Properties</Text>
                 </Button>
                 <Button vertical>
-                  <Icon name="person" />
+                  <Icon name="home" />
                   <Text>Matched Properties</Text>
                 </Button>
               </FooterTab>
