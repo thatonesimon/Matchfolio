@@ -9,12 +9,28 @@ import {
   AsyncStorage,
   Platform,
   StyleSheet,
-  Text,
   TextInput,
-  View,
   Alert,
-  Button
 } from 'react-native';
+import { Drawer,
+         Container,
+         Header,
+         View,
+         DeckSwiper,
+         Card,
+         CardItem,
+         Thumbnail,
+         Text,
+         Left,
+         Right,
+         Body,
+         Title,
+         Button,
+         Content,
+         Footer,
+         FooterTab,
+         Icon,
+         Spinner } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 
 
@@ -25,12 +41,12 @@ const resetAction = NavigationActions.reset({
   ]
 })
 
-export class Login extends Component<{}> {	
+export class Login extends Component<{}> {
 
   static navigationOptions = {
 		title: 'Login',
 	};
-  
+
   constructor(props) {
     super(props);
     this.state = { username: '', password: '' };
@@ -38,7 +54,7 @@ export class Login extends Component<{}> {
 	this._onSignupButtonPress = this._onSignupButtonPress.bind(this);
 	this.checkUserLoggedIn = this.checkUserLoggedIn.bind(this);
   }
-  
+
   componentDidMount()
   {
   		this.checkUserLoggedIn();
@@ -56,9 +72,9 @@ export class Login extends Component<{}> {
   		else
   		{
   			console.log("No data!")
-  		}		
+  		}
   	}
-	catch (error) 
+	catch (error)
 	{
 		console.log(error);
 	}
@@ -66,7 +82,7 @@ export class Login extends Component<{}> {
   }
 
   async _onLoginButtonPress(){
-  	
+
   	if (true)
   	{
   		try	{
@@ -78,15 +94,15 @@ export class Login extends Component<{}> {
   		}
  	}
 
-	Alert.alert('Logged In!', 'Username: ' + this.state.username + '\nPassword: ' + this.state.password, 
+	Alert.alert('Logged In!', 'Username: ' + this.state.username + '\nPassword: ' + this.state.password,
 	  	[{text: 'OK', onPress: () => this.props.navigation.dispatch(resetAction) }]);
   }
-  
+
   _onSignupButtonPress(){
 	this.props.navigation.navigate('signup', {username: this.state.username, password: this.state.password});
   }
-	  
-  
+
+
   render() {
     return (
       <View style={styles.container}>
@@ -113,14 +129,14 @@ export class Login extends Component<{}> {
 			<Text style={{height:35}}>
 			</Text>
 			<Text style={{textAlign: 'center'}}>
-				{'Don\'t have an account? '} 
-				<Text style={{	//fontWeight: 'bold', 
-								color: 'blue'}} 
+				{'Don\'t have an account? '}
+				<Text style={{	//fontWeight: 'bold',
+								color: 'blue'}}
 					  onPress={this._onSignupButtonPress}>
 					{'Sign up'}
 				</Text>
 			</Text>
-			
+
         </View>
       </View>
     );
@@ -129,35 +145,35 @@ export class Login extends Component<{}> {
 
 
 export class Signup extends Component<{}> {
-  
+
   static navigationOptions = {
 		title: 'Signup',
 	};
-  
+
   constructor(props) {
     super(props);
 	this.state = {username: "", password: ""};
 	this._onSignupButtonPress = this._onSignupButtonPress.bind(this);
   }
-  
+
   _onSignupButtonPress(){
-	  Alert.alert('Registered!', 'Username: ' + this.state.username + '\nPassword: ' + this.state.password, 
+	  Alert.alert('Registered!', 'Username: ' + this.state.username + '\nPassword: ' + this.state.password,
 	  [{text: 'OK', onPress: () => this.props.navigation.goBack() }]);
   }
-	  
+
   componentWillMount()
   {
     uname = this.props.navigation.state.params.username;
 	pword = this.props.navigation.state.params.password;
-	
+
 	if(!uname)
 		uname = "";
 	if(!pword)
 		pword = "";
-	
+
 	this.setState({username: uname, password: pword});
-  }	  
-	  
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -190,7 +206,7 @@ export class Signup extends Component<{}> {
 }
 
 export default class App extends Component<{}> {
-	
+
 	render() {
 		return <MainScreen />;
 	}
@@ -207,6 +223,5 @@ const styles = StyleSheet.create({
 	justifyContent: 'center',
 	margin: 20,
   }
-  
-});
 
+});
