@@ -1,20 +1,39 @@
 import React, { Component } from 'react';
 import { Alert,
-         Button,
          Dimensions,
          Image,
          ScrollView,
          TextInput,
-         StyleSheet,
-         Text,
-         View } from 'react-native';
+         StyleSheet, } from 'react-native';
 
-import Matchfolio from "../App";
+import { Drawer,
+        Container,
+        Header,
+        View,
+        DeckSwiper,
+        Card,
+        CardItem,
+        Thumbnail,
+        Text,
+        Left,
+        Right,
+        Body,
+        Title,
+        Button,
+        Content,
+        Footer,
+        FooterTab,
+        Icon,
+        Spinner } from 'native-base';
+
 
 class InputField extends Component{
   constructor(props) {
     super(props);
     this.state = { text: '' };
+  }
+  static navigationOptions = {
+    header: null,
   }
   render() {
     return (
@@ -33,12 +52,25 @@ class InputField extends Component{
 export default class Personal extends React.Component {
   render() {
     return (
-      <View>
-        <Text style={styles.header}>MatchFolio</Text>
-        <InputField name='Name'></InputField>
-        <InputField name='Email'></InputField>
-        <InputField name='Personal'></InputField>
-        <View style={styles.buttonHolder}>
+        <View>
+          <Header style= {{backgroundColor: 'transparent',
+               borderBottomWidth: 0}}>
+         <Left>
+         <Button transparent
+           onPress={() => this.props.navigation.navigate('DrawerToggle')}>
+           <Icon name='menu' />
+         </Button>
+         </Left>
+         <Body>
+         <Text style={styles.header}>Personal Info</Text>
+         </Body>
+
+         <Right />
+         </Header>
+         <InputField name='Name'></InputField>
+         <InputField name='Email'></InputField>
+         <InputField name='Personal'></InputField>
+         <View style={styles.buttonHolder}>
           <Button
             color="#5DADE2"
             title='Save'
@@ -50,7 +82,7 @@ export default class Personal extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  inputField:{margin:10},
+  inputField: {margin:10},
   textInput: {fontSize:20, height: 30, width:Dimensions.get('window').width-20, borderColor: 'gray', borderWidth: 1},
   inputHead: {fontSize:20, fontWeight: 'bold'},
   buttonHolder: {
@@ -61,7 +93,6 @@ const styles = StyleSheet.create({
   },
   header: {
     textAlign: 'center',
-    marginTop: 20,
     color: 'skyblue',
     fontSize: 40
   },

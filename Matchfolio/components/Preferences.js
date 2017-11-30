@@ -22,6 +22,9 @@ export default class Preferences extends React.Component {
   _onButtonPress() {
     Alert.alert('You tapped the button!');
   }
+  static navigationOptions = {
+    header: null,
+  }
   constructor(props) {
     super(props);
     this.state = {
@@ -39,7 +42,7 @@ export default class Preferences extends React.Component {
       <ScrollView>
         <Text style={styles.header}><Ionicons name="ios-cog" size={40} color="skyblue" padding = {40}/> Preferences</Text>
         <Text style={styles.blacktext}>Rent</Text>
-      
+
         <View style={{ flexDirection: 'row' }}>
            <TextInput
             style={styles.inputs}
@@ -47,7 +50,7 @@ export default class Preferences extends React.Component {
             returnKeyType = {"next"}
             autoFocus = {true}
             placeholder = "Title"
-            onSubmitEditing={(event) => { 
+            onSubmitEditing={(event) => {
               this.refs.MaxRent.focus(); }}
             onChangeText={text => this.setState({ text })}
           />
@@ -67,7 +70,7 @@ export default class Preferences extends React.Component {
             keyboardType="numeric"
             returnKeyType = {"next"}
             placeholder = "Title"
-            onSubmitEditing={(event) => { 
+            onSubmitEditing={(event) => {
               this.refs.MaxSquare.focus(); }}
             onChangeText={text => this.setState({ text })}
           />
@@ -122,27 +125,27 @@ export default class Preferences extends React.Component {
          <View style={{ flexDirection: 'row' }}><CheckBox
           onValueChange={this._handleToggleSwitch}
           value={this.state.switchValue}
-        /><Text> Houses </Text> 
+        /><Text> Houses </Text>
         </View>
-        
+
         <View style={{ flexDirection: 'row' }}><CheckBox
           onValueChange={this._handleToggleSwitch}
           value={this.state.switchValue}
-        /><Text> Apartments </Text> 
+        /><Text> Apartments </Text>
         </View>
-        
+
         <View style={{ flexDirection: 'row' }}><CheckBox
           onValueChange={this._handleToggleSwitch}
           value={this.state.switchValue}
-        /><Text> Condos </Text> 
+        /><Text> Condos </Text>
         </View>
-        
+
         <View style={{ flexDirection: 'row' }}><CheckBox
           onValueChange={this._handleToggleSwitch}
           value={this.state.switchValue}
-        /><Text> Townhouses </Text> 
+        /><Text> Townhouses </Text>
         </View>
-        
+
         <View style={styles.buttonHolder}>
           <Button
             color="#4b9693"
