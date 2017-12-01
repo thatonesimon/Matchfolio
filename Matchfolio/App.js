@@ -33,6 +33,7 @@ import Personal from "./components/Personal";
 import Preferences from "./components/Preferences";
 import { CardSwiper as Home } from './components/Home';
 import { default as RentalApp } from './components/RentalApp';
+import PropertyInfo from './components/PropertyInfo';
 
 export const DrawerMainNav = DrawerNavigator({
   home: { screen: Home },
@@ -40,11 +41,14 @@ export const DrawerMainNav = DrawerNavigator({
   Preferences: { screen: Preferences },
   rentalapp: { screen: RentalApp }
 });
+
 DrawerMainNav.navigationOptions = {header: null};
+
 export const IntroStackNav = StackNavigator({
   login: { screen: Login },
   signup: { screen: Signup },
   main: { screen: DrawerMainNav },
+  propertyInfo: { screen: PropertyInfo },
 });
 
 export default class App extends React.Component {

@@ -75,9 +75,10 @@ export class CardSwiper extends React.Component {
 
   }
 
-  _onMoreInfo() {
+  _onMoreInfo(item) {
     // redirect to property details page
 
+    this.props.navigation.navigate('propertyInfo');
   }
 
   _onInterestedButton() {
@@ -130,7 +131,7 @@ export class CardSwiper extends React.Component {
                                   </View>
                           }
               renderItem={item =>
-              					<Card style={{ elevation: 3 }}>
+                                  <Card style={{ elevation: 3 }}>
                                     <CardItem>
                                       <Left>
                                         <Thumbnail source={{uri: baseUrl + item.image_urls.split(',')[1]}} />
@@ -141,7 +142,7 @@ export class CardSwiper extends React.Component {
                                       </Left>
                                     </CardItem>
                                       <CardItem cardBody>
-                                        <Image style={{ height: 300, flex: 1 }} source={{uri: 'http://pa.cdn.appfolio.com/' + item.image_urls.split(',')[0]}} />
+                                        <Image style={{ height: 300, flex: 1 }} source={{uri: baseUrl + item.image_urls.split(',')[0]}} />
                                       </CardItem>
                                     <CardItem>
                                       <View style={styles.horizontalHolder}>
