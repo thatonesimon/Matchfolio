@@ -31,7 +31,7 @@ export default class PropertyInfo extends Component {
       <ScrollView>
   	    <View style={styles.container}>
           <Image style={styles.gallery} source={{uri: baseUrl + property.image_urls.split(',')[0]}} />
-          <Text style={styles.mainInfo}>{"Address: " + property.address_address1 + " " + property.address_city + ", " + property.address_country}</Text>
+          <Text style={styles.mainInfo}>{property.address_address1 + "\n" + property.address_city + ", " + property.address_country}</Text>
           <View style={styles.horizontalHolder}>
   	        <Text style={styles.leftPropertyInfo}>{"Rent:\n$" + property.market_rent + "/month"}</Text>
             <Text style={styles.propertyInfo}>{"# of Rooms: \n" + property.bedrooms + " Bed/" + property.bathrooms + " Bath"}</Text>
