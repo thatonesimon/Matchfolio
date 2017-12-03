@@ -143,17 +143,17 @@ export class CardSwiper extends React.Component {
                                       </CardItem>
                                     <CardItem>
                                       <View style={styles.horizontalHolder}>
-                                        <Text style={styles.propertyInfo}>{"Square Feet: \n" + item.square_feet + " sq ft." }</Text>
-                                        <Text style={styles.propertyInfo}>{"Rent: \n$" + item.market_rent}</Text>
+                                        <Text style={styles.leftPropertyInfo}>{"Rent:\n$" + item.market_rent + "/month"}</Text>
                                         <Text style={styles.propertyInfo}>{"# of Rooms: \n" + item.bedrooms + " Bed/" + item.bathrooms + " Bath"}</Text>
+                                        <Text style={styles.rightPropertyInfo}>{"Square Feet: \n" + item.square_feet + " sq ft." }</Text>
                                       </View>
                                     </CardItem>
                                     <CardItem>
-                                      <Text>{"Amenities: " + item.amenities}</Text>
+                                      <Text style={styles.propertyDescription}>{item.marketing_title}</Text>
                                     </CardItem>
                                     <CardItem>
                                       <View style={styles.horizontalHolder}>
-                                        <Text style={styles.phoneNumber}>{item.contact_phone_number}</Text>
+                                        <Text style={styles.phoneNumber}>{"Phone:\n" + item.contact_phone_number}</Text>
                                       </View>
                                     </CardItem>
                                   </Card>
@@ -208,6 +208,25 @@ const styles = StyleSheet.create({
       flex: 1,
       textAlign: 'center',
       fontSize: 15,
+    },
+    leftPropertyInfo: {
+      flex: 1,
+      textAlign: 'center',
+      fontSize: 15,
+      borderRightColor: 'black',
+      borderRightWidth: 1,
+    },
+    rightPropertyInfo: {
+      flex: 1,
+      textAlign: 'center',
+      fontSize: 15,
+      borderLeftColor: 'black',
+      borderLeftWidth: 1,
+    },
+    propertyDescription: {
+      flex: 1,
+      textAlign: 'center',
+      fontSize: 20,
     },
     header: {
       fontSize: 20,
