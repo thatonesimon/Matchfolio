@@ -15,15 +15,15 @@ import { Drawer,
          Text, } from 'native-base';
 import Swiper from 'react-native-swiper';
 
-var item;
 const baseUrl = 'http://pa.cdn.appfolio.com/';
-
 
 export default class PropertyInfo extends Component {
 
   constructor(props) {
     super(props);
-    //item = this.props.navigation.state.params.item;
+    if(this.props.navigation.state.params) {
+      property = this.props.navigation.state.params.item;
+    }
   }
 
   render() {
