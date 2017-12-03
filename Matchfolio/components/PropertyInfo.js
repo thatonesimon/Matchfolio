@@ -13,6 +13,7 @@ import { Drawer,
          CardItem,
          Thumbnail,
          Text, } from 'native-base';
+import Swiper from 'react-native-swiper';
 
 var item;
 const baseUrl = 'http://pa.cdn.appfolio.com/';
@@ -28,17 +29,19 @@ export default class PropertyInfo extends Component {
   render() {
     return (
       <ScrollView>
-	    <View style={styles.container}>
+  	    <View style={styles.container}>
           <Image style={styles.gallery} source={{uri: baseUrl + property.image_urls.split(',')[0]}} />
-	      <Text style={styles.mainInfo}>{"Address: " + property.address_address1 + " " + property.address_city + ", " + property.address_country}</Text>
-	      <Text style={styles.mainInfo}>{"Rent: $" + property.market_rent + "/month"}</Text>
-	      <Text style={styles.info}>{"Description: " + property.marketing_description}</Text>
-	      <Text style={styles.info}>{"Description: " + property.marketing_description}</Text>
+          <Text style={styles.mainInfo}>{"Address: " + property.address_address1 + " " + property.address_city + ", " + property.address_country}</Text>
+          <View style={styles.horizontalHolder}>
+  	        <Text style={styles.leftPropertyInfo}>{"Rent:\n$" + property.market_rent + "/month"}</Text>
+            <Text style={styles.propertyInfo}>{"# of Rooms: \n" + property.bedrooms + " Bed/" + property.bathrooms + " Bath"}</Text>
+            <Text style={styles.rightPropertyInfo}>{"Square Feet: \n" + property.square_feet + " sq ft." }</Text>
+          </View>
+  	      <Text style={styles.info}>{"Description: " + property.marketing_description}</Text>
           <Text style={styles.info}>{"Amenities: " + property.amenities}</Text>
-          <Text style={styles.info}>{"# of Rooms: \n" + property.bedrooms + " Bed/" + property.bathrooms + " Bath"}</Text>
-          <Text style={styles.phoneNumber}>{property.contact_phone_number}</Text>
-	    </View>
-	  </ScrollView>
+          <Text style={styles.phoneNumber}>{"Phone:\n" + property.contact_phone_number}</Text>
+  	    </View>
+  	  </ScrollView>
     );
   }
 
@@ -49,31 +52,55 @@ const styles = StyleSheet.create({
 	  padding: 10,
 	},
 	gallery: {
-	  height: 300, 
+	  height: 400, 
 	  flex: 1, 
 	  padding: 10,
+    borderColor: 'black',
+    borderBottomWidth: 1,
 	},
+  leftPropertyInfo: {
+    flex: 1,
+    textAlign: 'center',
+    fontSize: 15,
+    borderRightColor: 'black',
+    borderRightWidth: 1,
+  },
+  rightPropertyInfo: {
+    flex: 1,
+    textAlign: 'center',
+    fontSize: 15,
+    borderLeftColor: 'black',
+    borderLeftWidth: 1,
+  },
 	propertyInfo: {
-      flex: 1,
-      textAlign: 'center',
-      fontSize: 15,
-    },
-    mainInfo: {
-      fontSize: 20,	
-      padding: 10,
-      borderBottomColor: 'black',
-      borderBottomWidth: 1,
-    },
-    info: {
-    	fontSize: 15,
-    	padding: 10,
-    },
-    phoneNumber: {
-      flex: 1,
-      textAlign: 'center',
-      color: '#aaa',
-    },
-  });
+    flex: 1,
+    textAlign: 'center',
+    fontSize: 15,
+  },
+  mainInfo: {
+    fontSize: 20,	
+    padding: 10,
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+  },
+  info: {
+  	fontSize: 15,
+  	padding: 10,
+  },
+  phoneNumber: {
+    flex: 1,
+    textAlign: 'center',
+    color: '#aaa',
+  },
+  horizontalHolder: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 10,
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+  },
+});
 
 
 var property = {
