@@ -37,7 +37,10 @@ export class CardSwiper extends React.Component {
   {
     super(props);
     this.state = {loading: true};
+    this._onNotInterested = this._onNotInterested.bind(this);
     this._nextProperty = this._nextProperty.bind(this);
+    this._onInterested = this._onInterested.bind(this);
+    this._onMoreInfo = this._onMoreInfo.bind(this);
   }
 
   state = {
@@ -63,34 +66,27 @@ export class CardSwiper extends React.Component {
   }
 
   _onNotInterestedButton() {
-    this._deckSwiper._root.swipeLeft();
+    this.deck._root.swipeLeft();
     this._onNotInterested();
   }
 
   _onNotInterested() {
     // [maybe] save info to ensure property isn't displayed again
-    console.log("Not interested in property");
-
-    // go on to next property
-
+    console.log("Not interested in property: " + this.deck._root.state.selectedItem.address_address1);
   }
 
   _onMoreInfo(item) {
-    // redirect to property details page
-
-    this.props.navigation.navigate('propertyInfo');
+    this.props.navigation.navigate('propertyInfo', {item: this.deck._root.state.selectedItem});
   }
 
   _onInterestedButton() {
-    this._deckSwiper._root.swipeRight();
+    this.deck._root.swipeRight();
     this._onInterested();
   }
 
   _onInterested() {
     // save info to display on matched properties page
-    console.log("Interested in property");
-
-    // go on to next property
+    console.log("Interested in property: " + this.deck._root.state.selectedItem.address_address1);
   }
 
   _updatePropertyImages(index) {
@@ -123,8 +119,9 @@ export class CardSwiper extends React.Component {
             <DeckSwiper
               onSwipeLeft={this._onNotInterested}
               onSwipeRight={this._onInterested}
+              onTapCard={this._onMoreInfo}
               looping={false}
-              ref={(c) => this._deckSwiper = c}
+              ref={(c) => this.deck = c}
               dataSource={propertyInfo}
               renderEmpty={ () => <View style={{ alignSelf: "center" }}>
                                     <Text>Over</Text>
