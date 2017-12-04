@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { StyleSheet, StatusBar, Image } from 'react-native';
-import { StackNavigator, DrawerNavigator } from 'react-navigation';
+import { StyleSheet, StatusBar, Image, AsyncStorage, TouchableHighlight } from 'react-native';
+import { StackNavigator, DrawerNavigator, NavigationActions } from 'react-navigation';
 import { Drawer,
          Container,
          Header,
@@ -30,13 +30,14 @@ export class CardSwiper extends React.Component {
   static navigationOptions = {
     header: null,
     drawerLabel: 'Home',
-    drawerLockMode: 'locked-closed'
+    drawerLockMode: 'locked-closed',
+    tabBarVisible: false,
   }
 
   constructor(props)
   {
     super(props);
-    this.state = {loading: true};
+    this.state = {loading: true, matches: null};
     this._onNotInterested = this._onNotInterested.bind(this);
     this._nextProperty = this._nextProperty.bind(this);
     this._onInterested = this._onInterested.bind(this);
@@ -55,8 +56,23 @@ export class CardSwiper extends React.Component {
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
     });
+    var matches_data = await AsyncStorage.getItem('matched-properties');
+    if (matches_data!=null)
+    {
+      this.setState({matches: JSON.parse(matches_data)});
+    }
     //StatusBar.setHidden(true);
     this.setState({loading: false});
+  }
+
+  async componentWillUnmount()
+  {
+    try {
+        await AsyncStorage.setItem('matched-properties', JSON.stringify(this.state.matches));
+      }
+      catch (error) {
+        console.log(error);
+      }
   }
 
   _nextProperty() {
@@ -84,9 +100,25 @@ export class CardSwiper extends React.Component {
     this._onInterested();
   }
 
-  _onInterested() {
-    // save info to display on matched properties page
-    console.log("Interested in property: " + this.deck._root.state.selectedItem.address_address1);
+  _onInterested(item) {
+
+    console.log(item);
+    var newArray;
+    if (this.state.matches!=null)
+    {
+      console.log('state.matches size: ' + this.state.matches.length);
+      newArray = this.state.matches.slice();    
+    }
+    else
+    {
+      console.log('state.matches : null');
+      newArray = [];
+    }
+
+    newArray.push(item);   
+    this.setState({matches: newArray})
+
+    // go on to next property
   }
 
   _updatePropertyImages(index) {
@@ -138,9 +170,11 @@ export class CardSwiper extends React.Component {
                                         </Body>
                                       </Left>
                                     </CardItem>
+                                    <TouchableHighlight onPress={this._onMoreInfo}>
                                       <CardItem cardBody>
                                         <Image style={{ height: 300, flex: 1 }} source={{uri: baseUrl + item.image_urls.split(',')[0]}} />
                                       </CardItem>
+                                    </TouchableHighlight>
                                     <CardItem>
                                       <View style={styles.horizontalHolder}>
                                         <Text style={styles.leftPropertyInfo}>{"Rent:\n$" + item.market_rent + "/month"}</Text>
@@ -178,7 +212,11 @@ export class CardSwiper extends React.Component {
                   <Icon active name="search" />
                   <Text>Find Properties</Text>
                 </Button>
-                <Button vertical>
+                <Button vertical onPress={()=>
+                  { 
+                    this.props.navigation.navigate('matches', {matches: this.state.matches});
+                  }
+                }>
                   <Icon name="home" />
                   <Text>Matched Properties</Text>
                 </Button>
