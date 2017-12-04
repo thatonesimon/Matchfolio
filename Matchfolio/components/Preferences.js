@@ -2,20 +2,35 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   Alert,
-  Button,
   CheckBox,
   Dimensions,
   FlatList,
-  Header,
   Image,
   Picker,
   ScrollView,
   StyleSheet,
   Switch,
-  Text,
   TextInput,
-  View,
 } from 'react-native';
+import { Drawer,
+        Container,
+        Header,
+        View,
+        DeckSwiper,
+        Card,
+        CardItem,
+        Thumbnail,
+        Text,
+        Left,
+        Right,
+        Body,
+        Title,
+        Button,
+        Content,
+        Footer,
+        FooterTab,
+        Icon,
+        Spinner } from 'native-base';
 import { Ionicons } from '@expo/vector-icons'; // 6.1.0
 
 export default class Preferences extends React.Component {
@@ -24,6 +39,8 @@ export default class Preferences extends React.Component {
   }
   static navigationOptions = {
     header: null,
+    drawerLabel: 'Preferences',
+    drawerIcon: ({ tintColor }) => (<Icon name="ios-cog" size={15} style={{ color: tintColor }} />),
   }
   constructor(props) {
     super(props);
@@ -40,6 +57,19 @@ export default class Preferences extends React.Component {
   render() {
     return (
       <ScrollView>
+          <Header style= {{backgroundColor: 'transparent',
+               borderBottomWidth: 0}}>
+         <Left>
+         <Button transparent
+           onPress={() => this.props.navigation.navigate('DrawerToggle')}>
+           <Icon name='menu' />
+         </Button>
+         </Left>
+         <Body>
+         </Body>
+
+         <Right />
+         </Header>
         <Text style={styles.header}><Ionicons name="ios-cog" size={40} color="skyblue" padding = {40}/> Preferences</Text>
         <Text style={styles.blacktext}>Rent</Text>
 

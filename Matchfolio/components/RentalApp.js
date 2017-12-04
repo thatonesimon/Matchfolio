@@ -1,18 +1,39 @@
 /**
   * MatchFolio Personal Information page
   */
-
-import React, { Component } from 'react';
-import {
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View
-} from 'react-native';
-import { Drawer, Fab, Container, Header, DeckSwiper, Card, CardItem, Thumbnail, Left, Right, Body, Title, Button, Content, Footer, FooterTab, Icon, Spinner } from 'native-base';
-
+  import React, { Component } from 'react';
+  import {
+    AppRegistry,
+    Alert,
+    CheckBox,
+    Dimensions,
+    FlatList,
+    Image,
+    Picker,
+    ScrollView,
+    StyleSheet,
+    Switch,
+    TextInput,
+  } from 'react-native';
+  import { Drawer,
+          Container,
+          Header,
+          View,
+          DeckSwiper,
+          Card,
+          CardItem,
+          Thumbnail,
+          Text,
+          Left,
+          Right,
+          Body,
+          Title,
+          Button,
+          Content,
+          Footer,
+          FooterTab,
+          Icon,
+          Spinner } from 'native-base';
 const instructions =
   "We'll use this information to run a\n"
   + "background check so we can make sure you\n"
@@ -50,9 +71,27 @@ function onPressSubmit() {
 }
 
 export default class App extends Component<{}> {
+  static navigationOptions = {
+    header: null,
+    drawerLabel: 'Rental App',
+    drawerIcon: ({ tintColor }) => (<Icon name="ios-list-box-outline" size={15} style={{ color: tintColor }} />),
+  }
   render() {
     return (
       <ScrollView>
+          <Header style= {{backgroundColor: 'transparent',
+               borderBottomWidth: 0}}>
+         <Left>
+         <Button transparent
+           onPress={() => this.props.navigation.navigate('DrawerToggle')}>
+           <Icon name='menu' />
+         </Button>
+         </Left>
+         <Body>
+         </Body>
+
+         <Right />
+         </Header>
         <View style={styles.container}>
           <Text style={styles.welcome}>
             Welcome to MatchFolio!

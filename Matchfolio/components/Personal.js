@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import { Alert,
          Dimensions,
          Image,
@@ -26,14 +27,12 @@ import { Drawer,
         Icon,
         Spinner } from 'native-base';
 
+import { Ionicons } from '@expo/vector-icons'; // 6.1.0
 
 class InputField extends Component{
   constructor(props) {
     super(props);
     this.state = { text: '' };
-  }
-  static navigationOptions = {
-    header: null,
   }
   render() {
     return (
@@ -50,6 +49,11 @@ class InputField extends Component{
 }
 
 export default class Personal extends React.Component {
+  static navigationOptions = {
+    header: null,
+    drawerLabel: 'Personal',
+    drawerIcon: ({ tintColor }) => (<Icon name="ios-contact-outline" size={15} style={{ color: tintColor }} />),
+  }
   render() {
     return (
         <View>
@@ -62,20 +66,15 @@ export default class Personal extends React.Component {
          </Button>
          </Left>
          <Body>
-         <Text style={styles.header}>Personal Info</Text>
          </Body>
-
          <Right />
          </Header>
+         <Text style={styles.header}><Ionicons name="ios-contact" size={40} color="skyblue" padding = {40}/> Preferences</Text>
          <InputField name='Name'></InputField>
          <InputField name='Email'></InputField>
-         <InputField name='Personal'></InputField>
-         <View style={styles.buttonHolder}>
-          <Button
-            color="#5DADE2"
-            title='Save'
-            onPress={() => {Alert.alert("must fill out name")}} />
-        </View>
+              <Button bordered onPress={() => {Alert.alert("saved")} } >
+                <Text> Saved </Text>
+              </Button>
       </View>
     );
   }
@@ -86,10 +85,7 @@ const styles = StyleSheet.create({
   textInput: {fontSize:20, height: 30, width:Dimensions.get('window').width-20, borderColor: 'gray', borderWidth: 1},
   inputHead: {fontSize:20, fontWeight: 'bold'},
   buttonHolder: {
-    width: Dimensions.get('window').width,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-around',
+    textAlign: 'center'
   },
   header: {
     textAlign: 'center',
