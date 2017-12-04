@@ -21,7 +21,8 @@ import { Drawer,
          Icon,
          Spinner } from 'native-base';
 
-const propertyInfo = require('../res/property-info.json');
+var propertyInfo = require('../res/property-info.json');
+var remainingInfos = propertyInfo.slice();
 const baseUrl = 'http://pa.cdn.appfolio.com/';
 var propertyPictures;
 
@@ -56,16 +57,22 @@ export class CardSwiper extends React.Component {
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
     });
-    var matches_data = await AsyncStorage.getItem('matched-properties');
+    /*var matches_data = await AsyncStorage.getItem('matched-properties');
     if (matches_data!=null)
     {
       this.setState({matches: JSON.parse(matches_data)});
-    }
+    }*/
     //StatusBar.setHidden(true);
+    if (this.props.navigation.state.params != undefined && this.props.navigation.state.params.homeSavedMatches!=null)
+      {
+         this.setState({matches: this.props.navigation.state.params.homeSavedMatches});
+         remainingInfos = this.props.navigation.state.params.remainingInfos;       
+      }
+
     this.setState({loading: false});
   }
 
-  async componentWillUnmount()
+  async componentWillUnmountX()
   {
     try {
         await AsyncStorage.setItem('matched-properties', JSON.stringify(this.state.matches));
@@ -83,27 +90,31 @@ export class CardSwiper extends React.Component {
 
   _onNotInterestedButton() {
     this.deck._root.swipeLeft();
-    this._onNotInterested();
+    this._onNotInterested(this.deck._root.state.selectedItem);
   }
 
-  _onNotInterested() {
+  _onNotInterested(item) {
     // [maybe] save info to ensure property isn't displayed again
-    console.log("Not interested in property: " + this.deck._root.state.selectedItem.address_address1);
+    //console.log("Not interested in property: " + this.deck._root.state.selectedItem.address_address1);
+    if(item!=null) this._removeInfoFromRemaining(item);  
   }
 
-  _onMoreInfo(item) {
-    this.props.navigation.navigate('propertyInfo', {item: this.deck._root.state.selectedItem});
+  _onMoreInfo() {
+    if(this.deck._root.state.selectedItem!=null && remainingInfos.length>0)
+      this.props.navigation.navigate('propertyInfo', {item: this.deck._root.state.selectedItem});
   }
 
   _onInterestedButton() {
     this.deck._root.swipeRight();
-    this._onInterested();
+    this._onInterested(this.deck._root.state.selectedItem);
   }
 
   _onInterested(item) {
+    if(item == null || remainingInfos.length<1)
+      return;
 
     console.log(item);
-    var newArray;
+    var newArray = [];
     if (this.state.matches!=null)
     {
       console.log('state.matches size: ' + this.state.matches.length);
@@ -112,11 +123,11 @@ export class CardSwiper extends React.Component {
     else
     {
       console.log('state.matches : null');
-      newArray = [];
     }
 
     newArray.push(item);
     this.setState({matches: newArray})
+    this._removeInfoFromRemaining(item);
 
     // go on to next property
   }
@@ -125,6 +136,14 @@ export class CardSwiper extends React.Component {
 
     // propertyPictures = propertyInfo[index].image_urls.split(",");
     // this.setState({ pictureURL: propertyPictures[0] });
+  }
+
+  _removeInfoFromRemaining(item) {
+    const index = remainingInfos.indexOf(item);
+    
+    if (index !== -1) {
+        remainingInfos.splice(index, 1);
+    }
   }
 
   render() {
@@ -151,10 +170,9 @@ export class CardSwiper extends React.Component {
             <DeckSwiper
               onSwipeLeft={this._onNotInterested}
               onSwipeRight={this._onInterested}
-              onTapCard={this._onMoreInfo}
               looping={false}
               ref={(c) => this.deck = c}
-              dataSource={propertyInfo}
+              dataSource={remainingInfos}
               renderEmpty={ () => <View style={{ alignSelf: "center" }}>
                                     <Text>Over</Text>
                                   </View>
@@ -213,8 +231,8 @@ export class CardSwiper extends React.Component {
                   <Text>Find Properties</Text>
                 </Button>
                 <Button vertical onPress={()=>
-                  {
-                    this.props.navigation.navigate('matches', {matches: this.state.matches});
+                  { 
+                    this.props.navigation.navigate('matches', {matches: this.state.matches, remainingInfos: remainingInfos});
                   }
                 }>
                   <Icon name="home" />

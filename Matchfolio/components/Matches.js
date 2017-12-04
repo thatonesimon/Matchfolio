@@ -34,13 +34,13 @@ export default class Matches extends Component {
 
   static navigationOptions = {
     header: null,
-    tabBarVisible: false,
     drawerLabel: EmptyDrawerItem
   }
 
    constructor(props)
    {
       super(props);
+      this._onRenderRow = this._onRenderRow.bind(this);
    }
 
    componentWillMount()
@@ -68,11 +68,28 @@ export default class Matches extends Component {
       }
    }
 
+   _onRenderRow(item)
+   {
+      if(item == null)
+         return null;
+      else
+         return (
+      <ListItem button onPress={()=>this.props.navigation.navigate('propertyInfo', {item: item})}>
+              <Thumbnail square size={80} source={{uri: baseUrl + item.image_urls.split(',')[0]}} />
+              <Body>
+                <Text>{item.address_address1}</Text>
+                <Text note>{"Rent: $" + item.market_rent}</Text>
+              </Body>
+            </ListItem>);
+   }
+
    render() {
       var data = []
+      var remainingInfos = []
       if (this.props.navigation.state.params != undefined && this.props.navigation.state.params.matches!=null)
       {
          data = this.props.navigation.state.params.matches;
+         remainingInfos = this.props.navigation.state.params.remainingInfos;
       }
     return (
       <Container>
@@ -90,19 +107,11 @@ export default class Matches extends Component {
           </Header>
         <Content>
          <List dataArray={data}
-            renderRow={(item) =>
-            <ListItem button onPress={()=>this.props.navigation.navigate('propertyInfo', {item: item})}>
-              <Thumbnail square size={80} source={{uri: baseUrl + item.image_urls.split(',')[1]}} />
-              <Body>
-                <Text>{item.address_address1}</Text>
-                <Text note>{"Rent: $" + item.market_rent}</Text>
-              </Body>
-            </ListItem>}
-          />
+            renderRow={this._onRenderRow} /> 
         </Content>
             <Footer>
               <FooterTab>
-                <Button vertical onPress={()=>this.props.navigation.navigate('home')}>
+                <Button vertical onPress={()=>this.props.navigation.navigate('home', {homeSavedMatches: data, remainingInfos: remainingInfos})}>
                   <Icon name="search" />
                   <Text>Find Properties</Text>
                 </Button>
