@@ -31,7 +31,7 @@ export class CardSwiper extends React.Component {
     header: null,
     drawerLabel: 'Home',
     drawerLockMode: 'locked-closed',
-    tabBarVisible: false,
+    drawerIcon: ({ tintColor }) => (<Icon name="home" size={15} style={{ color: tintColor }} />),
   }
 
   constructor(props)
@@ -107,7 +107,7 @@ export class CardSwiper extends React.Component {
     if (this.state.matches!=null)
     {
       console.log('state.matches size: ' + this.state.matches.length);
-      newArray = this.state.matches.slice();    
+      newArray = this.state.matches.slice();
     }
     else
     {
@@ -115,7 +115,7 @@ export class CardSwiper extends React.Component {
       newArray = [];
     }
 
-    newArray.push(item);   
+    newArray.push(item);
     this.setState({matches: newArray})
 
     // go on to next property
@@ -213,7 +213,7 @@ export class CardSwiper extends React.Component {
                   <Text>Find Properties</Text>
                 </Button>
                 <Button vertical onPress={()=>
-                  { 
+                  {
                     this.props.navigation.navigate('matches', {matches: this.state.matches});
                   }
                 }>
