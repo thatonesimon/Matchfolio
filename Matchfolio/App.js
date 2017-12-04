@@ -36,6 +36,7 @@ import { CardSwiper as Home } from './components/Home';
 import { default as RentalApp } from './components/RentalApp';
 import PropertyInfo from './components/PropertyInfo';
 import Matches from './components/Matches';
+import Splash from './components/Splash.js';
 
 /*export const HomeTabNav = TabNavigator({
   find: { screen: Home },
@@ -57,6 +58,7 @@ export const DrawerMainNav = DrawerNavigator({
 DrawerMainNav.navigationOptions = {header: null};
 
 export const IntroStackNav = StackNavigator({
+  splash: { screen: Splash },
   login: { screen: Login },
   signup: { screen: Signup },
   main: { screen: DrawerMainNav },
