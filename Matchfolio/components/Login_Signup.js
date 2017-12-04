@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   AsyncStorage,
@@ -69,10 +63,6 @@ export class Login extends Component<{}> {
   			this.setState(JSON.parse(value));
   			this._onLoginButtonPress();
   		}
-  		else
-  		{
-  			console.log("No data!")
-  		}
   	}
 	catch (error)
 	{
@@ -83,19 +73,14 @@ export class Login extends Component<{}> {
 
   async _onLoginButtonPress(){
 
-  	if (true)
-  	{
   		try	{
   			await AsyncStorage.setItem('userData', JSON.stringify(this.state));
-  			console.log("Saved data!")
   		}
   		catch (error) {
   			console.log(error);
   		}
- 	}
 
-	Alert.alert('Logged In!', 'Username: ' + this.state.username + '\nPassword: ' + this.state.password,
-	  	[{text: 'OK', onPress: () => this.props.navigation.dispatch(resetAction) }]);
+      this.props.navigation.dispatch(resetAction);
   }
 
   _onSignupButtonPress(){

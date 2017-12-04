@@ -7,7 +7,8 @@ import { Alert,
          TouchableHighlight,
          TouchableWithoutFeedback } from 'react-native';
 import { StackNavigator,
-         DrawerNavigator } from 'react-navigation';
+         DrawerNavigator,
+         TabNavigator } from 'react-navigation';
 import { Drawer,
          Container,
          Header,
@@ -34,12 +35,23 @@ import Preferences from "./components/Preferences";
 import { CardSwiper as Home } from './components/Home';
 import { default as RentalApp } from './components/RentalApp';
 import PropertyInfo from './components/PropertyInfo';
+import Matches from './components/Matches';
+
+/*export const HomeTabNav = TabNavigator({
+  find: { screen: Home },
+  matches: { screen: Matches },
+}, {
+  swipeEnabled: false,
+  animationEnabled: false,
+  lazy: false,
+})*/
 
 export const DrawerMainNav = DrawerNavigator({
   home: { screen: Home },
+  matches: {screen: Matches},
   personal: { screen: Personal },
   Preferences: { screen: Preferences },
-  rentalapp: { screen: RentalApp }
+  rentalapp: { screen: RentalApp },
 });
 
 DrawerMainNav.navigationOptions = {header: null};
