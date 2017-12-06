@@ -31,47 +31,42 @@ const resetAction = NavigationActions.reset({
 export class Login extends Component<{}> {
 	static navigationOptions = {
 		title: 'Login',
+    header: null,
 	};
 
-  constructor(props) {
-    super(props);
-    this.state = { username: '', password: '' };
-	this._onLoginButtonPress = this._onLoginButtonPress.bind(this);
-	this._onSignupButtonPress = this._onSignupButtonPress.bind(this);
-	this.checkUserLoggedIn = this.checkUserLoggedIn.bind(this);
-  }
-
-  componentDidMount()
-  {
-  		//this.checkUserLoggedIn();
-  }
-
-  async checkUserLoggedIn()
-  {
-  	try {
-  		var value = await AsyncStorage.getItem('userData');
-  		if (value !== null)
-  		{
-  			this.setState(JSON.parse(value));
-  			this._onLoginButtonPress();
-  		}
-  	}
-	catch (error)
-	{
-		console.log(error);
+	constructor(props) {
+		super(props);
+		this.state = { username: '', password: '' };
+		this._onLoginButtonPress = this._onLoginButtonPress.bind(this);
+		this._onSignupButtonPress = this._onSignupButtonPress.bind(this);
+		this.checkUserLoggedIn = this.checkUserLoggedIn.bind(this);
 	}
 
-  }
+	componentDidMount(){
+		this.checkUserLoggedIn();
+	}
 
-  async _onLoginButtonPress(){
+	async checkUserLoggedIn(){
+		try {
+			var value = await AsyncStorage.getItem('userData');
+			if (value !== null){
+				this.setState(JSON.parse(value));
+				this._onLoginButtonPress();
+			}
+		}
+		
+		catch (error){
+			console.log(error);
+		}
+	}
 
-  		/*try	{
-  			await AsyncStorage.setItem('userData', JSON.stringify(this.state));
-  		}
-  		catch (error) {
-  			console.log(error);
-  		}*/
-
+	async _onLoginButtonPress(){
+	try	{
+		await AsyncStorage.setItem('userData', JSON.stringify(this.state));
+	}
+	catch (error) {
+		console.log(error);
+	}
 	this.props.navigation.dispatch(resetAction);
 	}
 
@@ -79,37 +74,35 @@ export class Login extends Component<{}> {
 		this.props.navigation.navigate('signup', {username: this.state.username, password: this.state.password});
 	}
 
-  render() {
-    return (
-      <View style={styles.container}>
-		<Text style={{height:40}} />
-		<Text style={{color: 'steelblue', fontSize: 40, textAlign: 'center', fontWeight: 'bold'}}>
-			{'MatchFolio'}
-		</Text>
-        <View style={styles.buttonContainer}>
-			<TextInput
-				placeholder="Username"
-				onChangeText={(text) => this.setState({ username: text })}
-			/>
-      <Text style={{height:5}} />
-			<TextInput
-				placeholder="Password"
-				onChangeText={(text) => this.setState({ password: text })}
-				secureTextEntry={true}
-			/>
-			<Text style={{height:25}}>
-			</Text>
-			<Button bordered block
-				onPress={this._onLoginButtonPress}
-			><Text>Log In</Text></Button>
-			<Text style={{height:35}}>
-			</Text>
-			<Text style={{textAlign: 'center'}}>
-				{'Don\'t have an account? '}
-				<Text style={{	//fontWeight: 'bold',
-								color: 'blue'}}
-					  onPress={this._onSignupButtonPress}>
-					{'Sign up'}
+	render() {
+		return (
+			<View style={styles.container}>
+				<Text style={{height:40}} />
+				<Text style={{color: 'steelblue', fontSize: 40, textAlign: 'center', fontWeight: 'bold'}}>
+				{'MatchFolio'}
+				</Text>
+				<View style={styles.buttonContainer}>
+					<TextInput
+						placeholder="Username"
+						onChangeText={(text) => this.setState({ username: text })}
+					/>
+					<TextInput
+						placeholder="Password"
+						onChangeText={(text) => this.setState({ password: text })}
+						secureTextEntry={true}
+					/>
+					<Text style={{height:25}}></Text>
+					<Button
+						onPress={this._onLoginButtonPress}
+						title='Log In'
+					/>
+					<Text style={{height:35}}></Text>
+					<Text style={{textAlign: 'center'}}>
+						{'Don\'t have an account? '}
+					<Text style={{	//fontWeight: 'bold',
+						color: 'blue'}}
+						onPress={this._onSignupButtonPress}>
+						{'Sign up'}
 					</Text>
 					</Text>
 				</View>
@@ -123,6 +116,7 @@ export class Signup extends Component<{}> {
 
 	static navigationOptions = {
 		title: 'Signup',
+    header: null,
 	};
 
 	constructor(props) {
@@ -154,27 +148,26 @@ export class Signup extends Component<{}> {
 			<Text style={{height:40}} />
 			<Text style={{color: 'steelblue', fontSize: 40, textAlign: 'center', fontWeight: 'bold'}}>
 			{'MatchFolio'}
-		</Text>
-        <View style={styles.buttonContainer}>
-			<TextInput
-				placeholder="Username"
-				onChangeText={(text) => this.setState({username: text})}
-				value={this.state.username}
-			/>
-      <Text style={{height:5}} />
-			<TextInput
-				placeholder="Password"
-				onChangeText={(text) => this.setState({password: text})}
-				secureTextEntry={true}
-				value={this.state.password}
-			/>
-			<Text style={{height:25}}>
 			</Text>
-			<Button bordered block
-				onPress={this._onSignupButtonPress}
-			><Text>Sign up</Text></Button>
-        </View>
-      </View>
+			<View style={styles.buttonContainer}>
+				<TextInput
+					placeholder="Username"
+					onChangeText={(text) => this.setState({username: text})}
+					value={this.state.username}
+				/>
+				<TextInput
+					placeholder="Password"
+					onChangeText={(text) => this.setState({password: text})}
+					secureTextEntry={true}
+					value={this.state.password}
+				/>
+				<Text style={{height:25}}></Text>
+				<Button
+					onPress={this._onSignupButtonPress}
+					title='Register'
+				/>
+			</View>
+		</View>
     );
   }
 }

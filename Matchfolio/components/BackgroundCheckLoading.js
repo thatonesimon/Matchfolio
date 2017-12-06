@@ -5,6 +5,9 @@ import * as Progress from 'react-native-progress';
 var timer;
 
 export default class BackgroundCheckLoading extends Component {
+
+	static navigationOptions = { header: null };
+
 	constructor(props) {
 		super(props);
 
