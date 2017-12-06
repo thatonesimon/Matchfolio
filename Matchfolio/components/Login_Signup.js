@@ -147,7 +147,7 @@ export class Signup extends Component<{}> {
   }
 
   _onSignupButtonPress(){
-    Alert.alert('Registered!', 'Username: ' + this.state.username + '\nPassword: ' + this.state.password,
+    Alert.alert('Registered!', "",
     [{text: 'OK', onPress: () => this.props.navigation.navigate('personal') }]);
   }
 

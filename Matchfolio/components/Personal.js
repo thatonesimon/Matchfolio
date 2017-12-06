@@ -4,9 +4,6 @@ import { Drawer,
         Container,
         Header,
         View,
-        DeckSwiper,
-        Card,
-        CardItem,
         Thumbnail,
         Text,
         Left,
@@ -18,7 +15,11 @@ import { Drawer,
         Footer,
         FooterTab,
         Icon,
-        Spinner } from 'native-base';
+        Spinner,
+        Form,
+        Item,
+        Input,
+        Label, } from 'native-base';
 import { Ionicons } from '@expo/vector-icons'; // 6.1.0
 import { NavigationActions } from 'react-navigation';
 
@@ -50,26 +51,41 @@ export default class Personal extends React.Component {
 	}
 	render() {
 		return (
-			<View>
-				<Header style= {{backgroundColor: 'transparent',
-				borderBottomWidth: 0}}>
-					<Left>
-						<Button transparent
-						onPress={() => this.props.navigation.navigate('DrawerToggle')}>
-							<Icon name='menu' />
-						</Button>
-					</Left>
-					<Right />
-				</Header>
-				<Text style={styles.header}><Ionicons name="ios-contact" size={40} color="skyblue" padding = {40}/> Personal</Text>
-				<InputField name='Name'></InputField>
-				<InputField name='Email'></InputField>
-        <View style={{justifyContent: 'center', alignItems: 'center', alignSelf: 'center'}}>
-				    <Button bordered onPress={() => {this.props.navigation.navigate('Preferences')} } >
-					       <Text> Save </Text>
-				    </Button>
-        </View>
-			</View>
+			<Container>
+        <Header style= {{backgroundColor: 'transparent',
+                  borderBottomWidth: 0}}>
+                           <Left style={{flex: 1}}>
+                                   <Button transparent
+                                   onPress={() => this.props.navigation.navigate('DrawerToggle')}>
+                                           <Icon name='menu' />
+                                   </Button>
+                           </Left>
+                           <Body style={{flex: 3, alignItems: 'center', justifyContent: 'center'}}>
+                            <Text style={styles.header}><Ionicons name="ios-contact" size={40} color="skyblue" padding = {40}/> Personal</Text>
+                           </Body>
+                           <Right style={{flex: 1}} />
+                   </Header>
+        <Content>
+          <Form>
+            <Item floatingLabel>
+              <Label>First Name</Label>
+            </Item>
+            <Item floatingLabel>
+              <Label>Last Name</Label>
+            </Item>
+            <Item floatingLabel>
+              <Label>Social Security #</Label>
+            </Item>
+            <Item floatingLabel>
+              <Label>Birthday</Label>
+            </Item>
+            <Item />
+          </Form>
+          <Button bordered block onPress={() => this.props.navigation.navigate('backgroundcheck')} style={styles.button} >
+            <Text>Sign up</Text>
+          </Button>
+        </Content>
+      </Container>
 		);
 	}
 }
@@ -84,9 +100,13 @@ const styles = StyleSheet.create({
   header: {
     textAlign: 'center',
     color: 'skyblue',
-    fontSize: 40
+    fontSize: 40,
   },
   margin: {
     margin: 10,
+  },
+  button: {
+    padding: 10,
+    margin: 20,
   },
 });
