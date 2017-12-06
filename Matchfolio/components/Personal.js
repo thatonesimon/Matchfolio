@@ -81,7 +81,7 @@ export default class Personal extends React.Component {
             <Item />
           </Form>
           <Button bordered block onPress={() => this.props.navigation.navigate('backgroundcheck')} style={styles.button} >
-            <Text>Sign up</Text>
+            <Text>Save</Text>
           </Button>
         </Content>
       </Container>
