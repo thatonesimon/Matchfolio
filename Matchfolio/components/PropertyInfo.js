@@ -58,7 +58,7 @@ export default class PropertyInfo extends Component {
       <ScrollView>
   	    <View style={styles.container}>
           
-        <Swiper loadMinimal loadMinimalSize={1} style={styles.wrapper} loop={true}>
+        <Swiper loadMinimal loadMinimalSize={1} style={styles.wrapper} loop={false}>
           {
             this.state.imgList.map((item, i) => <Slide
               loadHandle={this.loadHandle}
