@@ -80,7 +80,7 @@ export default class Personal extends React.Component {
             </Item>
             <Item />
           </Form>
-          <Button bordered block onPress={() => this.props.navigation.navigate('backgroundcheck')} style={styles.button} >
+          <Button bordered block onPress={() => this.props.navigation.navigate('preferences')} style={styles.button} >
             <Text>Save</Text>
           </Button>
         </Content>

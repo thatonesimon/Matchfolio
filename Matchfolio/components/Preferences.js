@@ -36,7 +36,7 @@ export default class Preferences extends React.Component {
 
 	render() {
 		return (
-			<ScrollView>
+			<ScrollView backgroundColor='white'>
         <Header style= {{backgroundColor: 'transparent', borderBottomWidth: 0}}>
           <Left style={{flex: 1}}>
             <Button transparent onPress={() => this.props.navigation.navigate('DrawerToggle')}>
