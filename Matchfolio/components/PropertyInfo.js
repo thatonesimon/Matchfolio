@@ -20,7 +20,7 @@ const Slide = props => {
     <Image onLoad={props.loadHandle.bind(null, props.i)} style={styles.image} source={{uri: props.uri}} />
     {
       !props.loaded && <View style={styles.loadingView}>
-        <Spinner />
+        <Spinner color='#006eff'/>
       </View>
     }
   </View>)
@@ -33,11 +33,12 @@ export default class PropertyInfo extends Component {
     if(this.props.navigation.state.params) {
       property = this.props.navigation.state.params.item;
     }
-    const images = property.image_urls.split(',');
+    const images_old = property.image_urls.split(',');
+    const images = [];
     var loadQ = [];
-    for (i=0; i<images.length; i++)
+    for (i=0; i<images_old.length && i<10; i++)
     {
-      images[i] = baseUrl + images[i];
+      images.push(baseUrl + images_old[i]);
       loadQ.push(0)
     }
     this.state = {imgList: images, loadQueue: loadQ}
@@ -61,7 +62,7 @@ export default class PropertyInfo extends Component {
           {
             this.state.imgList.map((item, i) => <Slide
               loadHandle={this.loadHandle}
-              loaded={!!this.state.loadQueue[i]}
+              loaded={this.state.loadQueue[i]}
               uri={item}
               i={i}
               key={i} />)
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0,0,0,.5)'
+    backgroundColor: 'rgba(255,255,255,.5)'
   },
 
   loadingImage: {

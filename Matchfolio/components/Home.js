@@ -141,7 +141,7 @@ export class CardSwiper extends React.Component {
 
  	render() {
 		if (this.state.loading) {
-			return <Spinner />;
+			return <Spinner color='#006eff'/>;
 		}
 		
 		else {
