@@ -35,6 +35,7 @@ export default class Preferences extends React.Component {
 	render() {
 		return (
 			<ScrollView>
+				<View style={styles.container}>
 				<Text style={styles.header}>
 					<Ionicons 
 						name="ios-cog" 
@@ -180,6 +181,7 @@ export default class Preferences extends React.Component {
 						onPress={() => {Alert.alert('Saved');}}
 					/>
 				</View>
+				</View>
 			</ScrollView>
 		);
 	}
@@ -199,8 +201,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'flex-start',
-    justifyContent: 'space-around',
   },
   buttonHolder: {
     width: Dimensions.get('window').width,
