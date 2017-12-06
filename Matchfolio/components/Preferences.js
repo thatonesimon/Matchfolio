@@ -40,7 +40,7 @@ export default class Preferences extends React.Component {
   static navigationOptions = {
     header: null,
     drawerLabel: 'Preferences',
-    drawerIcon: ({ tintColor }) => (<Icon name="ios-cog" size={15} style={{ color: tintColor }} />),
+    drawerIcon: ({ tintColor }) => (<Icon name="ios-color-filter-outline" size={15} style={{ color: tintColor }} />),
   }
   constructor(props) {
     super(props);
@@ -215,7 +215,6 @@ const styles = StyleSheet.create({
   },
   header: {
     textAlign: 'center',
-    marginTop: 20,
     color: 'skyblue',
     fontSize: 40,
   },
