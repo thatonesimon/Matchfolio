@@ -43,7 +43,7 @@ export default class Preferences extends React.Component {
               <Icon name='menu' />
             </Button>
           </Left>
-          <Body style={{flex: 3, alignItems: 'center', justifyContent: 'center'}}>
+          <Body style={{flex: 4, alignItems: 'center', justifyContent: 'center'}}>
            <Text style={styles.header}><Ionicons name="ios-cog" size={40} color="skyblue" padding = {40}/> Preferences</Text>
           </Body>
           <Right style={{flex: 1}} />
