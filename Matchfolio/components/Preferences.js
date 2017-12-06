@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   Alert,
-  Button,
   Dimensions,
   FlatList,
   Image,
@@ -13,7 +12,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { Container, Header, Content, ListItem, CheckBox, Text, Body } from 'native-base';
+import { Container, Header, Left, Right, Button, Content, ListItem, Icon, CheckBox, Text, Body } from 'native-base';
 import { Ionicons } from '@expo/vector-icons'; // 6.1.0
 import { NavigationActions } from 'react-navigation';
 
@@ -23,6 +22,7 @@ export default class Preferences extends React.Component {
 		Alert.alert('You tapped the button!');
 	}
 	static navigationOptions = {
+    drawerIcon: ({ tintColor }) => (<Icon name="ios-color-filter-outline" size={15} style={{ color: tintColor }} />),
 		header: null,
 	}
 
@@ -37,14 +37,21 @@ export default class Preferences extends React.Component {
 	render() {
 		return (
 			<ScrollView>
-				<View style={styles.container}>
+        <Header style= {{backgroundColor: 'transparent', borderBottomWidth: 0}}>
+          <Left>
+            <Button transparent onPress={() => this.props.navigation.navigate('DrawerToggle')}>
+              <Icon name='menu' />
+            </Button>
+          </Left>
+          <Right />
+        </Header>
 				<Text style={styles.header}>
-					<Ionicons 
-						name="ios-cog" 
-						size={40} 
-						color="skyblue" 
-						padding = {40}/> 
-					Preferences 
+					<Ionicons
+						name="ios-cog"
+						size={40}
+						color="skyblue"
+						padding = {40}/>
+					Preferences
 				</Text>
 				<Text style={styles.blacktext}>Rent</Text>
 
@@ -145,45 +152,43 @@ export default class Preferences extends React.Component {
 						<Text>Cats Allowed</Text>
 					</Body>
 				</ListItem>
-				
+
 
 				<Text style={styles.blacktext}>Property Type</Text>
 				<ListItem>
-					<CheckBox checked={this.state.house} 
+					<CheckBox checked={this.state.house}
 					onPress={()=>this.setState({house: !this.state.house})} />
 					<Body>
 						<Text>House</Text>
 					</Body>
 				</ListItem>
 				<ListItem>
-					<CheckBox checked={this.state.condo} 
+					<CheckBox checked={this.state.condo}
 					onPress={()=>this.setState({condo: !this.state.condo})} />
 					<Body>
 						<Text>Condo</Text>
 					</Body>
 				</ListItem>
 				<ListItem>
-					<CheckBox checked={this.state.apartment} 
+					<CheckBox checked={this.state.apartment}
 					onPress={()=>this.setState({apartment: !this.state.apartment})} />
 					<Body>
 						<Text>Apartment</Text>
 					</Body>
 				</ListItem>
 				<ListItem>
-					<CheckBox checked={this.state.town} 
+					<CheckBox checked={this.state.town}
 					onPress={()=>this.setState({town: !this.state.town})} />
 					<Body>
 						<Text>Townhouse</Text>
 					</Body>
 				</ListItem>
-				
-				<View style={styles.buttonHolder}>
-					<Button title="Save"
-						color="#4b9693"
-						onPress={() => {this.props.navigation.navigate('rentalapp')}}
-					/>
-				</View>
-				</View>
+
+        <View style={{justifyContent: 'center', alignItems: 'center', alignSelf: 'center'}}>
+				    <Button bordered onPress={() => {this.props.navigation.navigate('rentalapp')} } >
+					       <Text> Saved </Text>
+				    </Button>
+        </View>
 			</ScrollView>
 		);
 	}
@@ -212,7 +217,6 @@ const styles = StyleSheet.create({
   },
   header: {
     textAlign: 'center',
-    marginTop: 20,
     color: 'skyblue',
     fontSize: 40,
   },

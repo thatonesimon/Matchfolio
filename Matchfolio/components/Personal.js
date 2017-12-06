@@ -64,9 +64,11 @@ export default class Personal extends React.Component {
 				<Text style={styles.header}><Ionicons name="ios-contact" size={40} color="skyblue" padding = {40}/> Personal</Text>
 				<InputField name='Name'></InputField>
 				<InputField name='Email'></InputField>
-				<Button bordered onPress={() => {this.props.navigation.navigate('preferences')} } >
-					<Text> Saved </Text>
-				</Button>
+        <View style={{justifyContent: 'center', alignItems: 'center', alignSelf: 'center'}}>
+				    <Button bordered onPress={() => {Alert.alert("saved")} } >
+					       <Text> Saved </Text>
+				    </Button>
+        </View>
 			</View>
 		);
 	}

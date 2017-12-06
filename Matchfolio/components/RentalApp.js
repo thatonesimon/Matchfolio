@@ -20,7 +20,7 @@ import {AppRegistry, Alert, CheckBox, Dimensions, FlatList, Image, Picker, Scrol
           Icon,
           Spinner } from 'native-base';
 import { NavigationActions } from 'react-navigation';
-          
+
 const instructions =
   "We'll use this information to run a\n" + "background check so we can make sure you\n" + "qualify for every property we show you.\n";
 
@@ -49,11 +49,11 @@ export default class App extends Component<{}> {
 		drawerLabel: 'Rental App',
 		drawerIcon: ({ tintColor }) => (<Icon name="ios-list-box-outline" size={15} style={{ color: tintColor }} />),
 	}
-		
+
 	render() {
 		return (
 			<ScrollView>
-				<Header 
+				<Header
 					style= {{backgroundColor: 'transparent',
 					borderBottomWidth: 0}}>
 					<Left>
@@ -71,7 +71,7 @@ export default class App extends Component<{}> {
 					<Text style={styles.instructions}>
 						To get started, input your information.
 					</Text>
-					<Text 
+					<Text
 						style={styles.instructions}>
 						{instructions}
 					</Text>
@@ -96,9 +96,11 @@ export default class App extends Component<{}> {
 					<TextInputWithTitle title="Have you ever been convicted of a crime?" placeholder="yes/no"/>
 					<TextInputWithTitle title="Have you ever filed a lawsuit against your landlord?" placeholder="yes/no"/>
 					<TextInputWithTitle title="Are you working with a leasing agent?" placeholder="yes/no"/>
-					<Button bordered onPress={() => {this.props.navigation.navigate('backgroundcheck')} } >
-						<Text>Save</Text>
-					</Button>
+          <View style={{justifyContent: 'center', alignItems: 'center', alignSelf: 'center'}}>
+  				    <Button bordered onPress={() => {this.props.navigation.navigate('rentalapp')} } >
+  					       <Text> Saved </Text>
+  				    </Button>
+          </View>
 				</View>
 			</ScrollView>
 		);
