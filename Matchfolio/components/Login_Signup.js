@@ -51,7 +51,7 @@ export class Login extends Component<{}> {
 
   componentDidMount()
   {
-  		this.checkUserLoggedIn();
+  		//this.checkUserLoggedIn();
   }
 
   async checkUserLoggedIn()
@@ -73,12 +73,12 @@ export class Login extends Component<{}> {
 
   async _onLoginButtonPress(){
 
-  		try	{
+  		/*try	{
   			await AsyncStorage.setItem('userData', JSON.stringify(this.state));
   		}
   		catch (error) {
   			console.log(error);
-  		}
+  		}*/
 
       this.props.navigation.dispatch(resetAction);
   }
@@ -100,6 +100,7 @@ export class Login extends Component<{}> {
 				placeholder="Username"
 				onChangeText={(text) => this.setState({ username: text })}
 			/>
+      <Text style={{height:5}} />
 			<TextInput
 				placeholder="Password"
 				onChangeText={(text) => this.setState({ password: text })}
@@ -107,10 +108,9 @@ export class Login extends Component<{}> {
 			/>
 			<Text style={{height:25}}>
 			</Text>
-			<Button
+			<Button bordered block
 				onPress={this._onLoginButtonPress}
-				title='Log In'
-			/>
+			><Text>Log In</Text></Button>
 			<Text style={{height:35}}>
 			</Text>
 			<Text style={{textAlign: 'center'}}>
@@ -172,6 +172,7 @@ export class Signup extends Component<{}> {
 				onChangeText={(text) => this.setState({username: text})}
 				value={this.state.username}
 			/>
+      <Text style={{height:5}} />
 			<TextInput
 				placeholder="Password"
 				onChangeText={(text) => this.setState({password: text})}
@@ -180,10 +181,9 @@ export class Signup extends Component<{}> {
 			/>
 			<Text style={{height:25}}>
 			</Text>
-			<Button
+			<Button bordered block
 				onPress={this._onSignupButtonPress}
-				title='Register'
-			/>
+			><Text>Sign up</Text></Button>
         </View>
       </View>
     );
