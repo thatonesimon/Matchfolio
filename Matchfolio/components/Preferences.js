@@ -1,17 +1,6 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
-  Alert,
-  CheckBox,
-  Dimensions,
-  FlatList,
-  Image,
-  Picker,
-  ScrollView,
-  StyleSheet,
-  Switch,
-  TextInput,
-} from 'react-native';
+  AppRegistry, Alert, CheckBox, Dimensions, FlatList, Image, Picker, ScrollView, StyleSheet, Switch, TextInput} from 'react-native';
 import { Drawer,
         Container,
         Header,
@@ -34,160 +23,185 @@ import { Drawer,
 import { Ionicons } from '@expo/vector-icons'; // 6.1.0
 
 export default class Preferences extends React.Component {
-  _onButtonPress() {
-    Alert.alert('You tapped the button!');
-  }
-  static navigationOptions = {
-    header: null,
-    drawerLabel: 'Preferences',
-    drawerIcon: ({ tintColor }) => (<Icon name="ios-color-filter-outline" size={15} style={{ color: tintColor }} />),
-  }
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: false,
-      switchValue: true
-    };
-  }
+	_onButtonPress() {
+		Alert.alert('You tapped the button!');
+	}
+	
+	static navigationOptions = {
+		header: null,
+		drawerLabel: 'Preferences',
+		drawerIcon: ({ tintColor }) => (<Icon name="ios-color-filter-outline" size={15} style={{ color: tintColor }} />),
+	}
+	
+	constructor(props) {
+		super(props);
+		this.state = {
+			value: false,
+			switchValue: true
+		};
+	}
 
-  _handleToggleSwitch = () => this.setState(state => ({
-    switchValue: !state.switchValue
-  }));
+	_handleToggleSwitch = () => this.setState(state => ({
+		switchValue: !state.switchValue
+	}));
 
-  render() {
-    return (
-      <ScrollView>
-          <Header style= {{backgroundColor: 'transparent',
-               borderBottomWidth: 0}}>
-         <Left>
-         <Button transparent
-           onPress={() => this.props.navigation.navigate('DrawerToggle')}>
-           <Icon name='menu' />
-         </Button>
-         </Left>
-         <Body>
-         </Body>
+	render() {
+		return (
+		  <ScrollView>
+			  <Header style= {{backgroundColor: 'transparent',
+				   borderBottomWidth: 0}}>
+			 <Left>
+			 <Button transparent
+			   onPress={() => this.props.navigation.navigate('DrawerToggle')}>
+			   <Icon name='menu' />
+			 </Button>
+			 </Left>
+			 <Body>
+			 </Body>
 
-         <Right />
-         </Header>
-        <Text style={styles.header}><Ionicons name="ios-cog" size={40} color="skyblue" padding = {40}/> Preferences</Text>
-        <Text style={styles.blacktext}>Rent</Text>
+			 <Right />
+			 </Header>
+			<Text style={styles.header}><Ionicons name="ios-cog" size={40} color="skyblue" padding = {40}/> Preferences</Text>
+			<Text style={styles.blacktext}>Rent</Text>
 
-        <View style={{ flexDirection: 'row' }}>
-           <TextInput
-            style={styles.inputs}
-            keyboardType="numeric"
-            returnKeyType = {"next"}
-            autoFocus = {true}
-            placeholder = "Title"
-            onSubmitEditing={(event) => {
-              this.refs.MaxRent.focus(); }}
-            onChangeText={text => this.setState({ text })}
-          />
-          <Text style={styles.blacktext}>to </Text>
-          <TextInput
-          ref='MaxRent'
-            style={styles.inputs}
-            keyboardType="numeric"
-            placeholder="Max"
-            onChangeText={text => this.setState({ text })}
-          />
-        </View>
-        <Text style={styles.blacktext}>Square Feet</Text>
-        <View style={{ flexDirection: 'row' }}>
-          <TextInput
-            style={styles.inputs}
-            keyboardType="numeric"
-            returnKeyType = {"next"}
-            placeholder = "Title"
-            onSubmitEditing={(event) => {
-              this.refs.MaxSquare.focus(); }}
-            onChangeText={text => this.setState({ text })}
-          />
-          <Text style={styles.blacktext}>to </Text>
-          <TextInput
-          ref='MaxSquare'
-            style={styles.inputs}
-            keyboardType="numeric"
-            placeholder="Max"
-            onChangeText={text => this.setState({ text })}
-          />
-        </View>
-        <Text style={styles.blacktext}>Bed</Text>
-        <Picker
-          style={{ width: 100 }}
-          selectedValue={this.state.bedlanguage}
-          onValueChange={(bedVal, itemIndex) =>
-            this.setState({ bedlanguage: bedVal })}>
-          <Picker.Item label="1" value="bed_one" />
-          <Picker.Item label="2" value="bed_two" />
-          <Picker.Item label="3" value="bed_three" />
-          <Picker.Item label="4" value="bed_four" />
-          <Picker.Item label="5" value="bed_five" />
-        </Picker>
-        <Text style={styles.blacktext}>Baths</Text>
-        <Picker
-          style={{ width: 100 }}
-          selectedValue={this.state.bathlanguage}
-          onValueChange={(bathValue, itemIndex) =>
-            this.setState({ bathlanguage: bathValue })}>
-          <Picker.Item label="1" value="bath_one" />
-          <Picker.Item label="2" value="bath_two" />
-          <Picker.Item label="3" value="bath_three" />
-          <Picker.Item label="4" value="bath_four" />
-          <Picker.Item label="5" value="bath_five" />
-        </Picker>
-        <Text style={styles.blacktext}>Amenities Included</Text>
-        <FlatList
-          data={[
-            { key: 'Laundry' },
-            { key: 'Dishwasher' },
-            { key: 'Air Conditioning' },
-            { key: 'Furnished' },
-            { key: 'Parking' },
-            { key: 'Dog-Friendly' },
-            { key: 'Cat-Friendly' },
-          ]}
-          renderItem={({ item }) => <Text style={styles.item}>{item.key}</Text>}
-        />
+					<View style={{ flexDirection: 'row' }}>
+						<TextInput style={styles.inputs}
+							keyboardType="numeric"
+							returnKeyType = {"next"}
+							autoFocus = {true}
+							placeholder = "Min"
+							onSubmitEditing={(event) => {this.refs.MaxRent.focus(); }}
+							onChangeText={text => this.setState({ text })}
+						/>
+						<Text style={styles.blacktext}>to </Text>
+						<TextInput style={styles.inputs}
+							ref='MaxRent'
+							keyboardType="numeric"
+							placeholder="Max"
+							onChangeText={text => this.setState({ text })}
+						/>
+					</View>
 
-        <Text style={styles.blacktext}>Style</Text>
-         <View style={{ flexDirection: 'row' }}><CheckBox
-          onValueChange={this._handleToggleSwitch}
-          value={this.state.switchValue}
-        /><Text> Houses </Text>
-        </View>
+					<Text style={styles.blacktext}>Square Feet</Text>
+					<View style={{ flexDirection: 'row' }}>
+						<TextInput style={styles.inputs}
+							keyboardType="numeric"
+							returnKeyType = {"next"}
+							placeholder = "Title"
+							onSubmitEditing={(event) => {this.refs.MaxSquare.focus(); }}
+							onChangeText={text => this.setState({ text })}
+						/>
+						<Text style={styles.blacktext}>to </Text>
+						<TextInput style={styles.inputs}
+							ref='MaxSquare'
+							keyboardType="numeric"
+							placeholder="Max"
+							onChangeText={text => this.setState({ text })}
+						/>
+					</View>
 
-        <View style={{ flexDirection: 'row' }}><CheckBox
-          onValueChange={this._handleToggleSwitch}
-          value={this.state.switchValue}
-        /><Text> Apartments </Text>
-        </View>
+					<Text style={styles.blacktext}>Bed</Text>
+					<Picker style={{ width: 100 }}
+						mode = 'dropdown'
+						selectedValue={this.state.bedlanguage}
+						onValueChange={(bedVal, itemIndex) =>this.setState({ bedlanguage: bedVal })}>
+						<Picker.Item label="1" value="bed_one" />
+						<Picker.Item label="2" value="bed_two" />
+						<Picker.Item label="3" value="bed_three" />
+						<Picker.Item label="4" value="bed_four" />
+						<Picker.Item label="5+" value="bed_five" />
+					</Picker>
 
-        <View style={{ flexDirection: 'row' }}><CheckBox
-          onValueChange={this._handleToggleSwitch}
-          value={this.state.switchValue}
-        /><Text> Condos </Text>
-        </View>
+					<Text style={styles.blacktext}>Baths</Text>
+					<Picker style={{ width: 100 }}
+						mode = 'dropdown'
+						selectedValue={this.state.bathlanguage}
+						onValueChange={(bathValue, itemIndex) =>this.setState({ bathlanguage: bathValue })}>
+						<Picker.Item label="1" value="bath_one" />
+						<Picker.Item label="2" value="bath_two" />
+						<Picker.Item label="3" value="bath_three" />
+						<Picker.Item label="4" value="bath_four" />
+						<Picker.Item label="5+" value="bath_five" />
+					</Picker>
 
-        <View style={{ flexDirection: 'row' }}><CheckBox
-          onValueChange={this._handleToggleSwitch}
-          value={this.state.switchValue}
-        /><Text> Townhouses </Text>
-        </View>
+					<Text style={styles.blacktext}>Amenities Included</Text>
+					<ListItem>
+						<CheckBox checked={this.state.laundry} onPress={()=>this.setState({laundry: !this.state.laundry})}/>
+						<Body>
+							<Text>Laundry</Text>
+						</Body>
+					</ListItem>
+					<ListItem>
+						<CheckBox checked={this.state.dish} onPress={()=>this.setState({dish: !this.state.dish})}/>
+						<Body>
+							<Text>Dishwasher</Text>
+						</Body>
+					</ListItem>
+					<ListItem>
+						<CheckBox checked={this.state.air} onPress={()=>this.setState({air: !this.state.air})}/>
+						<Body>
+							<Text>Air-Conditioning</Text>
+						</Body>
+					</ListItem>
+					<ListItem>
+						<CheckBox checked={this.state.park} onPress={()=>this.setState({park: !this.state.park})}/>
+						<Body>
+							<Text>Parking</Text>
+						</Body>
+					</ListItem>
+					<ListItem>
+						<CheckBox checked={this.state.dogs} onPress={()=>this.setState({dogs: !this.state.dogs})}/>
+						<Body>
+							<Text>Dogs Allowed</Text>
+						</Body>
+					</ListItem>
+					<ListItem>
+						<CheckBox checked={this.state.cats} onPress={()=>this.setState({cats: !this.state.cats})}/>
+						<Body>
+							<Text>Cats Allowed</Text>
+						</Body>
+					</ListItem>
 
-        <View style={styles.buttonHolder}>
-          <Button
-            color="#4b9693"
-            title="Save"
-            onPress={() => {
-              Alert.alert('Saved');
-            }}
-          />
-        </View>
-      </ScrollView>
-    );
-  }
+
+					<Text style={styles.blacktext}>Property Type</Text>
+					<ListItem>
+						<CheckBox checked={this.state.house} 
+						onPress={()=>this.setState({house: !this.state.house})} />
+						<Body>
+							<Text>House</Text>
+						</Body>
+					</ListItem>
+					<ListItem>
+						<CheckBox checked={this.state.condo} 
+						onPress={()=>this.setState({condo: !this.state.condo})} />
+						<Body>
+							<Text>Condo</Text>
+						</Body>
+					</ListItem>
+					<ListItem>
+						<CheckBox checked={this.state.apartment} 
+						onPress={()=>this.setState({apartment: !this.state.apartment})} />
+						<Body>
+							<Text>Apartment</Text>
+						</Body>
+					</ListItem>
+					<ListItem>
+						<CheckBox checked={this.state.town} 
+						onPress={()=>this.setState({town: !this.state.town})} />
+						<Body>
+							<Text>Townhouse</Text>
+						</Body>
+					</ListItem>
+
+					<View style={styles.buttonHolder}>
+						<Button title="Save"
+							color="#4b9693"
+							onPress={() => {Alert.alert('Saved');}}
+						/>
+					</View>
+				</ScrollView>
+		);
+	}
 }
 
 const styles = StyleSheet.create({

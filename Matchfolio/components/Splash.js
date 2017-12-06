@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
-import { Alert,
-         Dimensions,
-         Image,
-         ScrollView,
-         StyleSheet, } from 'react-native';
+import { Alert, Dimensions, Image, ScrollView, StyleSheet, } from 'react-native';
 import { View,
          Spinner, } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 
 export default class Splash extends Component {
-
 	constructor(props) {
-    	super(props);
-    	this.redirectToLogin = this.redirectToLogin.bind(this);
-    }
+		super(props);
+		this.redirectToLogin = this.redirectToLogin.bind(this);
+	}
 
 	redirectToLogin() {
 		this.props.navigation.navigate('login');

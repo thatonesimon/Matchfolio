@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import { Alert,
-         Dimensions,
-         Image,
-         ScrollView,
-         StyleSheet, } from 'react-native';
+import { Alert, Dimensions, Image, ScrollView, StyleSheet, } from 'react-native';
 import { Drawer,
          Container,
          Header,
@@ -13,38 +9,36 @@ import { Drawer,
          CardItem,
          Thumbnail,
          Text, } from 'native-base';
-import Swiper from 'react-native-swiper';
 
+import Swiper from 'react-native-swiper';
 const baseUrl = 'http://pa.cdn.appfolio.com/';
 
 export default class PropertyInfo extends Component {
+	constructor(props) {
+		super(props);
+		if(this.props.navigation.state.params) {
+			property = this.props.navigation.state.params.item;
+		}
+	}
 
-  constructor(props) {
-    super(props);
-    if(this.props.navigation.state.params) {
-      property = this.props.navigation.state.params.item;
-    }
-  }
-
-  render() {
-    return (
-      <ScrollView>
-  	    <View style={styles.container}>
-          <Image style={styles.gallery} source={{uri: baseUrl + property.image_urls.split(',')[0]}} />
-          <Text style={styles.mainInfo}>{property.address_address1 + "\n" + property.address_city + ", " + property.address_country}</Text>
-          <View style={styles.horizontalHolder}>
-  	        <Text style={styles.leftPropertyInfo}>{"Rent:\n$" + property.market_rent + "/month"}</Text>
-            <Text style={styles.propertyInfo}>{"# of Rooms: \n" + property.bedrooms + " Bed/" + property.bathrooms + " Bath"}</Text>
-            <Text style={styles.rightPropertyInfo}>{"Square Feet: \n" + property.square_feet + " sq ft." }</Text>
-          </View>
-  	      <Text style={styles.info}>{"Description: " + property.marketing_description}</Text>
-          <Text style={styles.info}>{"Amenities: " + property.amenities}</Text>
-          <Text style={styles.phoneNumber}>{"Phone:\n" + property.contact_phone_number}</Text>
-  	    </View>
-  	  </ScrollView>
-    );
-  }
-
+	render() {
+		return (
+		<ScrollView>
+			<View style={styles.container}>
+				<Image style={styles.gallery} source={{uri: baseUrl + property.image_urls.split(',')[0]}} />
+				<Text style={styles.mainInfo}>{property.address_address1 + "\n" + property.address_city + ", " + property.address_country}</Text>
+				<View style={styles.horizontalHolder}>
+					<Text style={styles.leftPropertyInfo}>{"Rent:\n$" + property.market_rent + "/month"}</Text>
+					<Text style={styles.propertyInfo}>{"# of Rooms: \n" + property.bedrooms + " Bed/" + property.bathrooms + " Bath"}</Text>
+					<Text style={styles.rightPropertyInfo}>{"Square Feet: \n" + property.square_feet + " sq ft." }</Text>
+				</View>
+				<Text style={styles.info}>{"Description: " + property.marketing_description}</Text>
+				<Text style={styles.info}>{"Amenities: " + property.amenities}</Text>
+				<Text style={styles.phoneNumber}>{"Phone:\n" + property.contact_phone_number}</Text>
+			</View>
+		</ScrollView>
+		);
+	}
 }
 
 const styles = StyleSheet.create({
