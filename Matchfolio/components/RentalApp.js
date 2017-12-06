@@ -72,15 +72,6 @@ export default class App extends Component<{}> {
         <Content>
           <Form>
             <Item floatingLabel>
-              <Label>First Name</Label>
-            </Item>
-            <Item floatingLabel>
-              <Label>Last Name</Label>
-            </Item>
-            <Item floatingLabel>
-              <Label>Date of Birth</Label>
-            </Item>
-            <Item floatingLabel>
               <Label>Phone Number</Label>
             </Item>
             <Item floatingLabel>
