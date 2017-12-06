@@ -41,13 +41,14 @@ export default class BackgroundCheckLoading extends Component {
 			timer = setInterval(() => {
 			progress += Math.random() / 5;
 			if (progress > 1) {
-			 	progress = 1;
-			 	this.setState({ text: "Background check complete!"});
-				setTimeout((this.redirectToMain), 1000);
-				clearInterval(timer);
+				 	progress = 1;
+					this.setState({ progress });
+				 	this.setState({ text: "Background check complete!"});
+					setTimeout((this.redirectToMain), 1000);
+					clearInterval(timer);
 			}
-	        this.setState({ progress });
-	      	}, 500);
+      this.setState({ progress });
+    	}, 500);
 	    }, 1500);
 	}
 
