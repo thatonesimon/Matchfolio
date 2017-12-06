@@ -109,7 +109,7 @@ export default class App extends Component<{}> {
             </Item>
           </Form>
           <Button bordered block onPress={() => this.props.navigation.navigate('backgroundcheck')} style={styles.button} >
-            <Text>Sign up</Text>
+            <Text>Submit</Text>
           </Button>
         </Content>
 			</ScrollView>
