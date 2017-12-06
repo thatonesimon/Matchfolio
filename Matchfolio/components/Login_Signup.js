@@ -183,6 +183,11 @@ export class Signup extends Component<{}> {
         secureTextEntry={true}
         value={this.state.password}
       />
+      <TextInput
+        placeholder="Verify Password"
+        onChangeText={(text) => this.setState({ password: text })}
+        secureTextEntry={true}
+      />
       <Text style={{height:25}}>
       </Text>
       <Button bordered block
