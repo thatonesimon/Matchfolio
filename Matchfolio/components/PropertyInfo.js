@@ -8,41 +8,114 @@ import { Drawer,
          Card,
          CardItem,
          Thumbnail,
-         Text, } from 'native-base';
-
+         Text,
+         Spinner, } from 'native-base';
 import Swiper from 'react-native-swiper';
+
 const baseUrl = 'http://pa.cdn.appfolio.com/';
+const { width } = Dimensions.get('window')
+
+const Slide = props => {
+  return (<View style={styles.slide}>
+    <Image onLoad={props.loadHandle.bind(null, props.i)} style={styles.image} source={{uri: props.uri}} />
+    {
+      !props.loaded && <View style={styles.loadingView}>
+        <Spinner />
+      </View>
+    }
+  </View>)
+}
 
 export default class PropertyInfo extends Component {
-	constructor(props) {
-		super(props);
-		if(this.props.navigation.state.params) {
-			property = this.props.navigation.state.params.item;
-		}
-	}
 
-	render() {
-		return (
-		<ScrollView>
-			<View style={styles.container}>
-				<Image style={styles.gallery} source={{uri: baseUrl + property.image_urls.split(',')[0]}} />
-				<Text style={styles.mainInfo}>{property.address_address1 + "\n" + property.address_city + ", " + property.address_country}</Text>
-				<View style={styles.horizontalHolder}>
-					<Text style={styles.leftPropertyInfo}>{"Rent:\n$" + property.market_rent + "/month"}</Text>
-					<Text style={styles.propertyInfo}>{"# of Rooms: \n" + property.bedrooms + " Bed/" + property.bathrooms + " Bath"}</Text>
-					<Text style={styles.rightPropertyInfo}>{"Square Feet: \n" + property.square_feet + " sq ft." }</Text>
-				</View>
-				<Text style={styles.info}>{"Description: " + property.marketing_description}</Text>
-				<Text style={styles.info}>{"Amenities: " + property.amenities}</Text>
-				<Text style={styles.phoneNumber}>{"Phone:\n" + property.contact_phone_number}</Text>
-			</View>
-		</ScrollView>
-		);
-	}
+  constructor(props) {
+    super(props);
+    if(this.props.navigation.state.params) {
+      property = this.props.navigation.state.params.item;
+    }
+    const images = property.image_urls.split(',');
+    var loadQ = [];
+    for (i=0; i<images.length; i++)
+    {
+      images[i] = baseUrl + images[i];
+      loadQ.push(0)
+    }
+    this.state = {imgList: images, loadQueue: loadQ}
+    this.loadHandle = this.loadHandle.bind(this)
+  }
+
+    loadHandle (i) {
+    let loadQueue = this.state.loadQueue
+    loadQueue[i] = 1
+    this.setState({
+      loadQueue
+    })
+  }
+
+  render() {
+    return (
+      <ScrollView>
+  	    <View style={styles.container}>
+          
+        <Swiper loadMinimal loadMinimalSize={1} style={styles.wrapper} loop={true}>
+          {
+            this.state.imgList.map((item, i) => <Slide
+              loadHandle={this.loadHandle}
+              loaded={!!this.state.loadQueue[i]}
+              uri={item}
+              i={i}
+              key={i} />)
+          }
+        </Swiper>
+
+          <Text style={styles.mainInfo}>{property.address_address1 + "\n" + property.address_city + ", " + property.address_country}</Text>
+          <View style={styles.horizontalHolder}>
+  	        <Text style={styles.leftPropertyInfo}>{"Rent:\n$" + property.market_rent + "/month"}</Text>
+            <Text style={styles.propertyInfo}>{"# of Rooms: \n" + property.bedrooms + " Bed/" + property.bathrooms + " Bath"}</Text>
+            <Text style={styles.rightPropertyInfo}>{"Square Feet: \n" + property.square_feet + " sq ft." }</Text>
+          </View>
+  	      <Text style={styles.info}>{"Description: " + property.marketing_description}</Text>
+          <Text style={styles.info}>{"Amenities: " + property.amenities}</Text>
+          <Text style={styles.phoneNumber}>{"Phone:\n" + property.contact_phone_number}</Text>
+  	    </View>
+  	  </ScrollView>
+    );
+  }
+
 }
 
 const styles = StyleSheet.create({
-	container: {
+	wrapper: {
+    height: 400,
+  },
+
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'transparent'
+  },
+  image: {
+    flex: 1,
+    backgroundColor: 'transparent'
+  },
+
+  loadingView: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0,0,0,.5)'
+  },
+
+  loadingImage: {
+    width: 60,
+    height: 60
+  },
+
+  container: {
 	  padding: 10,
 	},
 	gallery: {
