@@ -38,21 +38,17 @@ export default class Preferences extends React.Component {
 		return (
 			<ScrollView>
         <Header style= {{backgroundColor: 'transparent', borderBottomWidth: 0}}>
-          <Left>
+          <Left style={{flex: 1}}>
             <Button transparent onPress={() => this.props.navigation.navigate('DrawerToggle')}>
               <Icon name='menu' />
             </Button>
           </Left>
-          <Right />
+          <Body style={{flex: 3, alignItems: 'center', justifyContent: 'center'}}>
+           <Text style={styles.header}><Ionicons name="ios-cog" size={40} color="skyblue" padding = {40}/> Preferences</Text>
+          </Body>
+          <Right style={{flex: 1}} />
         </Header>
-				<Text style={styles.header}>
-					<Ionicons
-						name="ios-cog"
-						size={40}
-						color="skyblue"
-						padding = {40}/>
-					Preferences
-				</Text>
+
 				<Text style={styles.blacktext}>Rent</Text>
 
 				<View style={{ flexDirection: 'row' }}>

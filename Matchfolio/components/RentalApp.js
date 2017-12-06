@@ -20,6 +20,7 @@ import {AppRegistry, Alert, CheckBox, Dimensions, FlatList, Image, Picker, Scrol
           Icon,
           Spinner } from 'native-base';
 import { NavigationActions } from 'react-navigation';
+import { Ionicons } from '@expo/vector-icons'; // 6.1.0
 
 const instructions =
   "We'll use this information to run a\n" + "background check so we can make sure you\n" + "qualify for every property we show you.\n";
@@ -62,7 +63,10 @@ export default class App extends Component<{}> {
 							<Icon name='menu' />
 						</Button>
 					</Left>
-					<Right />
+          <Body style={{flex: 3, alignItems: 'center', justifyContent: 'center'}}>
+           <Text style={styles.header}><Ionicons name="ios-list-box-outline" size={30} color="skyblue" padding = {40}/> Rental Application</Text>
+          </Body>
+          <Right style={{flex: 1}} />
 				</Header>
 				<View style={styles.container}>
 					<Text style={styles.welcome}>
@@ -98,7 +102,7 @@ export default class App extends Component<{}> {
 					<TextInputWithTitle title="Are you working with a leasing agent?" placeholder="yes/no"/>
           <View style={{justifyContent: 'center', alignItems: 'center', alignSelf: 'center'}}>
   				    <Button bordered onPress={() => {this.props.navigation.navigate('backgroundcheck')} } >
-  					       <Text> Saved </Text>
+  					       <Text> Save </Text>
   				    </Button>
           </View>
 				</View>
@@ -126,5 +130,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+  },
+  header: {
+    textAlign: 'center',
+    color: 'skyblue',
+    fontSize: 20,
   },
 });
