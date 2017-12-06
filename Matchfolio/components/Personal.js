@@ -20,6 +20,8 @@ import { Drawer,
         Icon,
         Spinner } from 'native-base';
 import { Ionicons } from '@expo/vector-icons'; // 6.1.0
+import { NavigationActions } from 'react-navigation';
+
 
 class InputField extends Component{
 	constructor(props) {
@@ -62,7 +64,7 @@ export default class Personal extends React.Component {
 				<Text style={styles.header}><Ionicons name="ios-contact" size={40} color="skyblue" padding = {40}/> Personal</Text>
 				<InputField name='Name'></InputField>
 				<InputField name='Email'></InputField>
-				<Button bordered onPress={() => {Alert.alert("saved")} } >
+				<Button bordered onPress={() => {this.props.navigation.navigate('preferences')} } >
 					<Text> Saved </Text>
 				</Button>
 			</View>
