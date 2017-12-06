@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import * as Progress from 'react-native-progress';
+import { NavigationActions } from 'react-navigation';
 
-var timer;
+
+const resetAction = NavigationActions.reset({
+  index: 0,
+  actions: [
+    NavigationActions.navigate({routeName: 'main'})
+  ]
+})
 
 export default class BackgroundCheckLoading extends Component {
 
@@ -25,8 +32,8 @@ export default class BackgroundCheckLoading extends Component {
 		this.animate();
 	}
 
-  	redirectToMain() {
-		this.props.navigation.navigate('main');
+  redirectToMain() {
+		this.props.navigation.dispatch(resetAction);
 	}
 
 	animate() {
@@ -38,7 +45,7 @@ export default class BackgroundCheckLoading extends Component {
 	    	}
 
 			this.setState({ indeterminate: false });
-			timer = setInterval(() => {
+			var timer = setInterval(() => {
 			progress += Math.random() / 5;
 			if (progress > 1) {
 				 	progress = 1;
