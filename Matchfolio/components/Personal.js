@@ -69,7 +69,7 @@ export default class Personal extends React.Component {
          </Body>
          <Right />
          </Header>
-         <Text style={styles.header}><Ionicons name="ios-contact" size={40} color="skyblue" padding = {40}/> Preferences</Text>
+         <Text style={styles.header}><Ionicons name="ios-contact" size={40} color="skyblue" padding = {40}/> Personal</Text>
          <InputField name='Name'></InputField>
          <InputField name='Email'></InputField>
               <Button bordered onPress={() => {Alert.alert("saved")} } >

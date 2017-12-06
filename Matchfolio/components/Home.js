@@ -22,6 +22,7 @@ import { Drawer,
          Spinner } from 'native-base';
 
 var propertyInfo = require('../res/property-info.json');
+import { Ionicons } from '@expo/vector-icons'; // 6.1.0
 var remainingInfos = propertyInfo.slice();
 const baseUrl = 'http://pa.cdn.appfolio.com/';
 var propertyPictures;
@@ -66,7 +67,7 @@ export class CardSwiper extends React.Component {
     if (this.props.navigation.state.params != undefined && this.props.navigation.state.params.homeSavedMatches!=null)
       {
          this.setState({matches: this.props.navigation.state.params.homeSavedMatches});
-         remainingInfos = this.props.navigation.state.params.remainingInfos;       
+         remainingInfos = this.props.navigation.state.params.remainingInfos;
       }
 
     this.setState({loading: false});
@@ -96,7 +97,7 @@ export class CardSwiper extends React.Component {
   _onNotInterested(item) {
     // [maybe] save info to ensure property isn't displayed again
     //console.log("Not interested in property: " + this.deck._root.state.selectedItem.address_address1);
-    if(item!=null) this._removeInfoFromRemaining(item);  
+    if(item!=null) this._removeInfoFromRemaining(item);
   }
 
   _onMoreInfo() {
@@ -140,7 +141,7 @@ export class CardSwiper extends React.Component {
 
   _removeInfoFromRemaining(item) {
     const index = remainingInfos.indexOf(item);
-    
+
     if (index !== -1) {
         remainingInfos.splice(index, 1);
     }
@@ -214,14 +215,18 @@ export class CardSwiper extends React.Component {
           </View>
           <View style={{ flexDirection: "column", flex: 1, position: "absolute", bottom: 0, left: 0, right: 0, justifyContent: 'space-around'}}>
             <View style={styles.horizontalHolder}>
-              <Button rounded danger onPress={() => this._onNotInterestedButton() } >
-                <Text>Not Interested</Text>
+              <Button>
               </Button>
-              <Button rounded info onPress={() => this._onMoreInfo() } >
+              <Button bordered rounded danger onPress={() => this._onNotInterestedButton() } >
+                <Icon name="md-close" size={40} color="red"/>
+              </Button>
+              <Button rounded bordered onPress={() => this._onMoreInfo() } >
                 <Text>More Info</Text>
               </Button>
-              <Button rounded success onPress={() => this._onInterestedButton() } >
-                <Text>Interested</Text>
+              <Button bordered rounded success onPress={() => this._onInterestedButton() } >
+                <Icon name="md-heart-outline" size={30} color="green"/>
+              </Button>
+              <Button>
               </Button>
             </View>
             <Footer>
@@ -231,7 +236,7 @@ export class CardSwiper extends React.Component {
                   <Text>Find Properties</Text>
                 </Button>
                 <Button vertical onPress={()=>
-                  { 
+                  {
                     this.props.navigation.navigate('matches', {matches: this.state.matches, remainingInfos: remainingInfos});
                   }
                 }>
