@@ -68,7 +68,7 @@ export class CardSwiper extends React.Component {
         if(this.props.navigation.state.params.homeSavedMatches)
           this.setState({matches: this.props.navigation.state.params.homeSavedMatches});
         if(this.props.navigation.state.params.remainingInfos)
-          remainingInfos = this.props.navigation.state.params.remainingInfos;       
+          remainingInfos = this.props.navigation.state.params.remainingInfos;
       }
 
 		this.setState({loading: false});
@@ -96,7 +96,7 @@ export class CardSwiper extends React.Component {
 
   _onNotInterested(item) {
     // [maybe] save info to ensure property isn't displayed again
-    if(item!=null) this._removeInfoFromRemaining(item);  
+    if(item!=null) this._removeInfoFromRemaining(item);
   }
 
 	_onMoreInfo() {
@@ -143,12 +143,12 @@ export class CardSwiper extends React.Component {
 		if (this.state.loading) {
 			return <Spinner color='#006eff'/>;
 		}
-		
+
 		else {
 			this._updatePropertyImages(this.state.currentProperty);
 
 			return (
-				<Container>
+				<Container style={{backgroundColor: 'white'}}>
 					<Header>
 						<Left>
 							<Button transparent
@@ -169,7 +169,7 @@ export class CardSwiper extends React.Component {
 							ref={(c) => this.deck = c}
 							dataSource={remainingInfos}
 							renderEmpty={ () => <View style={{ alignSelf: "center" }}>
-							<Text>Over</Text></View>
+							<Text>Currently, there are no available properties. :(</Text></View>
 							}
 					renderItem={item =>
 						<Card style={{ elevation: 3 }}>
@@ -184,7 +184,7 @@ export class CardSwiper extends React.Component {
 							</CardItem>
 							<TouchableHighlight onPress={this._onMoreInfo}>
 								<CardItem cardBody>
-									<Image style={{ height: 300, flex: 1 }} source={{uri: baseUrl + item.image_urls.split(',')[0]}} />
+									<Image style={{ height: 325, flex: 1 }} source={{uri: baseUrl + item.image_urls.split(',')[0]}} />
 								</CardItem>
 							</TouchableHighlight>
 							<CardItem>
@@ -194,14 +194,7 @@ export class CardSwiper extends React.Component {
 									<Text style={styles.rightPropertyInfo}>{"Square Feet: \n" + item.square_feet + " sq ft." }</Text>
 								</View>
 							</CardItem>
-							<CardItem>
-								<Text style={styles.propertyDescription}>{item.marketing_title}</Text>
-							</CardItem>
-							<CardItem>
-								<View style={styles.horizontalHolder}>
-									<Text style={styles.phoneNumber}>{"Phone:\n" + item.contact_phone_number}</Text>
-								</View>
-							</CardItem>
+
 						</Card>
 					}
 					/>

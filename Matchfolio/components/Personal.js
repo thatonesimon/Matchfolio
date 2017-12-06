@@ -52,19 +52,18 @@ export default class Personal extends React.Component {
 	render() {
 		return (
 			<Container>
-        <Header style= {{backgroundColor: 'transparent',
-                  borderBottomWidth: 0}}>
-                           <Left style={{flex: 1}}>
-                                   <Button transparent
-                                   onPress={() => this.props.navigation.navigate('DrawerToggle')}>
-                                           <Icon name='menu' />
-                                   </Button>
-                           </Left>
-                           <Body style={{flex: 3, alignItems: 'center', justifyContent: 'center'}}>
-                            <Text style={styles.header}><Ionicons name="ios-contact" size={40} color="skyblue" padding = {40}/> Personal</Text>
-                           </Body>
-                           <Right style={{flex: 1}} />
-                   </Header>
+        <Header style= {{backgroundColor: 'transparent', borderBottomWidth: 0}}>
+           <Left style={{flex: 1}}>
+             <Button transparent
+             onPress={() => this.props.navigation.navigate('DrawerToggle')}>
+                     <Icon name='menu' />
+             </Button>
+             </Left>
+                 <Body style={{flex: 3, alignItems: 'center', justifyContent: 'center'}}>
+                  <Text style={styles.header}><Ionicons name="ios-contact" size={40} color="skyblue" padding = {40}/> Personal</Text>
+                 </Body>
+                 <Right style={{flex: 1}} />
+         </Header>
         <Content>
           <Form>
             <Item floatingLabel>
@@ -100,7 +99,7 @@ const styles = StyleSheet.create({
   header: {
     textAlign: 'center',
     color: 'skyblue',
-    fontSize: 40,
+    fontSize: 30,
   },
   margin: {
     margin: 10,
