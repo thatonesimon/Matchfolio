@@ -20,9 +20,9 @@ import { Drawer,
          FooterTab,
          Icon,
          Spinner } from 'native-base';
-
-var propertyInfo = require('../res/property-info.json');
 import { Ionicons } from '@expo/vector-icons'; // 6.1.0
+
+var propertyInfo = require('../res/property-info_clean.json');
 var remainingInfos = propertyInfo.slice();
 const baseUrl = 'http://pa.cdn.appfolio.com/';
 var propertyPictures;
@@ -51,22 +51,25 @@ export class CardSwiper extends React.Component {
 		pictureURL: "utopiamanagement/images/2c8b6e70-83f3-41bf-bfd2-79d3d676681f/large.jpg",
 	}
 
-	async componentWillMount() {
-		await Expo.Font.loadAsync({
-			'Ionicons': require('native-base/Fonts/Ionicons.ttf'),
-			'Roboto': require('native-base/Fonts/Roboto.ttf'),
-			'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
-		});
-		/*var matches_data = await AsyncStorage.getItem('matched-properties');
-		if (matches_data!=null)
-		{
-		this.setState({matches: JSON.parse(matches_data)});
-		}*/
-		//StatusBar.setHidden(true);
-		if (this.props.navigation.state.params != undefined && this.props.navigation.state.params.homeSavedMatches!=null){
-			this.setState({matches: this.props.navigation.state.params.homeSavedMatches});
-			remainingInfos = this.props.navigation.state.params.remainingInfos;
-		}
+  async componentWillMount() {
+    await Expo.Font.loadAsync({
+      'Ionicons': require('native-base/Fonts/Ionicons.ttf'),
+      'Roboto': require('native-base/Fonts/Roboto.ttf'),
+      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
+    });
+    /*var matches_data = await AsyncStorage.getItem('matched-properties');
+    if (matches_data!=null)
+    {
+      this.setState({matches: JSON.parse(matches_data)});
+    }*/
+    //StatusBar.setHidden(true);
+    if (this.props.navigation.state.params)
+      {
+        if(this.props.navigation.state.params.homeSavedMatches)
+          this.setState({matches: this.props.navigation.state.params.homeSavedMatches});
+        if(this.props.navigation.state.params.remainingInfos)
+          remainingInfos = this.props.navigation.state.params.remainingInfos;       
+      }
 
 		this.setState({loading: false});
 	}
@@ -91,11 +94,10 @@ export class CardSwiper extends React.Component {
 		this._onNotInterested(this.deck._root.state.selectedItem);
 	}
 
-	_onNotInterested(item) {
-		// [maybe] save info to ensure property isn't displayed again
-		//console.log("Not interested in property: " + this.deck._root.state.selectedItem.address_address1);
-		if(item!=null) this._removeInfoFromRemaining(item);
-	}
+  _onNotInterested(item) {
+    // [maybe] save info to ensure property isn't displayed again
+    if(item!=null) this._removeInfoFromRemaining(item);  
+  }
 
 	_onMoreInfo() {
 		if(this.deck._root.state.selectedItem!=null && remainingInfos.length>0)
@@ -111,16 +113,11 @@ export class CardSwiper extends React.Component {
 		if(item == null || remainingInfos.length<1)
 			return;
 
-		console.log(item);
-		var newArray = [];
-		
-		if (this.state.matches!=null){
-			console.log('state.matches size: ' + this.state.matches.length);
-			newArray = this.state.matches.slice();
-		}
-		else{
-			console.log('state.matches : null');
-		}
+    var newArray = [];
+    if (this.state.matches!=null)
+    {
+      newArray = this.state.matches.slice();
+    }
 
 		newArray.push(item);
 		this.setState({matches: newArray})
