@@ -75,9 +75,6 @@ export default class Personal extends React.Component {
             <Item floatingLabel>
               <Label>Social Security #</Label>
             </Item>
-            <Item floatingLabel>
-              <Label>Birthday</Label>
-            </Item>
             <Item />
           </Form>
           <Button bordered block onPress={() => this.props.navigation.navigate('rentalapp')} style={styles.button} >
