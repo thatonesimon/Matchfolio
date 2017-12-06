@@ -1,29 +1,21 @@
 import React, { Component } from 'react';
-
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image
-} from 'react-native';
-
+import {StyleSheet, Text, View, Image} from 'react-native';
 import * as Progress from 'react-native-progress';
 
 var timer;
 
 export default class BackgroundCheckLoading extends Component {
 	constructor(props) {
-	super(props);
+		super(props);
 
-	this.state = {
-	  progress: 0,
-	  indeterminate: true,
-	  text: "Background check in progress...",
-	};
+		this.state = {
+			progress: 0,
+			indeterminate: true,
+			text: "Background check in progress...",
+		};
 
-	this.componentDidMount = this.componentDidMount.bind(this);
-	this.redirectToMain = this.redirectToMain.bind(this);
-
+		this.componentDidMount = this.componentDidMount.bind(this);
+		this.redirectToMain = this.redirectToMain.bind(this);
 	}
 
 	componentDidMount() {
@@ -33,7 +25,6 @@ export default class BackgroundCheckLoading extends Component {
   	redirectToMain() {
 		this.props.navigation.navigate('main');
 	}
-
 
 	animate() {
 	    let progress = 0;
@@ -60,17 +51,17 @@ export default class BackgroundCheckLoading extends Component {
   render() {
 
     return (
-      <View style={styles.container}>
-		<Progress.Circle
-          style={styles.progress}
-          progress={this.state.progress}
-          indeterminate={this.state.indeterminate}
-          color="#3179cd"
-          showsText={true}
-          size={100}
-        />
-        <Text style={styles.welcome}>{this.state.text}</Text>
-      </View>
+		<View style={styles.container}>
+			<Progress.Circle
+				style={styles.progress}
+				progress={this.state.progress}
+				indeterminate={this.state.indeterminate}
+				color="#3179cd"
+				showsText={true}
+				size={100}
+			/>
+			<Text style={styles.welcome}>{this.state.text}</Text>
+		</View>
     );
   }
 }
