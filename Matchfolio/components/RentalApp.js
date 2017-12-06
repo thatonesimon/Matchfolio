@@ -97,7 +97,7 @@ export default class App extends Component<{}> {
 					<TextInputWithTitle title="Have you ever filed a lawsuit against your landlord?" placeholder="yes/no"/>
 					<TextInputWithTitle title="Are you working with a leasing agent?" placeholder="yes/no"/>
           <View style={{justifyContent: 'center', alignItems: 'center', alignSelf: 'center'}}>
-  				    <Button bordered onPress={() => {this.props.navigation.navigate('rentalapp')} } >
+  				    <Button bordered onPress={() => {this.props.navigation.navigate('backgroundcheck')} } >
   					       <Text> Saved </Text>
   				    </Button>
           </View>

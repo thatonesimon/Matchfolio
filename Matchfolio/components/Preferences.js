@@ -186,7 +186,7 @@ export default class Preferences extends React.Component {
 
         <View style={{justifyContent: 'center', alignItems: 'center', alignSelf: 'center'}}>
 				    <Button bordered onPress={() => {this.props.navigation.navigate('rentalapp')} } >
-					       <Text> Saved </Text>
+					       <Text> Save </Text>
 				    </Button>
         </View>
 			</ScrollView>
