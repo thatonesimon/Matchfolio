@@ -5,6 +5,9 @@ import { View,
 import { NavigationActions } from 'react-navigation';
 
 export default class Splash extends Component {
+
+	static navigationOptions = { header: null };
+
 	constructor(props) {
 		super(props);
 		this.redirectToLogin = this.redirectToLogin.bind(this);
