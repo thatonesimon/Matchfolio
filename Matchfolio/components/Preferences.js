@@ -15,6 +15,8 @@ import {
 } from 'react-native';
 import { Container, Header, Content, ListItem, CheckBox, Text, Body } from 'native-base';
 import { Ionicons } from '@expo/vector-icons'; // 6.1.0
+import { NavigationActions } from 'react-navigation';
+
 
 export default class Preferences extends React.Component {
 	_onButtonPress() {
@@ -178,7 +180,7 @@ export default class Preferences extends React.Component {
 				<View style={styles.buttonHolder}>
 					<Button title="Save"
 						color="#4b9693"
-						onPress={() => {Alert.alert('Saved');}}
+						onPress={() => {this.props.navigation.navigate('rentalapp')}}
 					/>
 				</View>
 				</View>

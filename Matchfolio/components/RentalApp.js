@@ -19,6 +19,8 @@ import {AppRegistry, Alert, CheckBox, Dimensions, FlatList, Image, Picker, Scrol
           FooterTab,
           Icon,
           Spinner } from 'native-base';
+import { NavigationActions } from 'react-navigation';
+          
 const instructions =
   "We'll use this information to run a\n" + "background check so we can make sure you\n" + "qualify for every property we show you.\n";
 
@@ -37,6 +39,7 @@ class TextInputWithTitle extends Component {
 }
 
 function onPressSubmit() {
+  {this.props.navigation.navigate('backgroundcheck')};
   return;
 }
 
@@ -93,11 +96,9 @@ export default class App extends Component<{}> {
 					<TextInputWithTitle title="Have you ever been convicted of a crime?" placeholder="yes/no"/>
 					<TextInputWithTitle title="Have you ever filed a lawsuit against your landlord?" placeholder="yes/no"/>
 					<TextInputWithTitle title="Are you working with a leasing agent?" placeholder="yes/no"/>
-					<Button
-						title="Submit"
-						onPress={onPressSubmit}
-						color="#841584"
-						accessibilityLabel="Submit"/>
+					<Button bordered onPress={() => {this.props.navigation.navigate('backgroundcheck')} } >
+						<Text>Save</Text>
+					</Button>
 				</View>
 			</ScrollView>
 		);
