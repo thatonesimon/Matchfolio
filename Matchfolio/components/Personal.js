@@ -65,8 +65,8 @@ export default class Personal extends React.Component {
 				<InputField name='Name'></InputField>
 				<InputField name='Email'></InputField>
         <View style={{justifyContent: 'center', alignItems: 'center', alignSelf: 'center'}}>
-				    <Button bordered onPress={() => {Alert.alert("saved")} } >
-					       <Text> Saved </Text>
+				    <Button bordered onPress={() => {this.props.navigation.navigate('Preferences')} } >
+					       <Text> Save </Text>
 				    </Button>
         </View>
 			</View>
