@@ -98,6 +98,18 @@ export default class App extends Component<{}> {
             <Item floatingLabel>
               <Label>Employer</Label>
             </Item>
+	    <Item floatingLabel>
+              <Label>Vehicle Make, Model, Year</Label>
+            </Item>
+            <Item floatingLabel>
+              <Label>Savings Account Balance</Label>
+            </Item>
+            <Item floatingLabel>
+              <Label>Checking Account Balance</Label>
+            </Item>
+            <Item floatingLabel>
+              <Label>Credit Card Debt and Loan Balance</Label>
+            </Item>
           </Form>
           <Button bordered block onPress={() => this.props.navigation.navigate('backgroundcheck')} style={styles.button} >
             <Text>Submit</Text>
