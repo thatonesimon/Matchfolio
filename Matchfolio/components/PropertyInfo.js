@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, Dimensions, Image, ScrollView, StyleSheet, } from 'react-native';
-import { Drawer,
+import { Button,
+         Drawer,
          Container,
          Header,
          View,
@@ -13,7 +14,6 @@ import { Drawer,
 import Swiper from 'react-native-swiper';
 import Communications from 'react-native-communications';
 import MapView from 'react-native-maps';
-import MapMarker from 'react-native-maps';
 
 const baseUrl = 'http://pa.cdn.appfolio.com/';
 const { width } = Dimensions.get('window')
@@ -76,18 +76,6 @@ export default class PropertyInfo extends Component {
     return (
       <ScrollView>
   	    <View style={styles.container}>
-
-        <Swiper loadMinimal loadMinimalSize={1} style={styles.wrapper} loop={false}>
-          {
-            this.state.imgList.map((item, i) => <Slide
-              loadHandle={this.loadHandle}
-              loaded={this.state.loadQueue[i]}
-              uri={item}
-              i={i}
-              key={i} />)
-          }
-        </Swiper>
-
         <MapView
             initialRegion={{
               latitude: property.address_latitude,
@@ -105,6 +93,17 @@ export default class PropertyInfo extends Component {
 
         </MapView>
 
+        <Swiper loadMinimal loadMinimalSize={1} style={styles.wrapper} loop={true}>
+          {
+            this.state.imgList.map((item, i) => <Slide
+              loadHandle={this.loadHandle}
+              loaded={this.state.loadQueue[i]}
+              uri={item}
+              i={i}
+              key={i} />)
+          }
+        </Swiper>
+
           <Text style={styles.mainInfo}>{property.address_address1 + "\n" + property.address_city + ", " + property.address_country}</Text>
           <View style={styles.horizontalHolder}>
   	        <Text style={styles.leftPropertyInfo}>{"Rent:\n$" + property.market_rent + "/month"}</Text>
@@ -113,6 +112,11 @@ export default class PropertyInfo extends Component {
           </View>
   	      <Text style={styles.info}>{"Description: " + property.marketing_description}</Text>
           <Text style={styles.info}>{"Amenities: " + property.amenities}</Text>
+          <View style={{flexDirection: 'row', flex: 1}}>
+              <Button info style={{flex: 1}} onPress={() => this._callNumber(property.contact_phone_number) } >
+                <Text style={{textAlign: 'center'}}>Contact Owner</Text>
+              </Button>
+          </View>
           <Text style={styles.phoneNumber} onPress={() => this._callNumber(property.contact_phone_number)} >{"Phone:\n" + property.contact_phone_number}</Text>
 
         </View>
@@ -124,12 +128,14 @@ export default class PropertyInfo extends Component {
 
 const styles = StyleSheet.create({
 	wrapper: {
-    height: 400,
+    height: 300,
+    borderRadius: 5,
   },
 
   map: {
       height: 240,
-      top: 10,
+      marginBottom: 10,
+      borderRadius: 5,
   },
 
   slide: {
@@ -192,10 +198,21 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomColor: 'black',
     borderBottomWidth: 1,
+    textAlign: 'center',
+    borderWidth: 1,
+    backgroundColor: '#eef8fd',
+    borderRadius: 5,
+    marginBottom: 10,
+    marginTop: 10,
   },
   info: {
   	fontSize: 15,
   	padding: 10,
+    borderColor: 'black',
+    borderWidth: 1,
+    backgroundColor: '#eef8fd',
+    borderRadius: 5,
+    marginBottom: 10,
   },
   phoneNumber: {
     flex: 1,
@@ -207,7 +224,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 10,
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
+    borderColor: 'black',
+    borderWidth: 1,
+    backgroundColor: '#eef8fd',
+    borderRadius: 5,
+    marginBottom: 10,
   },
 });
