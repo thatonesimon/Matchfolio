@@ -75,7 +75,7 @@ export default class App extends Component<{}> {
               <Label>Phone Number</Label>
             </Item>
             <Item floatingLabel>
-              <Label>Driver's' License Number</Label>
+              <Label>Driver's License Number</Label>
             </Item>
             <Item floatingLabel>
               <Label>SSN</Label>
@@ -97,6 +97,18 @@ export default class App extends Component<{}> {
             </Item>
             <Item floatingLabel>
               <Label>Employer</Label>
+            </Item>
+	    <Item floatingLabel>
+              <Label>Vehicle Make, Model, Year</Label>
+            </Item>
+            <Item floatingLabel>
+              <Label>Savings Account Balance</Label>
+            </Item>
+            <Item floatingLabel>
+              <Label>Checking Account Balance</Label>
+            </Item>
+            <Item floatingLabel>
+              <Label>Credit Card Debt and Loan Balance</Label>
             </Item>
           </Form>
           <Button bordered block onPress={() => this.props.navigation.navigate('backgroundcheck')} style={styles.button} >
