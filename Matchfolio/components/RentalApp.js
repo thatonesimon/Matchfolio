@@ -75,7 +75,7 @@ export default class App extends Component<{}> {
               <Label>Phone Number</Label>
             </Item>
             <Item floatingLabel>
-              <Label>Driver's' License Number</Label>
+              <Label>Driver's License Number</Label>
             </Item>
             <Item floatingLabel>
               <Label>SSN</Label>
