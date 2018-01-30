@@ -12,7 +12,8 @@ import { Drawer,
          Spinner, } from 'native-base';
 import Swiper from 'react-native-swiper';
 import Communications from 'react-native-communications';
-
+import MapView from 'react-native-maps';
+import MapMarker from 'react-native-maps';
 
 const baseUrl = 'http://pa.cdn.appfolio.com/';
 const { width } = Dimensions.get('window')
@@ -43,8 +44,11 @@ export default class PropertyInfo extends Component {
       images.push(baseUrl + images_old[i]);
       loadQ.push(0)
     }
+
     this.state = {imgList: images, loadQueue: loadQ}
     this.loadHandle = this.loadHandle.bind(this)
+
+
   }
 
     loadHandle (i) {
@@ -78,6 +82,23 @@ export default class PropertyInfo extends Component {
           }
         </Swiper>
 
+        <MapView
+            initialRegion={{
+              latitude: property.address_latitude,
+              longitude: property.address_longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+            style={styles.map}
+        >
+            <MapMarker
+              coordinate={{latitude: property.address_latitude, longitude: property.address_longitude}}
+              title={"Test"}
+              description={"Test"}
+              />
+
+        </MapView>
+
           <Text style={styles.mainInfo}>{property.address_address1 + "\n" + property.address_city + ", " + property.address_country}</Text>
           <View style={styles.horizontalHolder}>
   	        <Text style={styles.leftPropertyInfo}>{"Rent:\n$" + property.market_rent + "/month"}</Text>
@@ -98,6 +119,11 @@ export default class PropertyInfo extends Component {
 const styles = StyleSheet.create({
 	wrapper: {
     height: 400,
+  },
+
+  map: {
+      height: 240,
+      top: 10,
   },
 
   slide: {
