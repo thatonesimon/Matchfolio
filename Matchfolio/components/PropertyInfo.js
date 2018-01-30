@@ -45,10 +45,16 @@ export default class PropertyInfo extends Component {
       loadQ.push(0)
     }
 
-    this.state = {imgList: images, loadQueue: loadQ}
+    var propertyMarker = [
+        {
+            latitude: property.address_latitude,
+            longitude: property.address_longitude,
+            title: property.address_address1,
+            subtitle: 'Test'
+        }
+    ]
+    this.state = {imgList: images, loadQueue: loadQ, marker: propertyMarker}
     this.loadHandle = this.loadHandle.bind(this)
-
-
   }
 
     loadHandle (i) {
@@ -86,15 +92,15 @@ export default class PropertyInfo extends Component {
             initialRegion={{
               latitude: property.address_latitude,
               longitude: property.address_longitude,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
+              latitudeDelta: 0.0472,
+              longitudeDelta: 0.0221,
             }}
             style={styles.map}
         >
-            <MapMarker
+            <MapView.Marker
               coordinate={{latitude: property.address_latitude, longitude: property.address_longitude}}
-              title={"Test"}
-              description={"Test"}
+              title={property.address_address1}
+              description={property.marketing_title}
               />
 
         </MapView>
