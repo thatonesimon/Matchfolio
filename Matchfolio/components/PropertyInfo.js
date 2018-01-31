@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, Dimensions, Image, ScrollView, StyleSheet, } from 'react-native';
-import { Drawer,
+import { Button,
+         Drawer,
          Container,
          Header,
          View,
@@ -12,7 +13,7 @@ import { Drawer,
          Spinner, } from 'native-base';
 import Swiper from 'react-native-swiper';
 import Communications from 'react-native-communications';
-
+import MapView from 'react-native-maps';
 
 const baseUrl = 'http://pa.cdn.appfolio.com/';
 const { width } = Dimensions.get('window')
@@ -43,7 +44,16 @@ export default class PropertyInfo extends Component {
       images.push(baseUrl + images_old[i]);
       loadQ.push(0)
     }
-    this.state = {imgList: images, loadQueue: loadQ}
+
+    var propertyMarker = [
+        {
+            latitude: property.address_latitude,
+            longitude: property.address_longitude,
+            title: property.address_address1,
+            subtitle: 'Test'
+        }
+    ]
+    this.state = {imgList: images, loadQueue: loadQ, marker: propertyMarker}
     this.loadHandle = this.loadHandle.bind(this)
   }
 
@@ -66,8 +76,24 @@ export default class PropertyInfo extends Component {
     return (
       <ScrollView>
   	    <View style={styles.container}>
+        <MapView
+            initialRegion={{
+              latitude: property.address_latitude,
+              longitude: property.address_longitude,
+              latitudeDelta: 0.0472,
+              longitudeDelta: 0.0221,
+            }}
+            style={styles.map}
+        >
+            <MapView.Marker
+              coordinate={{latitude: property.address_latitude, longitude: property.address_longitude}}
+              title={property.address_address1}
+              description={property.marketing_title}
+              />
 
-        <Swiper loadMinimal loadMinimalSize={1} style={styles.wrapper} loop={false}>
+        </MapView>
+
+        <Swiper loadMinimal loadMinimalSize={1} style={styles.wrapper} loop={true}>
           {
             this.state.imgList.map((item, i) => <Slide
               loadHandle={this.loadHandle}
@@ -86,6 +112,11 @@ export default class PropertyInfo extends Component {
           </View>
   	      <Text style={styles.info}>{"Description: " + property.marketing_description}</Text>
           <Text style={styles.info}>{"Amenities: " + property.amenities}</Text>
+          <View style={{flexDirection: 'row', flex: 1}}>
+              <Button info style={{flex: 1}} onPress={() => this._callNumber(property.contact_phone_number) } >
+                <Text style={{textAlign: 'center'}}>Contact Owner</Text>
+              </Button>
+          </View>
           <Text style={styles.phoneNumber} onPress={() => this._callNumber(property.contact_phone_number)} >{"Phone:\n" + property.contact_phone_number}</Text>
 
         </View>
@@ -97,7 +128,14 @@ export default class PropertyInfo extends Component {
 
 const styles = StyleSheet.create({
 	wrapper: {
-    height: 400,
+    height: 300,
+    borderRadius: 5,
+  },
+
+  map: {
+      height: 240,
+      marginBottom: 10,
+      borderRadius: 5,
   },
 
   slide: {
@@ -160,10 +198,21 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomColor: 'black',
     borderBottomWidth: 1,
+    textAlign: 'center',
+    borderWidth: 1,
+    backgroundColor: '#eef8fd',
+    borderRadius: 5,
+    marginBottom: 10,
+    marginTop: 10,
   },
   info: {
   	fontSize: 15,
   	padding: 10,
+    borderColor: 'black',
+    borderWidth: 1,
+    backgroundColor: '#eef8fd',
+    borderRadius: 5,
+    marginBottom: 10,
   },
   phoneNumber: {
     flex: 1,
@@ -175,7 +224,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 10,
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
+    borderColor: 'black',
+    borderWidth: 1,
+    backgroundColor: '#eef8fd',
+    borderRadius: 5,
+    marginBottom: 10,
   },
 });
