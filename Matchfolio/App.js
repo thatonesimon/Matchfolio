@@ -39,6 +39,7 @@ import PropertyInfo from './components/PropertyInfo';
 import Matches from './components/Matches';
 import Splash from './components/Splash';
 import BackgroundCheckLoading from './components/BackgroundCheckLoading';
+import * as firebase from 'firebase';
 
 /*export const HomeTabNav = TabNavigator({
   find: { screen: Home },

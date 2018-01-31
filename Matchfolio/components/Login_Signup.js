@@ -20,6 +20,17 @@ import { Drawer,
          Icon,
          Spinner } from 'native-base';
 import { NavigationActions } from 'react-navigation';
+import * as firebase from 'firebase';
+
+var config = {
+    apiKey: "AIzaSyBoPA-hJksEC7PY-OprZR7z9vuV0sqj_-4",
+    authDomain: "matchfolio-3ad17.firebaseapp.com",
+    databaseURL: "https://matchfolio-3ad17.firebaseio.com",
+    projectId: "matchfolio-3ad17",
+    storageBucket: "matchfolio-3ad17.appspot.com",
+    messagingSenderId: "506540295492"
+  };
+  firebase.initializeApp(config);
 
 const resetAction = NavigationActions.reset({
   index: 0,
@@ -59,7 +70,7 @@ export class Login extends Component<{}> {
   async checkUserLoggedIn()
   {
     try {
-      var value = await AsyncStorage.getItem('userData');
+      var ref = firebase.database().ref("testtrial1");
       if (value !== null)
       {
         this.setState(JSON.parse(value));

@@ -21,9 +21,15 @@ import { Drawer,
          Icon,
          Spinner } from 'native-base';
 import { Ionicons } from '@expo/vector-icons'; // 6.1.0
+import * as firebase from 'firebase';
 
-var propertyInfo = require('../res/property-info_clean.json');
-var remainingInfos = propertyInfo.slice();
+var mainDataRef = firebase.database().ref();
+var propertyInfo;
+var remainingInfos;
+mainDataRef.once("value")
+    .then(function(dataSnapshot){
+        propertyInfo = dataSnapshot.val();
+  })
 const baseUrl = 'http://pa.cdn.appfolio.com/';
 var propertyPictures;
 
@@ -140,11 +146,12 @@ export class CardSwiper extends React.Component {
 	}
 
  	render() {
-		if (this.state.loading) {
+		if (this.state.loading || propertyInfo === undefined) {
 			return <Spinner color='#006eff'/>;
 		}
 
 		else {
+      remainingInfos = propertyInfo.slice();
 			this._updatePropertyImages(this.state.currentProperty);
 
 			return (
