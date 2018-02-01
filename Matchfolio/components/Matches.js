@@ -158,7 +158,13 @@ export default class Matches extends Component {
                       longitudeDelta: 0.0421,
                     }}
                     style={styles.map}
-                    />
+                >
+                    <MapView.Marker
+                      coordinate={{latitude: 34.434248, longitude: -119.863704}}
+                      title={"Appfolio"}
+                      description={"Come visit Appfolio!"}
+                      />
+                </MapView>
                 </Content>
                 <ActionButton
                   buttonColor="rgba(231,76,60,1)"
@@ -188,7 +194,7 @@ export default class Matches extends Component {
 
 const styles = StyleSheet.create({
     map: {
-        height: 1000,
+        height: 500,
         flex: 1,
         marginBottom: 10,
         borderRadius: 5,
