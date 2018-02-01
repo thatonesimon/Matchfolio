@@ -117,8 +117,6 @@ export default class PropertyInfo extends Component {
                 <Text style={{textAlign: 'center'}}>Contact Owner</Text>
               </Button>
           </View>
-          <Text style={styles.phoneNumber} onPress={() => this._callNumber(property.contact_phone_number)} >{"Phone:\n" + property.contact_phone_number}</Text>
-
         </View>
   	  </ScrollView>
     );
