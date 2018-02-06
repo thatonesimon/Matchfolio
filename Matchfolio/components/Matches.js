@@ -43,27 +43,52 @@ export default class Matches extends Component {
 		super(props);
 		this._onRenderRow = this._onRenderRow.bind(this);
 
+        var data = []
+        var remainingInfos = null
+        if (this.props.navigation.state.params)
+        {
+           if (this.props.navigation.state.params.matches)
+              data = this.props.navigation.state.params.matches;
+           if (this.props.navigation.state.params.remainingInfos)
+              remainingInfos = this.props.navigation.state.params.remainingInfos;
+        }
+
+        var markers = [{
+            key: "appfolio",
+            title: "Appfolio",
+            description: "Come visit Appfolio!",
+            coordinates: {
+              latitude: 34.434248,
+              longitude: -119.863704
+            },
+          },
+          {
+            key: "simons",
+            title: "Simon's Place",
+            description: "Lit",
+            coordinates: {
+              latitude: 34.4107502,
+              longitude: -119.8666063
+            },
+        }];
+
+        // apparently foreach is much slower
+        for(var i = 0; i < data.length; i++) {
+            var property = data[i];
+            var newMarker = { key: property.listable_uid,
+                              title: property.address_address1,
+                              description: property.marketing_title,
+                              coordinates: {
+                                  latitude: property.address_latitude,
+                                  longitude: property.address_longitude
+                              },
+                          };
+            markers.push(newMarker);
+        }
 
         // start with map
-        this.state= {listView: false,
-                    markers: [{
-                        key: "sjfdfljk",
-                        title: "Appfolio",
-                        description: "Come visit Appfolio!",
-                        coordinates: {
-                          latitude: 34.434248,
-                          longitude: -119.863704
-                        },
-                      },
-                      {
-                        key: "aseufhdj",
-                        title: "Simon's Place",
-                        description: "Lit",
-                        coordinates: {
-                          latitude: 34.4107502,
-                          longitude: -119.8666063
-                        },
-                      }]};
+        this.state= {listView: false, data: data, remainingInfos: remainingInfos,
+                    markers: markers};
 	}
 
    componentWillMount(){
@@ -103,15 +128,6 @@ export default class Matches extends Component {
    }
 
    render() {
-      var data = []
-      var remainingInfos = null
-      if (this.props.navigation.state.params)
-      {
-         if (this.props.navigation.state.params.matches)
-            data = this.props.navigation.state.params.matches;
-         if (this.props.navigation.state.params.remainingInfos)
-            remainingInfos = this.props.navigation.state.params.remainingInfos;
-      }
       if(this.state.listView) {
           return (
             <Container backgroundColor='white'>
@@ -128,18 +144,18 @@ export default class Matches extends Component {
                   <Right />
                 </Header>
               <Content>
-               <List dataArray={data}
+               <List dataArray={this.state.data}
                   renderRow={this._onRenderRow} />
               </Content>
               <ActionButton
-                buttonColor="rgba(231,76,60,1)"
+                buttonColor="#3179cd"
                 onPress={() => { this.setState({listView: !this.state.listView})}}
                 position="right"
                 style={styles.button}
               />
                   <Footer>
                     <FooterTab>
-                      <Button vertical onPress={()=>this.props.navigation.navigate('home', {homeSavedMatches: data, remainingInfos: remainingInfos})}>
+                      <Button vertical onPress={()=>this.props.navigation.navigate('home', {homeSavedMatches: this.state.data, remainingInfos: this.state.remainingInfos})}>
                         <Icon name="search" />
                         <Text>Find Properties</Text>
                       </Button>
@@ -190,14 +206,14 @@ export default class Matches extends Component {
                 </MapView>
                 </Content>
                 <ActionButton
-                  buttonColor="rgba(231,76,60,1)"
+                  buttonColor="#3179cd"
                   onPress={() => { this.setState({listView: !this.state.listView})}}
                   position="right"
                   style={styles.button}
                 />
                     <Footer>
                       <FooterTab>
-                        <Button vertical onPress={()=>this.props.navigation.navigate('home', {homeSavedMatches: data, remainingInfos: remainingInfos})}>
+                        <Button vertical onPress={()=>this.props.navigation.navigate('home', {homeSavedMatches: this.state.data, remainingInfos: this.state.remainingInfos})}>
                           <Icon name="search" />
                           <Text>Find Properties</Text>
                         </Button>
