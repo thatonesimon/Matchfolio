@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage, StyleSheet } from 'react-native'
+import { AsyncStorage, Dimensions, StyleSheet } from 'react-native'
 import { Drawer,
          Container,
          Header,
@@ -42,8 +42,28 @@ export default class Matches extends Component {
 	constructor(props){
 		super(props);
 		this._onRenderRow = this._onRenderRow.bind(this);
+
+
         // start with map
-        this.state= {listView: false};
+        this.state= {listView: false,
+                    markers: [{
+                        key: "sjfdfljk",
+                        title: "Appfolio",
+                        description: "Come visit Appfolio!",
+                        coordinates: {
+                          latitude: 34.434248,
+                          longitude: -119.863704
+                        },
+                      },
+                      {
+                        key: "aseufhdj",
+                        title: "Simon's Place",
+                        description: "Lit",
+                        coordinates: {
+                          latitude: 34.4107502,
+                          longitude: -119.8666063
+                        },
+                      }]};
 	}
 
    componentWillMount(){
@@ -159,11 +179,14 @@ export default class Matches extends Component {
                     }}
                     style={styles.map}
                 >
-                    <MapView.Marker
-                      coordinate={{latitude: 34.434248, longitude: -119.863704}}
-                      title={"Appfolio"}
-                      description={"Come visit Appfolio!"}
-                      />
+                    {this.state.markers.map(marker => (
+                        <MapView.Marker
+                          key={marker.key}
+                          coordinate={marker.coordinates}
+                          title={marker.title}
+                          description={marker.description}
+                        />
+                    ))}
                 </MapView>
                 </Content>
                 <ActionButton
@@ -194,7 +217,7 @@ export default class Matches extends Component {
 
 const styles = StyleSheet.create({
     map: {
-        height: 500,
+        height: Dimensions.get('window').height,
         flex: 1,
         marginBottom: 10,
         borderRadius: 5,
