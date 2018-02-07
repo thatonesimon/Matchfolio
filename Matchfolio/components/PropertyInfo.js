@@ -72,6 +72,16 @@ export default class PropertyInfo extends Component {
       Communications.phonecall(phoneNumber, false);
   }
 
+  _apply() {
+      if(property.additional_questions) {
+          console.log("additional questions");
+          this.props.navigation.navigate('propertyInfo', {questions: property.additional_questions});
+      } else {
+          Alert.alert("Your application has been sent to " + property.vhost + "!");
+          this.props.navigation.navigate('additionalQuestions', {questions: "What?"});
+      }
+  }
+
   render() {
     return (
       <ScrollView>
@@ -112,9 +122,14 @@ export default class PropertyInfo extends Component {
           </View>
   	      <Text style={styles.info}>{"Description: " + property.marketing_description}</Text>
           <Text style={styles.info}>{"Amenities: " + property.amenities}</Text>
-          <View style={{flexDirection: 'row', flex: 1}}>
+          <View style={{flexDirection: 'row', flex: 1, marginBottom: 10}}>
               <Button info style={{flex: 1}} onPress={() => this._callNumber(property.contact_phone_number) } >
                 <Text style={{textAlign: 'center'}}>Contact Owner</Text>
+              </Button>
+          </View>
+          <View style={{flexDirection: 'row', flex: 1}}>
+              <Button success style={{flex: 1}} onPress={() => this._apply() } >
+                <Text style={{textAlign: 'center'}}>Apply to Property</Text>
               </Button>
           </View>
         </View>
