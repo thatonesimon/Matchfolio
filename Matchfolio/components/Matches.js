@@ -42,6 +42,7 @@ export default class Matches extends Component {
 	constructor(props){
 		super(props);
 		this._onRenderRow = this._onRenderRow.bind(this);
+        this._markerClick = this._markerClick.bind(this);
 
         var data = []
         var remainingInfos = null
@@ -52,48 +53,28 @@ export default class Matches extends Component {
            if (this.props.navigation.state.params.remainingInfos)
               remainingInfos = this.props.navigation.state.params.remainingInfos;
         }
-
-        var markers = [{
-            key: "appfolio",
-            title: "Appfolio",
-            description: "Come visit Appfolio!",
-            coordinates: {
-              latitude: 34.434248,
-              longitude: -119.863704
-            },
-          },
-          {
-            key: "simons",
-            title: "Simon's Place",
-            description: "Lit",
-            coordinates: {
-              latitude: 34.4107502,
-              longitude: -119.8666063
-            },
-        }];
-
-        // apparently foreach is much slower
-        for(var i = 0; i < data.length; i++) {
-            var property = data[i];
-            var newMarker = { key: property.listable_uid,
-                              title: property.address_address1,
-                              description: property.marketing_title,
-                              coordinates: {
-                                  latitude: property.address_latitude,
-                                  longitude: property.address_longitude
-                              },
-                          };
-            markers.push(newMarker);
-        }
+        // if you want appfolio's pin on there
+        // var appfolio = {
+        //     listable_uid: "appfolio",
+        //     address_address1: "Appfolio",
+        //     marketing_title: "Come visit Appfolio!",
+        //     address_latitude: 34.434248,
+        //     address_longitude: -119.863704
+        // };
+        //
+        // data.push(appfolio);
 
         // start with map
-        this.state= {listView: false, data: data, remainingInfos: remainingInfos,
-                    markers: markers};
+        this.state= {listView: false, data: data, remainingInfos: remainingInfos};
 	}
 
-   componentWillMount(){
+    _markerClick(key) {
+        console.log("Marker was clicked: " + key);
+    }
+
+    componentWillMount(){
       //this.checkMatchedProperties();
-   }
+    }
 
 	async checkMatchedProperties(){
 		try {
@@ -195,12 +176,17 @@ export default class Matches extends Component {
                     }}
                     style={styles.map}
                 >
-                    {this.state.markers.map(marker => (
+
+                    {this.state.data.map(marker => (
                         <MapView.Marker
-                          key={marker.key}
-                          coordinate={marker.coordinates}
-                          title={marker.title}
-                          description={marker.description}
+                          key={marker.listable_uid}
+                          coordinate={{
+                              latitude: marker.address_latitude,
+                              longitude: marker.address_longitude
+                          }}
+                          title={marker.address_address1}
+                          description={marker.marketing_title}
+                          onPress={() => this._markerClick(this.key)}
                         />
                     ))}
                 </MapView>

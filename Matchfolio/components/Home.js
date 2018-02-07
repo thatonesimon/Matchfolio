@@ -24,9 +24,10 @@ import { Ionicons } from '@expo/vector-icons'; // 6.1.0
 import * as firebase from 'firebase';
 
 var mainDataRef = firebase.database().ref();
+var propertyRef = firebase.database().ref('properties');
 var propertyInfo;
 var remainingInfos;
-mainDataRef.once("value")
+propertyRef.once("value")
     .then(function(dataSnapshot){
         propertyInfo = dataSnapshot.val();
   })
