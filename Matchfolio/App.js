@@ -39,6 +39,7 @@ import PropertyInfo from './components/PropertyInfo';
 import Matches from './components/Matches';
 import Splash from './components/Splash';
 import BackgroundCheckLoading from './components/BackgroundCheckLoading';
+import AdditionalQuestions from './components/AdditionalQuestions';
 import * as firebase from 'firebase';
 
 /*export const HomeTabNav = TabNavigator({
@@ -70,6 +71,7 @@ export const IntroStackNav = StackNavigator({
   backgroundcheck: { screen: BackgroundCheckLoading },
   main: { screen: DrawerMainNav },
   propertyInfo: { screen: PropertyInfo },
+  additionalQuestions: { screen: AdditionalQuestions},
 },
 { cardStyle: {
       paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight
