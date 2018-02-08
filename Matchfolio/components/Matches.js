@@ -133,7 +133,7 @@ export default class Matches extends Component {
                 onPress={() => { this.setState({listView: !this.state.listView})}}
                 position="right"
                 style={styles.button}
-              />
+                renderIcon={() => {return <Icon name="ios-map-outline" />}} />
                   <Footer>
                     <FooterTab>
                       <Button vertical onPress={()=>this.props.navigation.navigate('home', {homeSavedMatches: this.state.data, remainingInfos: this.state.remainingInfos})}>
@@ -196,7 +196,7 @@ export default class Matches extends Component {
                   onPress={() => { this.setState({listView: !this.state.listView})}}
                   position="right"
                   style={styles.button}
-                />
+                  renderIcon={() => {return <Icon name="ios-list" />}} />
                     <Footer>
                       <FooterTab>
                         <Button vertical onPress={()=>this.props.navigation.navigate('home', {homeSavedMatches: this.state.data, remainingInfos: this.state.remainingInfos})}>
