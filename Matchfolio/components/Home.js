@@ -25,6 +25,7 @@ import * as firebase from 'firebase';
 
 var mainDataRef = firebase.database().ref();
 var propertyRef = firebase.database().ref('properties');
+var user = firebase.auth().currentUser;   //assumes login process was successful
 var propertyInfo;
 var remainingInfos;
 propertyRef.once("value")
@@ -50,6 +51,21 @@ export class CardSwiper extends React.Component {
 		this._nextProperty = this._nextProperty.bind(this);
 		this._onInterested = this._onInterested.bind(this);
 		this._onMoreInfo = this._onMoreInfo.bind(this);
+
+    user = firebase.auth().currentUser;
+
+    if(user) {
+      console.log("dispname: ", user.displayName);
+      console.log("email: ", user.email);
+      console.log("uid: ", user.uid);
+
+      // user.delete().catch(function(error) {
+      //   console.log(error.message);
+      // })
+    }
+    else {
+      console.log("user data null");
+    }
 	}
 
 	state = {

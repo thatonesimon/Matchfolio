@@ -87,13 +87,17 @@ export class Login extends Component<{}> {
 
   async _onLoginButtonPress(){
 
-      /*try {
-        await AsyncStorage.setItem('userData', JSON.stringify(this.state));
-      }
-      catch (error) {
-        console.log(error);
-      }*/
+    /*try {
+      await AsyncStorage.setItem('userData', JSON.stringify(this.state));
+    }
+    catch (error) {
+      console.log(error);
+    }*/
 
+
+    //for testing:
+    this.state.username = "remuser@removeme.com";
+    this.state.password = "password1"
 
     if(!this.state.username || !this.state.password){
       Alert.alert("Please enter a username and password");
@@ -105,11 +109,10 @@ export class Login extends Component<{}> {
       navi.dispatch(resetAction);
      }
 
-     function _onFailedSignIn(error) {
-       Alert.alert("Error");
-       console.log(error.message);
+    function _onFailedSignIn(error) {
+      Alert.alert("Error");
+      console.log(error.message);
      }
-
 
     firebase.auth().signInWithEmailAndPassword(this.state.username, this.state.password).then(_onSuccessfulSignIn, _onFailedSignIn);
   }
