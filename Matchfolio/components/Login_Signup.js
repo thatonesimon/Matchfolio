@@ -94,7 +94,24 @@ export class Login extends Component<{}> {
         console.log(error);
       }*/
 
-  this.props.navigation.dispatch(resetAction);
+
+    if(!this.state.username || !this.state.password){
+      Alert.alert("Please enter a username and password");
+      return;
+    }
+
+    var navi = this.props.navigation;    //using navi because can't use 'this' inside function
+    function _onSuccessfulSignIn(success) {
+      navi.dispatch(resetAction);
+     }
+
+     function _onFailedSignIn(error) {
+       Alert.alert("Error");
+       console.log(error.message);
+     }
+
+
+    firebase.auth().signInWithEmailAndPassword(this.state.username, this.state.password).then(_onSuccessfulSignIn, _onFailedSignIn);
   }
 
   _onSignupButtonPress(){
@@ -163,10 +180,10 @@ export class Signup extends Component<{}> {
 
     //TODO: validate username and password first
 
-    var navigater = this.props.navigation;    //using navigater because can't use 'this' inside function
+    var navi = this.props.navigation;    //using navi because can't use 'this' inside function
     function _onSuccessfulSignUp(success) {
        Alert.alert('Registered!', "",
-       [{text: 'OK', onPress: () => navigater.navigate('personal') }]);
+       [{text: 'OK', onPress: () => navi.navigate('personal') }]);
      }
 
      function _onFailedSignUp(error) {
