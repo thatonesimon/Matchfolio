@@ -42,7 +42,6 @@ export default class Matches extends Component {
 	constructor(props){
 		super(props);
 		this._onRenderRow = this._onRenderRow.bind(this);
-        this._markerClick = this._markerClick.bind(this);
 
         var data = []
         var remainingInfos = null
@@ -67,10 +66,6 @@ export default class Matches extends Component {
         // start with map
         this.state= {listView: false, data: data, remainingInfos: remainingInfos};
 	}
-
-    _markerClick(key) {
-        console.log("Marker was clicked: " + key);
-    }
 
     componentWillMount(){
       //this.checkMatchedProperties();
@@ -183,11 +178,16 @@ export default class Matches extends Component {
                           coordinate={{
                               latitude: marker.address_latitude,
                               longitude: marker.address_longitude
-                          }}
-                          title={marker.address_address1}
-                          description={marker.marketing_title}
-                          onPress={() => this._markerClick(this.key)}
-                        />
+                          }}>
+
+                          <MapView.Callout
+                            onPress={()=>this.props.navigation.navigate('propertyInfo', {item: marker})}>
+                            <View>
+                              <Text style={{textAlign: "center", fontSize: 15}}>{marker.address_address1}</Text>
+                              <Text style={{textAlign: "center", fontSize: 12}}>{marker.marketing_title}</Text>
+                            </View>
+                          </MapView.Callout>
+                        </MapView.Marker>
                     ))}
                 </MapView>
                 </Content>
