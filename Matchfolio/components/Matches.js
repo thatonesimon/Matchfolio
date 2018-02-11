@@ -104,115 +104,126 @@ export default class Matches extends Component {
    }
 
    render() {
-      if(this.state.listView) {
-          return (
-            <Container backgroundColor='white'>
-                <Header>
-                  <Left>
-                    <Button transparent
-                    onPress={()=> this.props.navigation.navigate('DrawerToggle')}>
-                      <Icon name='menu' />
-                    </Button>
-                  </Left>
-                  <Body>
-                    <Title>MatchFolio</Title>
-                  </Body>
-                  <Right />
-                </Header>
-              <Content>
-               <List dataArray={this.state.data}
-                  renderRow={this._onRenderRow} />
-              </Content>
-              <ActionButton
-                buttonColor="#3179cd"
-                onPress={() => { this.setState({listView: !this.state.listView})}}
-                position="right"
-                style={styles.button}
-                renderIcon={() => {return <Icon name="ios-map-outline" />}} />
-                  <Footer>
-                    <FooterTab>
-                      <Button vertical onPress={()=>this.props.navigation.navigate('home', {homeSavedMatches: this.state.data, remainingInfos: this.state.remainingInfos})}>
-                        <Icon name="search" />
-                        <Text>Find Properties</Text>
-                      </Button>
-                      <Button vertical active>
-                        <Icon active name="home" />
-                        <Text>Matched Properties</Text>
-                      </Button>
-                    </FooterTab>
-                  </Footer>
-            </Container>
 
-          );
-      }
-      else {
-          return (
 
-              <Container backgroundColor='white'>
-                  <Header>
-                    <Left>
-                      <Button transparent
+       if(this.state.listView) {
+           let list = null;
+           if(this.state.data.length == 0) {
+               list = <View style={{flex: 1, margin: 10, justifyContent: "center"}}>
+                        <Text style={{textAlign: "center"}}>{"You have not matched with any properties yet!\n"}</Text>
+                        <Text style={{textAlign: "center"}}>Go to "Find Properties" to discover new properties!</Text>
+                      </View>;
+           } else {
+               list = <List dataArray={this.state.data}
+                            renderRow={this._onRenderRow} />;
+           }
+           return (
+             <Container backgroundColor='white'>
+                 <Header>
+                   <Left>
+                     <Button transparent
                       onPress={()=> this.props.navigation.navigate('DrawerToggle')}>
-                        <Icon name='menu' />
-                      </Button>
-                    </Left>
-                    <Body>
-                      <Title>MatchFolio</Title>
-                    </Body>
-                    <Right />
-                  </Header>
-                <Content style={{flexDirection:"column"}}>
-                <MapView
-                    initialRegion={{
-                      latitude: 34.434248,
-                      longitude: -119.863704,
-                      latitudeDelta: 0.0922,
-                      longitudeDelta: 0.0421,
-                    }}
-                    style={styles.map}
-                >
+                      <Icon name='menu' />
+                     </Button>
+                   </Left>
+                   <Body>
+                     <Title>MatchFolio</Title>
+                   </Body>
+                   <Right />
+                 </Header>
+               <Content>
+                 {list}
+               </Content>
+               <ActionButton
+                 buttonColor="#3179cd"
+                 onPress={() => { this.setState({listView: !this.state.listView})}}
+                 position="right"
+                 style={styles.button}
+                 renderIcon={() => {return <Icon name="ios-map-outline" />}} />
+                   <Footer>
+                     <FooterTab>
+                       <Button vertical onPress={()=>this.props.navigation.navigate('home', {homeSavedMatches: this.state.data, remainingInfos: this.state.remainingInfos})}>
+                         <Icon name="search" />
+                         <Text>Find Properties</Text>
+                       </Button>
+                       <Button vertical active>
+                         <Icon active name="home" />
+                         <Text>Matched Properties</Text>
+                       </Button>
+                     </FooterTab>
+                   </Footer>
+             </Container>
 
-                    {this.state.data.map(marker => (
-                        <MapView.Marker
-                          key={marker.listable_uid}
-                          coordinate={{
-                              latitude: marker.address_latitude,
-                              longitude: marker.address_longitude
-                          }}>
+           );
+       }
+       else {
+           return (
 
-                          <MapView.Callout
-                            onPress={()=>this.props.navigation.navigate('propertyInfo', {item: marker})}>
-                            <View>
-                              <Text style={{textAlign: "center", fontSize: 15}}>{marker.address_address1}</Text>
-                              <Text style={{textAlign: "center", fontSize: 12}}>{marker.marketing_title}</Text>
-                            </View>
-                          </MapView.Callout>
-                        </MapView.Marker>
-                    ))}
-                </MapView>
-                </Content>
-                <ActionButton
-                  buttonColor="#3179cd"
-                  onPress={() => { this.setState({listView: !this.state.listView})}}
-                  position="right"
-                  style={styles.button}
-                  renderIcon={() => {return <Icon name="ios-list" />}} />
-                    <Footer>
-                      <FooterTab>
-                        <Button vertical onPress={()=>this.props.navigation.navigate('home', {homeSavedMatches: this.state.data, remainingInfos: this.state.remainingInfos})}>
-                          <Icon name="search" />
-                          <Text>Find Properties</Text>
-                        </Button>
-                        <Button vertical active>
-                          <Icon active name="home" />
-                          <Text>Matched Properties</Text>
-                        </Button>
-                      </FooterTab>
-                    </Footer>
-              </Container>
+               <Container backgroundColor='white'>
+                   <Header>
+                     <Left>
+                       <Button transparent
+                       onPress={()=> this.props.navigation.navigate('DrawerToggle')}>
+                         <Icon name='menu' />
+                       </Button>
+                     </Left>
+                     <Body>
+                       <Title>MatchFolio</Title>
+                     </Body>
+                     <Right />
+                   </Header>
+                 <Content style={{flexDirection:"column"}}>
+                 <MapView
+                     initialRegion={{
+                       latitude: 34.434248,
+                       longitude: -119.863704,
+                       latitudeDelta: 0.0922,
+                       longitudeDelta: 0.0421,
+                     }}
+                     style={styles.map}
+                 >
 
-          );
-      }
+                     {this.state.data.map(marker => (
+                         <MapView.Marker
+                           key={marker.listable_uid}
+                           coordinate={{
+                               latitude: marker.address_latitude,
+                               longitude: marker.address_longitude
+                           }}>
+
+                           <MapView.Callout
+                             onPress={()=>this.props.navigation.navigate('propertyInfo', {item: marker})}>
+                             <View>
+                               <Text style={{textAlign: "center", fontSize: 15}}>{marker.address_address1}</Text>
+                               <Text style={{textAlign: "center", fontSize: 12}}>{marker.marketing_title}</Text>
+                             </View>
+                           </MapView.Callout>
+                         </MapView.Marker>
+                     ))}
+                 </MapView>
+                 </Content>
+                 <ActionButton
+                   buttonColor="#3179cd"
+                   onPress={() => { this.setState({listView: !this.state.listView})}}
+                   position="right"
+                   style={styles.button}
+                   renderIcon={() => {return <Icon name="ios-list" />}} />
+                     <Footer>
+                       <FooterTab>
+                         <Button vertical onPress={()=>this.props.navigation.navigate('home', {homeSavedMatches: this.state.data, remainingInfos: this.state.remainingInfos})}>
+                           <Icon name="search" />
+                           <Text>Find Properties</Text>
+                         </Button>
+                         <Button vertical active>
+                           <Icon active name="home" />
+                           <Text>Matched Properties</Text>
+                         </Button>
+                       </FooterTab>
+                     </Footer>
+               </Container>
+
+           );
+       }
 
   }
 }
