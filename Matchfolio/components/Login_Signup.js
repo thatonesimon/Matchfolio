@@ -65,34 +65,11 @@ export class Login extends Component<{}> {
 
   componentDidMount()
   {
-      //this.checkUserLoggedIn();
-  }
-
-  async checkUserLoggedIn()
-  {
-    try {
-      var ref = firebase.database().ref("testtrial1");
-      if (value !== null)
-      {
-        this.setState(JSON.parse(value));
-        this._onLoginButtonPress();
-      }
-    }
-  catch (error)
-  {
-    console.log(error);
-  }
 
   }
+
 
   async _onLoginButtonPress(){
-
-    /*try {
-      await AsyncStorage.setItem('userData', JSON.stringify(this.state));
-    }
-    catch (error) {
-      console.log(error);
-    }*/
 
 
     //for testing:
@@ -205,9 +182,9 @@ export class Signup extends Component<{}> {
     pword = this.props.navigation.state.params.password;
 
     if(!uname)
-    uname = "";
+        uname = "";
     if(!pword)
-    pword = "";
+        pword = "";
 
     this.setState({username: uname, password: pword});
   }
