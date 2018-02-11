@@ -58,7 +58,6 @@ export class CardSwiper extends React.Component {
           console.log("dispname: ", user.displayName);
           console.log("email: ", user.email);
           console.log("uid: ", user.uid);
-          })
         }
         else {
           console.log("user data null");

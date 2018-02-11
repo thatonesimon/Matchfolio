@@ -50,7 +50,7 @@ export class Login extends Component<{}> {
     this.state = { username: '', password: '' };
     this._onLoginButtonPress = this._onLoginButtonPress.bind(this);
     this._onSignupButtonPress = this._onSignupButtonPress.bind(this);
-    this.checkUserLoggedIn = this.checkUserLoggedIn.bind(this);
+    //this.checkUserLoggedIn = this.checkUserLoggedIn.bind(this);
 
   }
 
