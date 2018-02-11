@@ -50,7 +50,8 @@ export class Login extends Component<{}> {
     this.state = { username: '', password: '' };
     this._onLoginButtonPress = this._onLoginButtonPress.bind(this);
     this._onSignupButtonPress = this._onSignupButtonPress.bind(this);
-    this.checkUserLoggedIn = this.checkUserLoggedIn.bind(this);
+    //this.checkUserLoggedIn = this.checkUserLoggedIn.bind(this);
+
   }
 
   async componentWillMount() {
@@ -64,36 +65,33 @@ export class Login extends Component<{}> {
 
   componentDidMount()
   {
-      //this.checkUserLoggedIn();
-  }
-
-  async checkUserLoggedIn()
-  {
-    try {
-      var ref = firebase.database().ref("testtrial1");
-      if (value !== null)
-      {
-        this.setState(JSON.parse(value));
-        this._onLoginButtonPress();
-      }
-    }
-  catch (error)
-  {
-    console.log(error);
-  }
 
   }
+
 
   async _onLoginButtonPress(){
 
-      /*try {
-        await AsyncStorage.setItem('userData', JSON.stringify(this.state));
-      }
-      catch (error) {
-        console.log(error);
-      }*/
 
-  this.props.navigation.dispatch(resetAction);
+    //for testing:
+    this.state.username = "remuser@removeme.com";
+    this.state.password = "password1"
+
+    if(!this.state.username || !this.state.password){
+      Alert.alert("Please enter a username and password");
+      return;
+    }
+
+    var navi = this.props.navigation;    //using navi because can't use 'this' inside function
+    function _onSuccessfulSignIn(success) {
+      navi.dispatch(resetAction);
+     }
+
+    function _onFailedSignIn(error) {
+      Alert.alert("Error");
+      console.log(error.message);
+     }
+
+    firebase.auth().signInWithEmailAndPassword(this.state.username, this.state.password).then(_onSuccessfulSignIn, _onFailedSignIn);
   }
 
   _onSignupButtonPress(){
@@ -101,45 +99,41 @@ export class Login extends Component<{}> {
   }
 
   render() {
-    if(this.state.done){
-      return (
-        <View style={styles.container}>
-      <Text style={{height:40}} />
-      <Text style={{color: 'steelblue', fontSize: 40, textAlign: 'center', fontWeight: 'bold'}}>
-        {'MatchFolio'}
+    return (
+      <View style={styles.container}>
+    <Text style={{height:40}} />
+    <Text style={{color: 'steelblue', fontSize: 40, textAlign: 'center', fontWeight: 'bold'}}>
+      {'MatchFolio'}
+    </Text>
+        <View style={styles.buttonContainer}>
+      <TextInput
+        placeholder="Username"
+        onChangeText={(text) => this.setState({ username: text })}
+      />
+      <Text style={{height:5}} />
+      <TextInput
+        placeholder="Password"
+        onChangeText={(text) => this.setState({ password: text })}
+        secureTextEntry={true}
+      />
+      <Text style={{height:25}}>
       </Text>
-          <View style={styles.buttonContainer}>
-        <TextInput
-          placeholder="Username"
-          onChangeText={(text) => this.setState({ username: text })}
-        />
-        <Text style={{height:5}} />
-        <TextInput
-          placeholder="Password"
-          onChangeText={(text) => this.setState({ password: text })}
-          secureTextEntry={true}
-        />
-        <Text style={{height:25}}>
-        </Text>
-        <Button bordered block
-          onPress={this._onLoginButtonPress}
-        ><Text>Log In</Text></Button>
-        <Text style={{height:35}}>
-        </Text>
-        <Text style={{textAlign: 'center'}}>
-          {'Don\'t have an account? '}
-          <Text style={{  //fontWeight: 'bold',
-                  color: 'blue'}}
-              onPress={this._onSignupButtonPress}>
-            {'Sign up'}
-            </Text>
-            </Text>
-          </View>
+      <Button bordered block
+        onPress={this._onLoginButtonPress}
+      ><Text>Log In</Text></Button>
+      <Text style={{height:35}}>
+      </Text>
+      <Text style={{textAlign: 'center'}}>
+        {'Don\'t have an account? '}
+        <Text style={{  //fontWeight: 'bold',
+                color: 'blue'}}
+            onPress={this._onSignupButtonPress}>
+          {'Sign up'}
+          </Text>
+          </Text>
         </View>
-      );
-    } else {
-      return(<View />);
-    }
+      </View>
+    );
   }
 }
 
@@ -158,8 +152,29 @@ export class Signup extends Component<{}> {
   }
 
   _onSignupButtonPress(){
-    Alert.alert('Registered!', "",
-    [{text: 'OK', onPress: () => this.props.navigation.navigate('personal') }]);
+
+    if(!this.state.username || !this.state.password) {
+      Alert.alert("Please enter a username and password");
+      return;
+    }
+
+    //TODO: validate username and password first
+
+    var navi = this.props.navigation;    //using navi because can't use 'this' inside function
+    function _onSuccessfulSignUp(success) {
+       Alert.alert('Registered!', "",
+       [{text: 'OK', onPress: () => navi.navigate('personal') }]);
+     }
+
+     function _onFailedSignUp(error) {
+       Alert.alert("Error");
+       console.log(error.message);
+     }
+
+     firebase.auth().createUserWithEmailAndPassword(this.state.username, this.state.password).then(_onSuccessfulSignUp, _onFailedSignUp);
+
+    //TODO: get and use returned user data from sign up process ("returns firebase.Promise containing non-null firebase.User")
+    //also note that sign up auto logs user in
   }
 
   componentWillMount(){
@@ -167,9 +182,9 @@ export class Signup extends Component<{}> {
     pword = this.props.navigation.state.params.password;
 
     if(!uname)
-    uname = "";
+        uname = "";
     if(!pword)
-    pword = "";
+        pword = "";
 
     this.setState({username: uname, password: pword});
   }

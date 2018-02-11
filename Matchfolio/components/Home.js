@@ -25,6 +25,7 @@ import * as firebase from 'firebase';
 
 var mainDataRef = firebase.database().ref();
 var propertyRef = firebase.database().ref('properties');
+var user = firebase.auth().currentUser;   //assumes login process was successful
 var propertyInfo;
 var remainingInfos;
 propertyRef.once("value")
@@ -50,13 +51,19 @@ export class CardSwiper extends React.Component {
 		this._nextProperty = this._nextProperty.bind(this);
 		this._onInterested = this._onInterested.bind(this);
 		this._onMoreInfo = this._onMoreInfo.bind(this);
+
+        user = firebase.auth().currentUser;
+
+        if(user) {
+          console.log("dispname: ", user.displayName);
+          console.log("email: ", user.email);
+          console.log("uid: ", user.uid);
+        }
+        else {
+          console.log("user data null");
+        }
 	}
 
-	state = {
-		currentProperty: 0,
-		loading: true,
-		pictureURL: "utopiamanagement/images/2c8b6e70-83f3-41bf-bfd2-79d3d676681f/large.jpg",
-	}
 
   async componentWillMount() {
     await Expo.Font.loadAsync({
@@ -64,12 +71,7 @@ export class CardSwiper extends React.Component {
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
     });
-    /*var matches_data = await AsyncStorage.getItem('matched-properties');
-    if (matches_data!=null)
-    {
-      this.setState({matches: JSON.parse(matches_data)});
-    }*/
-    //StatusBar.setHidden(true);
+
     if (this.props.navigation.state.params)
       {
         if(this.props.navigation.state.params.homeSavedMatches)
@@ -79,15 +81,6 @@ export class CardSwiper extends React.Component {
       }
 
 		this.setState({loading: false});
-	}
-
-	async componentWillUnmountX(){
-		try {
-			await AsyncStorage.setItem('matched-properties', JSON.stringify(this.state.matches));
-		}
-		catch (error) {
-			console.log(error);
-		}
 	}
 
 	_nextProperty() {
