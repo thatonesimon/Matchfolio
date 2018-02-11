@@ -64,11 +64,29 @@ export default class Matches extends Component {
         // data.push(appfolio);
 
         // start with map
-        this.state= {listView: false, data: data, remainingInfos: remainingInfos};
+        this.state= {listView: false,
+                    data: data,
+                    remainingInfos: remainingInfos,
+                    latitude: 34.434248,
+                    longitude: -119.863704};
 	}
 
     componentWillMount(){
       //this.checkMatchedProperties();
+    }
+
+    componentDidMount() {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.setState({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+          console.log("lat: " + position.coords.latitude + " lon: " + position.coords.longitude);
+        },
+        (error) => console.log(error.message),
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+      );
     }
 
 	async checkMatchedProperties(){
@@ -104,8 +122,7 @@ export default class Matches extends Component {
    }
 
    render() {
-
-
+       console.log("Rendering with lat: " + this.state.latitude + " lon: " + this.state.longitude);
        if(this.state.listView) {
            let list = null;
            if(this.state.data.length == 0) {
@@ -174,12 +191,13 @@ export default class Matches extends Component {
                    </Header>
                  <Content style={{flexDirection:"column"}}>
                  <MapView
-                     initialRegion={{
-                       latitude: 34.434248,
-                       longitude: -119.863704,
+                     region={{
+                       latitude: this.state.latitude,
+                       longitude: this.state.longitude,
                        latitudeDelta: 0.0922,
                        longitudeDelta: 0.0421,
                      }}
+                     showsUserLocation = {true}
                      style={styles.map}
                  >
 
