@@ -75,8 +75,8 @@ export class Login extends Component<{}> {
 
 
     //for testing:
-    this.state.username = "useme";
-    this.state.password = "password1"
+     this.state.username = "useme";
+     this.state.password = "password1";
 
     if(!this.state.username || !this.state.password){
       Alert.alert("Please enter a username and password");
@@ -85,6 +85,7 @@ export class Login extends Component<{}> {
 
     var navi = this.props.navigation;    //using navi because can't use 'this' inside function
     function _onSuccessfulSignIn(success) {
+      
       navi.dispatch(resetAction);
      }
 
@@ -159,6 +160,8 @@ export class Signup extends Component<{}> {
   }
 
   _onSignupButtonPress(){
+    this.state.username = "useme";
+    this.state.password = "password1";
 
     if(!this.state.username || !this.state.password) {
       Alert.alert("Please enter a username and password");
@@ -167,8 +170,16 @@ export class Signup extends Component<{}> {
 
     //TODO: validate username and password first
 
+      function writeUserData(userId, name) {
+        firebase.database().ref('users/' + userId).set({
+            username: name
+        });
+      }
+
     var navi = this.props.navigation;    //using navi because can't use 'this' inside function
     function _onSuccessfulSignUp(success) {
+       user = firebase.auth().currentUser;
+       writeUserData(user.uid, user.email);
        Alert.alert('Registered!', "",
        [{text: 'OK', onPress: () => navi.navigate('personal') }]);
      }
@@ -181,7 +192,7 @@ export class Signup extends Component<{}> {
      if(this.state.username.endsWith(emailsuffix)){
        this.state.username = this.state.username.replace(emailsuffix, '');
      }
-     
+
      firebase.auth().createUserWithEmailAndPassword(this.state.username + emailsuffix, this.state.password).then(_onSuccessfulSignUp, _onFailedSignUp);
 
     //TODO: get and use returned user data from sign up process ("returns firebase.Promise containing non-null firebase.User")
