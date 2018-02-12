@@ -25,14 +25,11 @@ import * as firebase from 'firebase';
 
 var mainDataRef = firebase.database().ref();
 var propertyRef = firebase.database().ref('properties');
-var user = firebase.auth().currentUser;   //assumes login process was successful
+var user;
 
 var propertyInfo;
 var remainingInfos;
-propertyRef.once("value")
-    .then(function(dataSnapshot){
-        propertyInfo = dataSnapshot.val();
-  })
+
 const baseUrl = 'http://pa.cdn.appfolio.com/';
 var propertyPictures;
 
@@ -53,18 +50,7 @@ export class CardSwiper extends React.Component {
 		this._onInterested = this._onInterested.bind(this);
 		this._onMoreInfo = this._onMoreInfo.bind(this);
 
-        user = firebase.auth().currentUser;
-
-        if(user) {
-          console.log("dispname: ", user.displayName);
-          console.log("email: ", user.email);
-          console.log("uid: ", user.uid);
-        }
-        else {
-          console.log("user data not loaded");
-        }
 	}
-
 
   async componentWillMount() {
     await Expo.Font.loadAsync({
@@ -73,13 +59,30 @@ export class CardSwiper extends React.Component {
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
     });
 
-    if (this.props.navigation.state.params)
-      {
-        if(this.props.navigation.state.params.homeSavedMatches)
-          this.setState({matches: this.props.navigation.state.params.homeSavedMatches});
-        if(this.props.navigation.state.params.remainingInfos)
-          remainingInfos = this.props.navigation.state.params.remainingInfos;
-      }
+    await propertyRef.once('value').then(function(dataSnapshot) {
+      propertyInfo = dataSnapshot.val();
+      console.log('propertyinfo init')
+    }, function(error){
+      console.log(error.message)
+    })
+
+    user = firebase.auth().currentUser;
+
+    if(user) {
+      console.log("dispname: ", user.displayName);
+      console.log("email: ", user.email);
+      console.log("uid: ", user.uid);
+    }
+    else {
+      console.log("user data not loaded");
+    }
+
+    if (this.props.navigation.state.params) {
+      if(this.props.navigation.state.params.homeSavedMatches)
+        this.setState({matches: this.props.navigation.state.params.homeSavedMatches});
+      if(this.props.navigation.state.params.remainingInfos)
+        remainingInfos = this.props.navigation.state.params.remainingInfos;
+    }
 
 		this.setState({loading: false});
 	}

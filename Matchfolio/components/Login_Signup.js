@@ -93,7 +93,12 @@ export class Login extends Component<{}> {
       console.log(error.message);
      }
 
-    firebase.auth().signInWithEmailAndPassword(this.state.username + emailsuffix, this.state.password).then(_onSuccessfulSignIn, _onFailedSignIn);
+     //to allow username or email to be entered
+     if(this.state.username.endsWith(emailsuffix)){
+       this.state.username = this.state.username.replace(emailsuffix, '');
+     }
+
+     firebase.auth().signInWithEmailAndPassword(this.state.username + emailsuffix, this.state.password).then(_onSuccessfulSignIn, _onFailedSignIn);
   }
 
   _onSignupButtonPress(){
@@ -173,6 +178,10 @@ export class Signup extends Component<{}> {
        console.log(error.message);
      }
 
+     if(this.state.username.endsWith(emailsuffix)){
+       this.state.username = this.state.username.replace(emailsuffix, '');
+     }
+     
      firebase.auth().createUserWithEmailAndPassword(this.state.username + emailsuffix, this.state.password).then(_onSuccessfulSignUp, _onFailedSignUp);
 
     //TODO: get and use returned user data from sign up process ("returns firebase.Promise containing non-null firebase.User")
