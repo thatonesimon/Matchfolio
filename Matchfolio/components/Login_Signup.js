@@ -32,6 +32,8 @@ var config = {
   };
   firebase.initializeApp(config);
 
+const emailsuffix = "@matchfolio.com"
+
 const resetAction = NavigationActions.reset({
   index: 0,
   actions: [
@@ -73,7 +75,7 @@ export class Login extends Component<{}> {
 
 
     //for testing:
-    this.state.username = "remuser@removeme.com";
+    this.state.username = "useme";
     this.state.password = "password1"
 
     if(!this.state.username || !this.state.password){
@@ -91,7 +93,7 @@ export class Login extends Component<{}> {
       console.log(error.message);
      }
 
-    firebase.auth().signInWithEmailAndPassword(this.state.username, this.state.password).then(_onSuccessfulSignIn, _onFailedSignIn);
+    firebase.auth().signInWithEmailAndPassword(this.state.username + emailsuffix, this.state.password).then(_onSuccessfulSignIn, _onFailedSignIn);
   }
 
   _onSignupButtonPress(){
@@ -171,7 +173,7 @@ export class Signup extends Component<{}> {
        console.log(error.message);
      }
 
-     firebase.auth().createUserWithEmailAndPassword(this.state.username, this.state.password).then(_onSuccessfulSignUp, _onFailedSignUp);
+     firebase.auth().createUserWithEmailAndPassword(this.state.username + emailsuffix, this.state.password).then(_onSuccessfulSignUp, _onFailedSignUp);
 
     //TODO: get and use returned user data from sign up process ("returns firebase.Promise containing non-null firebase.User")
     //also note that sign up auto logs user in
