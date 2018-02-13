@@ -26,6 +26,7 @@ import * as firebase from 'firebase';
 var mainDataRef = firebase.database().ref();
 var propertyRef = firebase.database().ref('properties');
 var user = firebase.auth().currentUser;   //assumes login process was successful
+
 var propertyInfo;
 var remainingInfos;
 propertyRef.once("value")
@@ -60,7 +61,7 @@ export class CardSwiper extends React.Component {
           console.log("uid: ", user.uid);
         }
         else {
-          console.log("user data null");
+          console.log("user data not loaded");
         }
 	}
 
