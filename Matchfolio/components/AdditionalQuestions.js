@@ -8,7 +8,7 @@ export default class AdditionalQuestions extends Component {
     constructor(props) {
         super(props);
         if(this.props.navigation.state.params) {
-          questions = this.props.navigation.state.params.questions;
+          questions = this.props.navigation.state.params.questions.split("~");
         }
         additionalQuestions = "This property has additional questions on it's application!";
     }
