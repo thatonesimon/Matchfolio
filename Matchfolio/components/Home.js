@@ -57,7 +57,7 @@ export class CardSwiper extends React.Component {
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
     });
-
+    /*
     await propertyRef.once('value').then(function(dataSnapshot) {
       propertyInfo = dataSnapshot.val();
       //Make sure this function callback does not happen after the checking of the state params below
@@ -66,13 +66,15 @@ export class CardSwiper extends React.Component {
       console.log('propertyinfo init')
     }, function(error){
       console.log(error.message)
-    })
+    })\*/
+    propertyInfo = global.UserPropertyListing;
+    console.log("prop", propertyInfo);
+    remainingInfos = global.UserPropertyListing;
 
     user = firebase.auth().currentUser;
 
     if(user) {
       console.log("dispname: ", user.displayName);
-      console.log("simon?", global.simon);
       console.log("email: ", user.email);
       console.log("uid: ", user.uid);
     }
