@@ -94,6 +94,7 @@ export class Login extends Component<{}> {
     }
 
     var navi = this.props.navigation;    //using navi because can't use 'this' inside function
+
     async function _onSuccessfulSignIn(success) {
       var user = firebase.auth().currentUser;
       var fb = firebase.database().ref();
@@ -139,6 +140,10 @@ export class Login extends Component<{}> {
       }
       global.UserPropertyListing = filtered.slice();
       global.matched = savedMatches.slice();
+
+      navi.dispatch(resetAction);
+
+
 /*
       userScore: score,
       interested: [],
@@ -146,19 +151,24 @@ export class Login extends Component<{}> {
 
 */
       //query
-      navi.dispatch(resetAction);
      }
 
     function _onFailedSignIn(error) {
       Alert.alert("Error");
       console.log(error.message);
+      this.setState({loading: false})
      }
+
+     _onSuccessfulSignIn = _onSuccessfulSignIn.bind(this);
+     _onFailedSignIn = _onFailedSignIn.bind(this);
+
 
      //to allow username or email to be entered
      if(this.state.username.endsWith(emailsuffix)){
        this.state.username = this.state.username.replace(emailsuffix, '');
      }
 
+     this.setState({loading: true})
      firebase.auth().signInWithEmailAndPassword(this.state.username + emailsuffix, this.state.password).then(_onSuccessfulSignIn, _onFailedSignIn);
   }
 
@@ -167,6 +177,16 @@ export class Login extends Component<{}> {
   }
 
   render() {
+    if(this.state.loading){
+      return (
+          <View style ={styles.containerSpin}>
+            <Spinner color='#006eff'/>
+          </View>
+      )
+
+    }
+    else {
+
     return (
       <View style={styles.container}>
     <Text style={{height:40}} />
@@ -201,7 +221,7 @@ export class Login extends Component<{}> {
           </Text>
         </View>
       </View>
-    );
+    ); }
   }
 }
 
@@ -322,6 +342,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   //backgroundColor: 'skyblue'
+  },
+  containerSpin: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center'
   },
   buttonContainer: {
   flex: 2,
