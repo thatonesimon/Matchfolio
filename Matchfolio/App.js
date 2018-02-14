@@ -49,6 +49,7 @@ import * as firebase from 'firebase';
   animationEnabled: false,
   lazy: false,
 })*/
+global.flag = 0;
 
 export const DrawerMainNav = DrawerNavigator({
   home: { screen: Home },
@@ -77,6 +78,9 @@ export const IntroStackNav = StackNavigator({
 });
 
 export default class App extends React.Component {
+  componentWillUnmount(){
+    console.log("main app unmounting");
+  }
   render() {
     return (
       <IntroStackNav />

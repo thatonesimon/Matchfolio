@@ -22,6 +22,9 @@ import { Drawer,
 import { NavigationActions } from 'react-navigation';
 import * as firebase from 'firebase';
 
+p = require('../res/property-info_clean.json');
+
+
 var config = {
     apiKey: "AIzaSyBoPA-hJksEC7PY-OprZR7z9vuV0sqj_-4",
     authDomain: "matchfolio-3ad17.firebaseapp.com",
@@ -40,6 +43,14 @@ const resetAction = NavigationActions.reset({
     NavigationActions.navigate({routeName: 'main'})
   ]
 })
+
+/*              code to write properites to uuid !!!!!!!!!!!!!!!!!!!          do not delete
+var fb = firebase.database().ref();
+for(i = 0; i < p.length; i++){
+    fb.child('properties_new/' + p[i].listable_uid).set(p[i])
+}
+*/
+
 
 export class Login extends Component<{}> {
   static navigationOptions = {
@@ -85,7 +96,7 @@ export class Login extends Component<{}> {
 
     var navi = this.props.navigation;    //using navi because can't use 'this' inside function
     function _onSuccessfulSignIn(success) {
-      
+
       navi.dispatch(resetAction);
      }
 
@@ -171,8 +182,10 @@ export class Signup extends Component<{}> {
     //TODO: validate username and password first
 
       function writeUserData(userId, name) {
+        score = Math.floor(Math.random()*10);
         firebase.database().ref('users/' + userId).set({
-            username: name
+            username: name.replace(emailsuffix, ''),
+            userScore: score  
         });
       }
 

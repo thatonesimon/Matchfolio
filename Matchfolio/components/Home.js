@@ -49,7 +49,6 @@ export class CardSwiper extends React.Component {
 		this._nextProperty = this._nextProperty.bind(this);
 		this._onInterested = this._onInterested.bind(this);
 		this._onMoreInfo = this._onMoreInfo.bind(this);
-
 	}
 
   async componentWillMount() {
@@ -73,6 +72,7 @@ export class CardSwiper extends React.Component {
 
     if(user) {
       console.log("dispname: ", user.displayName);
+      console.log("simon?", global.simon);
       console.log("email: ", user.email);
       console.log("uid: ", user.uid);
     }
