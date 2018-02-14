@@ -185,7 +185,7 @@ export class Signup extends Component<{}> {
         score = Math.floor(Math.random()*10);
         firebase.database().ref('users/' + userId).set({
             username: name.replace(emailsuffix, ''),
-            userScore: score  
+            userScore: score
         });
       }
 
