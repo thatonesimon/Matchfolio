@@ -98,8 +98,8 @@ export class Login extends Component<{}> {
       var user = firebase.auth().currentUser;
       var fb = firebase.database().ref();
       var completeListing;
-      var interest;
-      var noInterest;
+      var interest = [];
+      var noInterest= [];
 
       await fb.child("properties_new").once('value').then(function(dataSnapshot) {
         completeListing = dataSnapshot.val();
@@ -112,20 +112,24 @@ export class Login extends Component<{}> {
 
       //var score;
       await fb.child("users/"+user.uid+"/interested").once("value").then(function(snapshot){
-          interest = snapshot.val();
-          console.log(interest);
+          snapshot.forEach(function(childsnap){
+              interest.push(childsnap.key);
+          });
       })
       await fb.child("users/"+user.uid+"/uninterested").once("value").then(function(snapshot){
-          noInterest = snapshot.val();
-          console.log(noInterest);
+          snapshot.forEach(function(childsnap){
+              noInterest.push(childsnap.key);
+          });
       })
       /*
       await fb.child("users/"+user.uid+"/userScore").once("value").then(function(snapshot){
           score = snapshot.val();
       })
       */
+
+      console.log("interest: ", interest);
+      console.log("interest: ", typeof(interest));
       var seen = interest.concat(noInterest);
-      console.log("seen: ", seen);
       var j = 0;
       var filtered =[];
       for(var i in completeListing){
@@ -134,10 +138,6 @@ export class Login extends Component<{}> {
           }
       }
       global.UserPropertyListing = filtered.slice();
-
-
-
-
 /*
       userScore: score,
       interested: [],
@@ -234,8 +234,8 @@ export class Signup extends Component<{}> {
         firebase.database().ref('users/' + userId).set({
             username: name.replace(emailsuffix, ''),
             userScore: score,
-            interested: [],
-            uninterested: []
+            interested: "",
+            uninterested: ""
         });
       }
 

@@ -23,6 +23,7 @@ import { Drawer,
 import { Ionicons } from '@expo/vector-icons'; // 6.1.0
 import * as firebase from 'firebase';
 
+var userDataRef;
 var mainDataRef = firebase.database().ref();
 var propertyRef = firebase.database().ref('properties');
 var user;
@@ -68,10 +69,10 @@ export class CardSwiper extends React.Component {
       console.log(error.message)
     })\*/
     propertyInfo = global.UserPropertyListing;
-    console.log("prop", propertyInfo);
     remainingInfos = global.UserPropertyListing;
 
     user = firebase.auth().currentUser;
+    userDataRef = firebase.database().ref("users/" +user.uid);
 
     if(user) {
       console.log("dispname: ", user.displayName);
@@ -105,7 +106,10 @@ export class CardSwiper extends React.Component {
 
   _onNotInterested(item) {
     // [maybe] save info to ensure property isn't displayed again
-    if(item!=null) this._removeInfoFromRemaining(item);
+    if(item!=null){
+      this._removeInfoFromRemaining(item);
+      userDataRef.child("uninterested").child(item.listable_uid).set(1);
+    }
   }
 
 	_onMoreInfo() {
@@ -132,7 +136,7 @@ export class CardSwiper extends React.Component {
 		newArray.push(item);
 		this.setState({matches: newArray})
 		this._removeInfoFromRemaining(item);
-
+    userDataRef.child("interested").child(item.listable_uid).set(1);
 		// go on to next property
 	}
 
