@@ -61,6 +61,9 @@ export class CardSwiper extends React.Component {
 
     await propertyRef.once('value').then(function(dataSnapshot) {
       propertyInfo = dataSnapshot.val();
+      //Make sure this function callback does not happen after the checking of the state params below
+      //which should hold precedence for assigning remainingInfos
+      remainingInfos = propertyInfo.slice();
       console.log('propertyinfo init')
     }, function(error){
       console.log(error.message)
@@ -120,6 +123,7 @@ export class CardSwiper extends React.Component {
     var newArray = [];
     if (this.state.matches!=null)
     {
+      //make shallow copy as to not modify original
       newArray = this.state.matches.slice();
     }
 
@@ -149,7 +153,7 @@ export class CardSwiper extends React.Component {
 		}
 
 		else {
-      remainingInfos = propertyInfo.slice();
+      //remainingInfos = propertyInfo.slice();
 			this._updatePropertyImages(this.state.currentProperty);
 
 			return (
