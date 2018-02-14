@@ -100,10 +100,9 @@ export class Login extends Component<{}> {
       var completeListing;
       var interest = [];
       var noInterest= [];
-
+      var savedMatches = [];
       await fb.child("properties_new").once('value').then(function(dataSnapshot) {
         completeListing = dataSnapshot.val();
-
         //Make sure this function callback does not happen after the checking of the state params below
         //which should hold precedence for assigning remainingInfos
       }, function(error){
@@ -114,6 +113,7 @@ export class Login extends Component<{}> {
       await fb.child("users/"+user.uid+"/interested").once("value").then(function(snapshot){
           snapshot.forEach(function(childsnap){
               interest.push(childsnap.key);
+              savedMatches.push(completeListing[childsnap.key])
           });
       })
       await fb.child("users/"+user.uid+"/uninterested").once("value").then(function(snapshot){
@@ -138,6 +138,7 @@ export class Login extends Component<{}> {
           }
       }
       global.UserPropertyListing = filtered.slice();
+      global.matched = savedMatches.slice();
 /*
       userScore: score,
       interested: [],

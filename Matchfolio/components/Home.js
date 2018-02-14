@@ -82,7 +82,7 @@ export class CardSwiper extends React.Component {
     else {
       console.log("user data not loaded");
     }
-
+    this.setState({matches: global.matched})
     if (this.props.navigation.state.params) {
       if(this.props.navigation.state.params.homeSavedMatches)
         this.setState({matches: this.props.navigation.state.params.homeSavedMatches});
