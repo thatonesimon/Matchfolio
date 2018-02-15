@@ -85,8 +85,8 @@ export class Login extends Component<{}> {
 
 
     //for testing:
-     this.state.username = "useme";
-     this.state.password = "password1";
+     //this.state.username = "useme";
+     //this.state.password = "password1";
 
     if(!this.state.username || !this.state.password){
       Alert.alert("Please enter a username and password");
@@ -240,8 +240,8 @@ export class Signup extends Component<{}> {
   }
 
   _onSignupButtonPress(){
-    this.state.username = "useme";
-    this.state.password = "password1";
+    //this.state.username = "useme";
+    //this.state.password = "password1";
 
     if(!this.state.username || !this.state.password) {
       Alert.alert("Please enter a username and password");
