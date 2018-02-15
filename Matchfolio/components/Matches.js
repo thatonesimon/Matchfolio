@@ -31,6 +31,7 @@ class EmptyDrawerItem extends Component {
 		return null
 	}
 }
+var currentMarker = 0;
 
 export default class Matches extends Component {
 
@@ -42,6 +43,7 @@ export default class Matches extends Component {
 	constructor(props){
 		super(props);
 		this._onRenderRow = this._onRenderRow.bind(this);
+        this.zoomToNext = this.zoomToNext.bind(this);
 
         var data = []
         var remainingInfos = null
@@ -105,6 +107,27 @@ export default class Matches extends Component {
 			console.log(error);
 		}
 	}
+
+    zoomToNext() {
+        console.log("Zoom to next property." + this.state.data.length);
+        if(this.state.data.length < 1) {
+            return;
+        }
+        if(currentMarker < this.state.data.length) {
+            this.setState({
+              latitude: this.state.data[currentMarker].address_latitude,
+              longitude: this.state.data[currentMarker].address_longitude,
+            });
+            currentMarker++;
+        } else {
+            currentMarker = 0;
+            this.setState({
+              latitude: this.state.data[currentMarker].address_latitude,
+              longitude: this.state.data[currentMarker].address_longitude,
+            });
+            currentMarker++;
+        }
+    }
 
    _onRenderRow(item)
    {
@@ -191,7 +214,7 @@ export default class Matches extends Component {
                    </Header>
                  <Content style={{flexDirection:"column"}}>
                  <MapView
-                     initialRegion={{
+                     region={{
                        latitude: this.state.latitude,
                        longitude: this.state.longitude,
                        latitudeDelta: 0.09,
@@ -220,6 +243,12 @@ export default class Matches extends Component {
                      ))}
                  </MapView>
                  </Content>
+                 <ActionButton
+                   buttonColor="#3179cd"
+                   onPress={() => this.zoomToNext()}
+                   position="left"
+                   style={styles.button}
+                   renderIcon={() => {return <Icon name="ios-arrow-round-forward" />}} />
                  <ActionButton
                    buttonColor="#3179cd"
                    onPress={() => { this.setState({listView: !this.state.listView})}}
