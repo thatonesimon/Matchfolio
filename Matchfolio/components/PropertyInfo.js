@@ -44,6 +44,19 @@ export default class PropertyInfo extends Component {
       images.push(baseUrl + images_old[i]);
       loadQ.push(0)
     }
+    if(this.props.navigation.state.params.showApply) {
+        applyButton = <View style={{flexDirection: 'row', flex: 1}}>
+                          <Button success style={{flex: 1}} onPress={() => this._apply() } >
+                              <Text style={{textAlign: 'center'}}>Apply to Property</Text>
+                          </Button>
+                      </View>;
+    } else {
+        applyButton = <View style={{flexDirection: 'row', flex: 1}}>
+                          <Button light style={{flex: 1}} onPress={() => Alert.alert("Swipe right on this property and go to Matched Properties to apply!") } >
+                              <Text style={{textAlign: 'center'}}>Apply to Property</Text>
+                          </Button>
+                      </View>;
+    }
 
     var propertyMarker = [
         {
@@ -77,7 +90,7 @@ export default class PropertyInfo extends Component {
           console.log("additional questions");
           this.props.navigation.navigate('additionalQuestions', {questions: property.additional_questions});
       } else {
-          //Alert.alert("Your application has been sent to " + property.vhost + "!");
+          Alert.alert("Your application has been sent to " + property.vhost + "!");
           this.props.navigation.navigate('additionalQuestions', {questions: ["Do you like cows?", "How many cows do you have?"]});
       }
   }
@@ -127,11 +140,7 @@ export default class PropertyInfo extends Component {
                 <Text style={{textAlign: 'center'}}>Contact Owner</Text>
               </Button>
           </View>
-          <View style={{flexDirection: 'row', flex: 1}}>
-              <Button success style={{flex: 1}} onPress={() => this._apply() } >
-                <Text style={{textAlign: 'center'}}>Apply to Property</Text>
-              </Button>
-          </View>
+          {applyButton}
         </View>
   	  </ScrollView>
     );

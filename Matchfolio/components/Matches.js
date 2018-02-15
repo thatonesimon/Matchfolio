@@ -67,8 +67,8 @@ export default class Matches extends Component {
         this.state= {listView: false,
                     data: data,
                     remainingInfos: remainingInfos,
-                    latitude: 34.434248,
-                    longitude: -119.863704};
+                    latitude: 34.41560,
+                    longitude: -119.84192};
 	}
 
     componentWillMount(){
@@ -112,7 +112,7 @@ export default class Matches extends Component {
          return null;
       else
          return (
-      <ListItem button onPress={()=>this.props.navigation.navigate('propertyInfo', {item: item})}>
+      <ListItem button onPress={()=>this.props.navigation.navigate('propertyInfo', {item: item, showApply: true})}>
          <Thumbnail square size={80} source={{uri: baseUrl + item.image_urls.split(',')[0]}} />
          <Body>
             <Text>{item.address_address1}</Text>
@@ -191,11 +191,11 @@ export default class Matches extends Component {
                    </Header>
                  <Content style={{flexDirection:"column"}}>
                  <MapView
-                     region={{
+                     initialRegion={{
                        latitude: this.state.latitude,
                        longitude: this.state.longitude,
-                       latitudeDelta: 0.0922,
-                       longitudeDelta: 0.0421,
+                       latitudeDelta: 0.09,
+                       longitudeDelta: 0.04,
                      }}
                      showsUserLocation = {true}
                      style={styles.map}
@@ -210,7 +210,7 @@ export default class Matches extends Component {
                            }}>
 
                            <MapView.Callout
-                             onPress={()=>this.props.navigation.navigate('propertyInfo', {item: marker})}>
+                             onPress={()=>this.props.navigation.navigate('propertyInfo', {item: marker, showApply: true})}>
                              <View>
                                <Text style={{textAlign: "center", fontSize: 15}}>{marker.address_address1}</Text>
                                <Text style={{textAlign: "center", fontSize: 12}}>{marker.marketing_title}</Text>
