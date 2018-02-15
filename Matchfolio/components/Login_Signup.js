@@ -22,6 +22,7 @@ import { Drawer,
 import { NavigationActions } from 'react-navigation';
 import * as firebase from 'firebase';
 
+
 var config = {
     apiKey: "AIzaSyBoPA-hJksEC7PY-OprZR7z9vuV0sqj_-4",
     authDomain: "matchfolio-3ad17.firebaseapp.com",
@@ -40,6 +41,15 @@ const resetAction = NavigationActions.reset({
     NavigationActions.navigate({routeName: 'main'})
   ]
 })
+
+/*              code to write properites to uuid !!!!!!!!!!!!!!!!!!!          do not delete
+p = require('../res/property-info_clean.json');
+var fb = firebase.database().ref();
+for(i = 0; i < p.length; i++){
+    fb.child('properties_new/' + p[i].listable_uid).set(p[i])
+}
+*/
+
 
 export class Login extends Component<{}> {
   static navigationOptions = {
@@ -75,8 +85,8 @@ export class Login extends Component<{}> {
 
 
     //for testing:
-    this.state.username = "useme";
-    this.state.password = "password1"
+     //this.state.username = "useme";
+     //this.state.password = "password1";
 
     if(!this.state.username || !this.state.password){
       Alert.alert("Please enter a username and password");
@@ -84,16 +94,82 @@ export class Login extends Component<{}> {
     }
 
     var navi = this.props.navigation;    //using navi because can't use 'this' inside function
-    function _onSuccessfulSignIn(success) {
+
+    async function _onSuccessfulSignIn(success) {
+      var user = firebase.auth().currentUser;
+      var fb = firebase.database().ref();
+      var completeListing;
+      var interest = [];
+      var noInterest= [];
+      var savedMatches = [];
+      await fb.child("properties_new").once('value').then(function(dataSnapshot) {
+        completeListing = dataSnapshot.val();
+        //Make sure this function callback does not happen after the checking of the state params below
+        //which should hold precedence for assigning remainingInfos
+      }, function(error){
+        console.log(error.message)
+      })
+
+      //var score;
+      await fb.child("users/"+user.uid+"/interested").once("value").then(function(snapshot){
+          snapshot.forEach(function(childsnap){
+              interest.push(childsnap.key);
+              savedMatches.push(completeListing[childsnap.key])
+          });
+      })
+      await fb.child("users/"+user.uid+"/uninterested").once("value").then(function(snapshot){
+          snapshot.forEach(function(childsnap){
+              noInterest.push(childsnap.key);
+          });
+      })
+      /*
+      await fb.child("users/"+user.uid+"/userScore").once("value").then(function(snapshot){
+          score = snapshot.val();
+      })
+      */
+
+      console.log("interest: ", interest);
+      console.log("interest: ", typeof(interest));
+      var seen = interest.concat(noInterest);
+      var j = 0;
+      var filtered =[];
+      for(var i in completeListing){
+          if(!seen.includes(i)){
+              filtered.push(completeListing[i]);
+          }
+      }
+      global.UserPropertyListing = filtered.slice();
+      global.matched = savedMatches.slice();
+
       navi.dispatch(resetAction);
+
+
+/*
+      userScore: score,
+      interested: [],
+      uninterested: []
+
+*/
+      //query
      }
 
     function _onFailedSignIn(error) {
       Alert.alert("Error");
       console.log(error.message);
+      this.setState({loading: false})
      }
 
-    firebase.auth().signInWithEmailAndPassword(this.state.username + emailsuffix, this.state.password).then(_onSuccessfulSignIn, _onFailedSignIn);
+     _onSuccessfulSignIn = _onSuccessfulSignIn.bind(this);
+     _onFailedSignIn = _onFailedSignIn.bind(this);
+
+
+     //to allow username or email to be entered
+     if(this.state.username.endsWith(emailsuffix)){
+       this.state.username = this.state.username.replace(emailsuffix, '');
+     }
+
+     this.setState({loading: true})
+     firebase.auth().signInWithEmailAndPassword(this.state.username + emailsuffix, this.state.password).then(_onSuccessfulSignIn, _onFailedSignIn);
   }
 
   _onSignupButtonPress(){
@@ -101,6 +177,16 @@ export class Login extends Component<{}> {
   }
 
   render() {
+    if(this.state.loading){
+      return (
+          <View style ={styles.containerSpin}>
+            <Spinner color='#006eff'/>
+          </View>
+      )
+
+    }
+    else {
+
     return (
       <View style={styles.container}>
     <Text style={{height:40}} />
@@ -135,7 +221,7 @@ export class Login extends Component<{}> {
           </Text>
         </View>
       </View>
-    );
+    ); }
   }
 }
 
@@ -154,6 +240,8 @@ export class Signup extends Component<{}> {
   }
 
   _onSignupButtonPress(){
+    //this.state.username = "useme";
+    //this.state.password = "password1";
 
     if(!this.state.username || !this.state.password) {
       Alert.alert("Please enter a username and password");
@@ -162,8 +250,20 @@ export class Signup extends Component<{}> {
 
     //TODO: validate username and password first
 
+      function writeUserData(userId, name) {
+        score = Math.floor(Math.random()*10);
+        firebase.database().ref('users/' + userId).set({
+            username: name.replace(emailsuffix, ''),
+            userScore: score,
+            interested: "",
+            uninterested: ""
+        });
+      }
+
     var navi = this.props.navigation;    //using navi because can't use 'this' inside function
     function _onSuccessfulSignUp(success) {
+       var user = firebase.auth().currentUser;
+       writeUserData(user.uid, user.email);
        Alert.alert('Registered!', "",
        [{text: 'OK', onPress: () => navi.navigate('personal') }]);
      }
@@ -171,6 +271,10 @@ export class Signup extends Component<{}> {
      function _onFailedSignUp(error) {
        Alert.alert("Error");
        console.log(error.message);
+     }
+
+     if(this.state.username.endsWith(emailsuffix)){
+       this.state.username = this.state.username.replace(emailsuffix, '');
      }
 
      firebase.auth().createUserWithEmailAndPassword(this.state.username + emailsuffix, this.state.password).then(_onSuccessfulSignUp, _onFailedSignUp);
@@ -238,6 +342,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   //backgroundColor: 'skyblue'
+  },
+  containerSpin: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center'
   },
   buttonContainer: {
   flex: 2,
