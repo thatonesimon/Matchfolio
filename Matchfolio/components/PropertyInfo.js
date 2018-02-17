@@ -45,11 +45,19 @@ export default class PropertyInfo extends Component {
       loadQ.push(0)
     }
     if(this.props.navigation.state.params.showApply) {
-        applyButton = <View style={{flexDirection: 'row', flex: 1}}>
-                          <Button success style={{flex: 1}} onPress={() => this._apply() } >
+        applyButton = <View>
+                      <View style={{flexDirection: 'row', flex: 1}}>
+                          <Button success style={{flex: 1, marginBottom: 10}} onPress={() => this._apply() } >
                               <Text style={{textAlign: 'center'}}>Apply to Property</Text>
                           </Button>
+                      </View>
+                      <View style={{flexDirection: 'row', flex: 1}}>
+                          <Button danger style={{flex: 1}} onPress={() => this._unmatch() } >
+                              <Text style={{textAlign: 'center'}}>Unmatch from property</Text>
+                          </Button>
+                      </View>
                       </View>;
+
     } else {
         applyButton = <View style={{flexDirection: 'row', flex: 1}}>
                           <Button light style={{flex: 1}} onPress={() => Alert.alert("Swipe right on this property and go to Matched Properties to apply!") } >
@@ -93,6 +101,12 @@ export default class PropertyInfo extends Component {
           Alert.alert("Your application has been sent to " + property.vhost + "!");
           this.props.navigation.navigate('additionalQuestions', {questions: ["Do you like cows?", "How many cows do you have?"]});
       }
+  }
+
+  _unmatch() {
+      Alert.alert("You have been unmatched from this property.");
+      // TODO: remove this property from user's matched properties...
+      uid_to_remove = property.listable_uid;
   }
 
   render() {
