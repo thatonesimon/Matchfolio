@@ -59,11 +59,7 @@ export default class PropertyInfo extends Component {
                       </View>;
 
     } else {
-        applyButton = <View style={{flexDirection: 'row', flex: 1}}>
-                          <Button light style={{flex: 1}} onPress={() => Alert.alert("Swipe right on this property and go to Matched Properties to apply!") } >
-                              <Text style={{textAlign: 'center'}}>Apply to Property</Text>
-                          </Button>
-                      </View>;
+        applyButton = <View style={{flexDirection: 'row', flex: 1}}/>;
     }
 
     var propertyMarker = [
