@@ -95,7 +95,7 @@ export default class PropertyInfo extends Component {
           this.props.navigation.navigate('additionalQuestions', {questions: property.additional_questions});
       } else {
           Alert.alert("Your application has been sent to " + property.vhost + "!");
-          this.props.navigation.navigate('additionalQuestions', {questions: ["Do you like cows?", "How many cows do you have?"]});
+          // this.props.navigation.navigate('additionalQuestions', {questions: ["Do you like cows?", "How many cows do you have?"]});
       }
   }
 
