@@ -95,8 +95,9 @@ const styles = StyleSheet.create({
   },
   header: {
     textAlign: 'center',
+    textAlignVertical: 'center',
     color: 'skyblue',
-    fontSize: 30,
+    fontSize: 24,
   },
   margin: {
     margin: 10,

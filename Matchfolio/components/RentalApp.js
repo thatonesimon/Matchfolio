@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
   },
   header: {
     textAlign: 'center',
+    textAlignVertical: 'center',
     color: 'skyblue',
     fontSize: 20,
   },
