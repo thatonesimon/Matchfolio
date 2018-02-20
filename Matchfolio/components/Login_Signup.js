@@ -59,7 +59,7 @@ export class Login extends Component<{}> {
 
   constructor(props) {
     super(props);
-    this.state = { username: '', password: '' };
+    this.state = { username: '', password: ''};
     this._onLoginButtonPress = this._onLoginButtonPress.bind(this);
     this._onSignupButtonPress = this._onSignupButtonPress.bind(this);
     //this.checkUserLoggedIn = this.checkUserLoggedIn.bind(this);
@@ -85,8 +85,8 @@ export class Login extends Component<{}> {
 
 
     //for testing:
-     this.state.username = "useme";
-     this.state.password = "password1";
+     // this.state.username = "useme";
+     // this.state.password = "password1";
 
     if(!this.state.username || !this.state.password){
       Alert.alert("Please enter a username and password");
@@ -141,7 +141,10 @@ export class Login extends Component<{}> {
       global.UserPropertyListing = filtered.slice();
       global.matched = savedMatches.slice();
 
-      navi.dispatch(resetAction);
+      if(global.justSignedUp)
+        navi.navigate('personal');
+      else
+        navi.dispatch(resetAction);
 
 
 /*
@@ -154,7 +157,7 @@ export class Login extends Component<{}> {
      }
 
     function _onFailedSignIn(error) {
-      Alert.alert("Error");
+      Alert.alert("Error: ", error.message);
       console.log(error.message);
       this.setState({loading: false})
      }
@@ -240,8 +243,9 @@ export class Signup extends Component<{}> {
   }
 
   _onSignupButtonPress(){
-    this.state.username = "useme";
-    this.state.password = "password1";
+    //for testing
+    // this.state.username = "useme";
+    // this.state.password = "password1";
 
     if(!this.state.username || !this.state.password) {
       Alert.alert("Please enter a username and password");
@@ -261,21 +265,26 @@ export class Signup extends Component<{}> {
       }
 
     var navi = this.props.navigation;    //using navi because can't use 'this' inside function
+
     function _onSuccessfulSignUp(success) {
        var user = firebase.auth().currentUser;
        writeUserData(user.uid, user.email);
+       global.justSignedUp = true;
        Alert.alert('Registered!', "",
-       [{text: 'OK', onPress: () => navi.navigate('personal') }]);
+       [{text: 'OK', onPress: () => navi.pop() }]);
      }
 
      function _onFailedSignUp(error) {
-       Alert.alert("Error");
+       Alert.alert("Error: ", error.message);
        console.log(error.message);
      }
 
      if(this.state.username.endsWith(emailsuffix)){
        this.state.username = this.state.username.replace(emailsuffix, '');
      }
+
+     _onSuccessfulSignUp = _onSuccessfulSignUp.bind(this);
+     _onFailedSignUp = _onFailedSignUp.bind(this);
 
      firebase.auth().createUserWithEmailAndPassword(this.state.username + emailsuffix, this.state.password).then(_onSuccessfulSignUp, _onFailedSignUp);
 

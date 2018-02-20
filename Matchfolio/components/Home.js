@@ -155,7 +155,11 @@ export class CardSwiper extends React.Component {
 
  	render() {
 		if (this.state.loading || propertyInfo === undefined) {
-			return <Spinner color='#006eff'/>;
+			return (
+        <View style ={styles.containerSpin}>
+          <Spinner color='#006eff'/>
+        </View>
+      )
 		}
 
 		else {
@@ -255,6 +259,13 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
+    },
+    containerSpin: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      alignSelf: 'center'
     },
     horizontalHolder: {
       flexDirection: 'row',
