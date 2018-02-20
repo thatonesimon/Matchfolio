@@ -14,6 +14,11 @@ import { Button,
 import Swiper from 'react-native-swiper';
 import Communications from 'react-native-communications';
 import MapView from 'react-native-maps';
+import * as firebase from 'firebase';
+
+// to remove
+var user;
+var userDataRef;
 
 const baseUrl = 'http://pa.cdn.appfolio.com/';
 const { width } = Dimensions.get('window')
@@ -72,6 +77,9 @@ export default class PropertyInfo extends Component {
     ]
     this.state = {imgList: images, loadQueue: loadQ, marker: propertyMarker}
     this.loadHandle = this.loadHandle.bind(this)
+
+    user = firebase.auth().currentUser;
+    userDataRef = firebase.database().ref("users/" +user.uid);
   }
 
     loadHandle (i) {
@@ -102,7 +110,7 @@ export default class PropertyInfo extends Component {
   _unmatch() {
       Alert.alert("You have been unmatched from this property.");
       // TODO: remove this property from user's matched properties...
-      uid_to_remove = property.listable_uid;
+      userDataRef.child("interested").child(property.listable_uid).remove();
   }
 
   render() {
