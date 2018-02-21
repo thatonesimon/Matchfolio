@@ -288,7 +288,7 @@ export class Signup extends Component<{}> {
        writeUserData(user.uid, user.email);
        global.justSignedUp = true;
        Alert.alert('Registered!', "",
-       [{text: 'OK', onPress: () => navi.pop() }]);
+       [{text: 'OK', onPress: () => navi.goBack() }]);
      }
 
      function _onFailedSignUp(error) {
