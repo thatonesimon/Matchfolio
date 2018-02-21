@@ -71,7 +71,6 @@ export default class Matches extends Component {
                     remainingInfos: remainingInfos,
                     latitude: 34.41560,
                     longitude: -119.84192};
-        this.markers = [];
 	}
 
     componentWillMount(){
@@ -81,10 +80,6 @@ export default class Matches extends Component {
     componentDidMount() {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          // this.setState({
-          //   latitude: position.coords.latitude,
-          //   longitude: position.coords.longitude,
-          // });
           var coordinates = {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
@@ -120,11 +115,6 @@ export default class Matches extends Component {
             return;
         }
         if(currentMarker < this.state.data.length) {
-            // this.setState({
-            //   latitude: this.state.data[currentMarker].address_latitude,
-            //   longitude: this.state.data[currentMarker].address_longitude,
-            // });
-            // this.markers[currentMarker].onPress();
             var coordinates = {
                 latitude: this.state.data[currentMarker].address_latitude,
                 longitude: this.state.data[currentMarker].address_longitude,
@@ -133,10 +123,6 @@ export default class Matches extends Component {
             currentMarker++;
         } else {
             currentMarker = 0;
-            // this.setState({
-            //   latitude: this.state.data[currentMarker].address_latitude,
-            //   longitude: this.state.data[currentMarker].address_longitude,
-            // });
             var coordinates = {
                 latitude: this.state.data[currentMarker].address_latitude,
                 longitude: this.state.data[currentMarker].address_longitude,
@@ -245,7 +231,6 @@ export default class Matches extends Component {
 
                      {this.state.data.map(marker => (
                          <MapView.Marker
-                           ref={thisMarker => this.markers.concat(thisMarker)}
                            key={marker.listable_uid}
                            coordinate={{
                                latitude: marker.address_latitude,
