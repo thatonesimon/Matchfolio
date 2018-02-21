@@ -80,10 +80,11 @@ export default class Matches extends Component {
     componentDidMount() {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          this.setState({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
+          var coordinates = {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+          }
+          this._map.animateToCoordinate(coordinates, 500);
           console.log("lat: " + position.coords.latitude + " lon: " + position.coords.longitude);
         },
         (error) => console.log(error.message),
@@ -114,17 +115,20 @@ export default class Matches extends Component {
             return;
         }
         if(currentMarker < this.state.data.length) {
-            this.setState({
-              latitude: this.state.data[currentMarker].address_latitude,
-              longitude: this.state.data[currentMarker].address_longitude,
-            });
+            var coordinates = {
+                latitude: this.state.data[currentMarker].address_latitude,
+                longitude: this.state.data[currentMarker].address_longitude,
+            }
+            this._map.animateToCoordinate(coordinates, 500);
             currentMarker++;
         } else {
             currentMarker = 0;
-            this.setState({
-              latitude: this.state.data[currentMarker].address_latitude,
-              longitude: this.state.data[currentMarker].address_longitude,
-            });
+            var coordinates = {
+                latitude: this.state.data[currentMarker].address_latitude,
+                longitude: this.state.data[currentMarker].address_longitude,
+            }
+            this._map.animateToCoordinate(coordinates, 500);
+
             currentMarker++;
         }
     }
@@ -214,7 +218,8 @@ export default class Matches extends Component {
                    </Header>
                  <Content style={{flexDirection:"column"}}>
                  <MapView
-                     region={{
+                    ref={map => this._map = map}
+                     initialRegion={{
                        latitude: this.state.latitude,
                        longitude: this.state.longitude,
                        latitudeDelta: 0.09,
@@ -277,7 +282,7 @@ export default class Matches extends Component {
 
 const styles = StyleSheet.create({
     map: {
-        height: Dimensions.get('window').height,
+        height: Dimensions.get('window').height-117,
         flex: 1,
         marginBottom: 10,
         borderRadius: 5,
