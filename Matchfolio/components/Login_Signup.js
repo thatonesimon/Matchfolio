@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {AsyncStorage, Platform, StyleSheet, TextInput, Alert} from 'react-native';
+import {AsyncStorage, Platform, StyleSheet, TextInput, Alert, Image} from 'react-native';
 import { Drawer,
          Container,
          Header,
@@ -34,6 +34,7 @@ var config = {
   firebase.initializeApp(config);
 
 const emailsuffix = "@matchfolio.com"
+const baseUrl = 'http://pa.cdn.appfolio.com/';
 
 const resetAction = NavigationActions.reset({
   index: 0,
@@ -133,11 +134,27 @@ export class Login extends Component<{}> {
       var seen = interest.concat(noInterest);
       var j = 0;
       var filtered =[];
+      // var prefetches = [];
       for(var i in completeListing){
           if(!seen.includes(i)){
               filtered.push(completeListing[i]);
+
+              // imageurls = completeListing[i].image_urls.split(',');
+              // for(i=0; i<10 && i<imageurls.length; i++) {
+              //   prefetches.push(Image.prefetch(baseUrl + imageurls[i]));
+              // }
           }
       }
+
+      // for(var i in savedMatches) {
+      //   imageurls = savedMatches[i].image_urls.split(',');
+      //   for(i=0; i<10 && i<imageurls.length; i++) {
+      //     prefetches.push(Image.prefetch(baseUrl + imageurls[i]));
+      //   }
+      // }
+      //
+      // await Promise.all(prefetches);
+
       global.UserPropertyListing = filtered.slice();
       global.matched = savedMatches.slice();
 
