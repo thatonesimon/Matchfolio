@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage, Dimensions, StyleSheet } from 'react-native'
+import { AsyncStorage, Dimensions, StyleSheet, ListView } from 'react-native'
 import { Drawer,
          Container,
          Header,
@@ -43,54 +43,58 @@ export default class Matches extends Component {
 	constructor(props){
 		super(props);
 		this._onRenderRow = this._onRenderRow.bind(this);
-        this.zoomToNext = this.zoomToNext.bind(this);
+    this._renderRightRemoveField = this._renderRightRemoveField.bind(this);
+    this._deleteRow = this._deleteRow.bind(this);
+    this.zoomToNext = this.zoomToNext.bind(this);
 
-        var data = []
-        var remainingInfos = null
-        if (this.props.navigation.state.params)
-        {
-           if (this.props.navigation.state.params.matches)
-              data = this.props.navigation.state.params.matches;
-           if (this.props.navigation.state.params.remainingInfos)
-              remainingInfos = this.props.navigation.state.params.remainingInfos;
-        }
-        // if you want appfolio's pin on there
-        // var appfolio = {
-        //     listable_uid: "appfolio",
-        //     address_address1: "Appfolio",
-        //     marketing_title: "Come visit Appfolio!",
-        //     address_latitude: 34.434248,
-        //     address_longitude: -119.863704
-        // };
-        //
-        // data.push(appfolio);
+    this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
-        // start with map
-        this.state= {listView: false,
-                    data: data,
-                    remainingInfos: remainingInfos,
-                    latitude: 34.41560,
-                    longitude: -119.84192};
+    var data = []
+    var remainingInfos = null
+    if (this.props.navigation.state.params)
+    {
+       if (this.props.navigation.state.params.matches)
+          data = this.props.navigation.state.params.matches;
+       if (this.props.navigation.state.params.remainingInfos)
+          remainingInfos = this.props.navigation.state.params.remainingInfos;
+    }
+    // if you want appfolio's pin on there
+    // var appfolio = {
+    //     listable_uid: "appfolio",
+    //     address_address1: "Appfolio",
+    //     marketing_title: "Come visit Appfolio!",
+    //     address_latitude: 34.434248,
+    //     address_longitude: -119.863704
+    // };
+    //
+    // data.push(appfolio);
+
+    // start with map
+    this.state= {listView: true,
+                data: data,
+                remainingInfos: remainingInfos,
+                latitude: 34.41560,
+                longitude: -119.84192};
 	}
 
-    componentWillMount(){
-      //this.checkMatchedProperties();
-    }
+  componentWillMount(){
+    //this.checkMatchedProperties();
+  }
 
-    componentDidMount() {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          var coordinates = {
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-          }
-          this._map.animateToCoordinate(coordinates, 500);
-          console.log("lat: " + position.coords.latitude + " lon: " + position.coords.longitude);
-        },
-        (error) => console.log(error.message),
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-      );
-    }
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        var coordinates = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+        }
+        this._map.animateToCoordinate(coordinates, 500);
+        console.log("lat: " + position.coords.latitude + " lon: " + position.coords.longitude);
+      },
+      (error) => console.log(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
+  }
 
 	async checkMatchedProperties(){
 		try {
@@ -109,29 +113,29 @@ export default class Matches extends Component {
 		}
 	}
 
-    zoomToNext() {
-        console.log("Zoom to next property." + this.state.data.length);
-        if(this.state.data.length < 1) {
-            return;
-        }
-        if(currentMarker < this.state.data.length) {
-            var coordinates = {
-                latitude: this.state.data[currentMarker].address_latitude,
-                longitude: this.state.data[currentMarker].address_longitude,
-            }
-            this._map.animateToCoordinate(coordinates, 500);
-            currentMarker++;
-        } else {
-            currentMarker = 0;
-            var coordinates = {
-                latitude: this.state.data[currentMarker].address_latitude,
-                longitude: this.state.data[currentMarker].address_longitude,
-            }
-            this._map.animateToCoordinate(coordinates, 500);
-
-            currentMarker++;
-        }
+  zoomToNext() {
+    console.log("Zoom to next property." + this.state.data.length);
+    if(this.state.data.length < 1) {
+        return;
     }
+    if(currentMarker < this.state.data.length) {
+        var coordinates = {
+            latitude: this.state.data[currentMarker].address_latitude,
+            longitude: this.state.data[currentMarker].address_longitude,
+        }
+        this._map.animateToCoordinate(coordinates, 500);
+        currentMarker++;
+    } else {
+        currentMarker = 0;
+        var coordinates = {
+            latitude: this.state.data[currentMarker].address_latitude,
+            longitude: this.state.data[currentMarker].address_longitude,
+        }
+        this._map.animateToCoordinate(coordinates, 500);
+
+        currentMarker++;
+    }
+  }
 
    _onRenderRow(item)
    {
@@ -148,6 +152,21 @@ export default class Matches extends Component {
       </ListItem>);
    }
 
+   _renderRightRemoveField(data, secId, rowId, rowMap) {
+    return (
+      <Button full danger onPress={_ => this._deleteRow(secId, rowId, rowMap)}>
+       <Icon active name='trash' />
+      </Button>
+    );
+   }
+
+   _deleteRow(secId, rowId, rowMap) {
+     rowMap[`${secId}${rowId}`].props.closeRow();
+     const newData = this.state.data.slice();
+     newData.splice(rowId, 1);
+     this.setState({data: newData});
+   }
+
    render() {
        console.log("Rendering with lat: " + this.state.latitude + " lon: " + this.state.longitude);
        if(this.state.listView) {
@@ -158,8 +177,11 @@ export default class Matches extends Component {
                         <Text style={{textAlign: "center"}}>Go to "Find Properties" to discover new properties!</Text>
                       </View>;
            } else {
-               list = <List dataArray={this.state.data}
-                            renderRow={this._onRenderRow} />;
+             list = <List dataSource={this.ds.cloneWithRows(this.state.data)}
+                          renderRow={this._onRenderRow}
+                          renderRightHiddenRow={this._renderRightRemoveField}
+                          disableRightSwipe={true}
+                          rightOpenValue={-75} />;
            }
            return (
              <Container backgroundColor='white'>

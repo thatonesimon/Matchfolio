@@ -78,9 +78,13 @@ export class Login extends Component<{}> {
 
   componentDidMount()
   {
-
+    //_signupListener();
   }
 
+  async _signupListener(){
+    while(!global.signupUsername);
+    this.setState({username: global.signupUsername});
+  }
 
   async _onLoginButtonPress(){
 
