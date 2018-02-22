@@ -23,6 +23,7 @@ import { Drawer,
          ListItem } from 'native-base';
 import ActionButton from 'react-native-action-button';
 import MapView from 'react-native-maps';
+import * as firebase from 'firebase';
 
 const baseUrl = 'http://pa.cdn.appfolio.com/';
 
@@ -163,8 +164,11 @@ export default class Matches extends Component {
    _deleteRow(secId, rowId, rowMap) {
      rowMap[`${secId}${rowId}`].props.closeRow();
      const newData = this.state.data.slice();
+     var uid_to_remove = newData[rowId].listable_uid;
      newData.splice(rowId, 1);
      this.setState({data: newData});
+     firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/interested/' + uid_to_remove).remove();
+     firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/uninterested/' + uid_to_remove).set(1);
    }
 
    render() {

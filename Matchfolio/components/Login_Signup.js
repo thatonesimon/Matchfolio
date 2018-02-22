@@ -78,16 +78,10 @@ export class Login extends Component<{}> {
 
   componentDidMount()
   {
-    //_signupListener();
-  }
 
-  async _signupListener(){
-    while(!global.signupUsername);
-    this.setState({username: global.signupUsername});
   }
 
   async _onLoginButtonPress(){
-
 
     //for testing:
      // this.state.username = "useme";
@@ -221,6 +215,7 @@ export class Login extends Component<{}> {
       <TextInput
         placeholder="Username"
         onChangeText={(text) => this.setState({ username: text })}
+        value={this.state.username}
       />
       <Text style={{height:5}} />
       <TextInput
@@ -259,7 +254,7 @@ export class Signup extends Component<{}> {
 
   constructor(props) {
     super(props);
-    this.state = {username: "", password: ""};
+    this.state = {username: "", password: "", verifyPass: ""};
     this._onSignupButtonPress = this._onSignupButtonPress.bind(this);
   }
 
@@ -270,6 +265,11 @@ export class Signup extends Component<{}> {
 
     if(!this.state.username || !this.state.password) {
       Alert.alert("Please enter a username and password");
+      return;
+    }
+
+    if(this.state.password != this.state.verifyPass) {
+      Alert.alert("Passwords do not match!");
       return;
     }
 
@@ -347,7 +347,7 @@ export class Signup extends Component<{}> {
       />
       <TextInput
         placeholder="Verify Password"
-        onChangeText={(text) => this.setState({ password: text })}
+        onChangeText={(text) => this.setState({verifyPass: text})}
         secureTextEntry={true}
       />
       <Text style={{height:25}}>

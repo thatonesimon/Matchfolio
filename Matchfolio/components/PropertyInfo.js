@@ -14,6 +14,7 @@ import { Button,
 import Swiper from 'react-native-swiper';
 import Communications from 'react-native-communications';
 import MapView from 'react-native-maps';
+import * as firebase from 'firebase';
 
 const baseUrl = 'http://pa.cdn.appfolio.com/';
 const { width } = Dimensions.get('window')
@@ -103,6 +104,8 @@ export default class PropertyInfo extends Component {
       Alert.alert("You have been unmatched from this property.");
       // TODO: remove this property from user's matched properties...
       uid_to_remove = property.listable_uid;
+      firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/interested/' + uid_to_remove).remove();
+      firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/uninterested/' + uid_to_remove).set(1);
   }
 
   render() {
