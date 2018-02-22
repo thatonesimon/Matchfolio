@@ -26,6 +26,7 @@ import MapView from 'react-native-maps';
 import * as firebase from 'firebase';
 
 const baseUrl = 'http://pa.cdn.appfolio.com/';
+var userDB_interested, userDB_uninterested;
 
 class EmptyDrawerItem extends Component {
 	render(){
@@ -46,10 +47,14 @@ export default class Matches extends Component {
 		this._onRenderRow = this._onRenderRow.bind(this);
     this._renderRightRemoveField = this._renderRightRemoveField.bind(this);
     this._deleteRow = this._deleteRow.bind(this);
+    this.onDbInterestedDataChanged = this.onDbInterestedDataChanged.bind(this);
     this.zoomToNext = this.zoomToNext.bind(this);
 
-    this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    userDB_interested = firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/interested/');
+    userDB_uninterested = firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/uninterested/');
+    userDB_interested.on('child_removed', this.onDbInterestedDataChanged);
 
+    this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     var data = []
     var remainingInfos = null
     if (this.props.navigation.state.params)
@@ -79,7 +84,7 @@ export default class Matches extends Component {
 	}
 
   componentWillMount(){
-    //this.checkMatchedProperties();
+    this._mounted = true;
   }
 
   componentDidMount() {
@@ -95,6 +100,10 @@ export default class Matches extends Component {
       (error) => console.log(error.message),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
+  }
+
+  componentWillUnmount() {
+    this._mounted = false;
   }
 
 	async checkMatchedProperties(){
@@ -113,6 +122,13 @@ export default class Matches extends Component {
 			console.log(error);
 		}
 	}
+
+  onDbInterestedDataChanged(dataSnapshot) {
+    if(this._mounted) {
+      const newData = this.state.data.filter(item => item.listable_uid != global.removedPropertyId);
+      this.setState({data: newData});
+    }
+  }
 
   zoomToNext() {
     console.log("Zoom to next property." + this.state.data.length);
@@ -163,12 +179,10 @@ export default class Matches extends Component {
 
    _deleteRow(secId, rowId, rowMap) {
      rowMap[`${secId}${rowId}`].props.closeRow();
-     const newData = this.state.data.slice();
-     var uid_to_remove = newData[rowId].listable_uid;
-     newData.splice(rowId, 1);
-     this.setState({data: newData});
-     firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/interested/' + uid_to_remove).remove();
-     firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/uninterested/' + uid_to_remove).set(1);
+     const uid_to_remove = this.state.data[rowId].listable_uid;
+     global.removedPropertyId = uid_to_remove;
+     userDB_interested.child(uid_to_remove).remove();
+     userDB_uninterested.child(uid_to_remove).set(1);
    }
 
    render() {

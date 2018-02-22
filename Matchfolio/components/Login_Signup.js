@@ -73,7 +73,9 @@ export class Login extends Component<{}> {
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
     });
-    this.setState({done: true});
+
+    //username password for testing purposes
+    this.setState({done: true, username: 'useme', password: 'hello123'});
   }
 
   componentDidMount()
@@ -214,7 +216,7 @@ export class Login extends Component<{}> {
         <View style={styles.buttonContainer}>
       <TextInput
         placeholder="Username"
-        onChangeText={(text) => this.setState({ username: text })}
+        onChangeText={(text) => this.setState({ username: text.replace(' ', '') })}
         value={this.state.username}
       />
       <Text style={{height:5}} />
@@ -335,7 +337,7 @@ export class Signup extends Component<{}> {
         <View style={styles.buttonContainer}>
       <TextInput
         placeholder="Username"
-        onChangeText={(text) => this.setState({username: text})}
+        onChangeText={(text) => this.setState({username: text.replace(' ', '')})}
         value={this.state.username}
       />
       <Text style={{height:5}} />

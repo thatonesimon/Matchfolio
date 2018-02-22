@@ -100,12 +100,14 @@ export default class PropertyInfo extends Component {
       }
   }
 
-  _unmatch() {
-      Alert.alert("You have been unmatched from this property.");
+  async _unmatch() {
+      // Alert.alert("You have been unmatched from this property.");
       // TODO: remove this property from user's matched properties...
       uid_to_remove = property.listable_uid;
-      firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/interested/' + uid_to_remove).remove();
+      global.removedPropertyId = uid_to_remove;
+      await this.props.navigation.goBack();
       firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/uninterested/' + uid_to_remove).set(1);
+      firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/interested/' + uid_to_remove).remove();
   }
 
   render() {
