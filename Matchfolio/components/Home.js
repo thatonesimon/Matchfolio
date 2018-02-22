@@ -24,15 +24,19 @@ import { Ionicons } from '@expo/vector-icons'; // 6.1.0
 import * as firebase from 'firebase';
 
 var userDataRef;
-var mainDataRef = firebase.database().ref();
-var propertyRef = firebase.database().ref('properties');
+var propertyRef;
 var user;
+
+var propertyCount;
 
 var propertyInfo;
 var remainingInfos;
 
 const baseUrl = 'http://pa.cdn.appfolio.com/';
 var propertyPictures;
+
+//for testing purposes
+p = require('../res/property-info_clean.json');
 
 export class CardSwiper extends React.Component {
 
@@ -50,6 +54,7 @@ export class CardSwiper extends React.Component {
 		this._nextProperty = this._nextProperty.bind(this);
 		this._onInterested = this._onInterested.bind(this);
 		this._onMoreInfo = this._onMoreInfo.bind(this);
+    this.onAddedProperty = this.onAddedProperty.bind(this);
 	}
 
   async componentWillMount() {
@@ -71,6 +76,9 @@ export class CardSwiper extends React.Component {
     propertyInfo = global.UserPropertyListing;
     remainingInfos = global.UserPropertyListing;
 
+    propertyCount = 0;
+    propertyRef = firebase.database().ref('properties_new');
+    propertyRef.on('child_added', this.onAddedProperty);
     user = firebase.auth().currentUser;
     userDataRef = firebase.database().ref("users/" +user.uid);
 
@@ -92,6 +100,20 @@ export class CardSwiper extends React.Component {
 
 		this.setState({loading: false});
 	}
+
+  onAddedProperty(dataSnapshot) {
+    propertyCount++;
+    if(propertyCount <= global.allPropertyCount) {
+      console.log('not added, but counted: propC, allprop:', propertyCount, global.allPropertyCount)
+    }
+    else {
+      console.log('added property!')
+      remainingInfos.push(/*for testing*/p[0]/*dataSnapshot.val()*/);
+      //don't know why we have to do this to refresh page, but will be an issue if new listing appers while user is swiping --> will cause a refresh and page will flash
+      this.setState({loading: true});
+      this.setState({loading: false});
+    }
+  }
 
 	_nextProperty() {
 		var propertyNumber = this.state.currentProperty;

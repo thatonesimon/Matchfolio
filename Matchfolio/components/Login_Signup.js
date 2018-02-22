@@ -135,9 +135,11 @@ export class Login extends Component<{}> {
       var j = 0;
       var filtered =[];
       // var prefetches = [];
+      global.allPropertyCount = 0;
       for(var i in completeListing){
-          if(!seen.includes(i)){
-              filtered.push(completeListing[i]);
+        global.allPropertyCount++
+        if(!seen.includes(i)){
+            filtered.push(completeListing[i]);
 
               // imageurls = completeListing[i].image_urls.split(',');
               // for(i=0; i<10 && i<imageurls.length; i++) {
@@ -155,6 +157,7 @@ export class Login extends Component<{}> {
       //
       // await Promise.all(prefetches);
 
+      console.log("ALLPROPLEN: ", global.allPropertyCount)
       global.UserPropertyListing = filtered.slice();
       global.matched = savedMatches.slice();
 
