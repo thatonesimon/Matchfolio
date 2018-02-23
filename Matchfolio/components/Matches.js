@@ -198,6 +198,7 @@ export default class Matches extends Component {
              list = <List dataSource={this.ds.cloneWithRows(this.state.data)}
                           renderRow={this._onRenderRow}
                           renderRightHiddenRow={this._renderRightRemoveField}
+                          renderLeftHiddenRow={()=>{}}
                           disableRightSwipe={true}
                           rightOpenValue={-75} />;
            }
