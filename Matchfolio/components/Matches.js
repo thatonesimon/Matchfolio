@@ -161,7 +161,7 @@ export default class Matches extends Component {
       else
          return (
       <ListItem button onPress={()=>this.props.navigation.navigate('propertyInfo', {item: item, showApply: true})}>
-         <Thumbnail square size={80} source={{uri: baseUrl + item.image_urls.split(',')[0]}} />
+         <Thumbnail square style={{marginLeft: 15}} size={80} source={{uri: baseUrl + item.image_urls.split(',')[0]}} />
          <Body>
             <Text>{item.address_address1}</Text>
             <Text note>{"Rent: $" + item.market_rent}</Text>
