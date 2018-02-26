@@ -19,6 +19,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@ptomasroos/react-native-multi-slider": "0.0.12",
     "expo": "^22.0.2",
     "firebase": "^4.9.0",
     "native-base": "^2.3.3",

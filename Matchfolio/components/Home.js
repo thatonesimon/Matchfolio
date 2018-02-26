@@ -289,9 +289,9 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
   },
   rentPropertyInfo: {
-    flex: 3,
+    flex: 2,
     textAlign: 'left',
-    fontSize: 24,
+    fontSize: 20,
     borderRightColor: 'black',
     borderRightWidth: 1,
   },
@@ -316,47 +316,3 @@ const styles = StyleSheet.create({
     color: '#aaa',
   },
 });
-//   container: {
-  //     flex: 1,
-  //     backgroundColor: '#fff',
-  //     alignItems: 'center',
-  //     justifyContent: 'center',
-  //   },
-  //   horizontalHolder: {
-  //     flexDirection: 'row',
-  //     textAlignVertical: 'center',
-  //     justifyContent: 'space-between',
-  //   },
-  //   verticalHolder: {
-  //     flexDirection: 'column',
-  //     justifyContent: 'space-between',
-  //     padding: 2,
-  //   },
-  //   rentPropertyInfo: {
-  //     flex: 3,
-  //     textAlign: 'left',
-  //     fontSize: 24,
-  //     borderRightColor: 'black',
-  //     borderRightWidth: 1,
-  //   },
-  //   otherPropertyInfo: {
-  //     flex: 1,
-  //     textAlign: 'center',
-  //     fontSize: 16,
-  //     borderLeftColor: 'black',
-  //     borderLeftWidth: 1,
-  //   },
-  //   propertyDescription: {
-  //     flex: 1,
-  //     textAlign: 'center',
-  //     fontSize: 20,
-  //   },
-  //   header: {
-  //     fontSize: 20,
-  //   },
-  //   phoneNumber: {
-  //     flex: 1,
-  //     textAlign: 'center',
-  //     color: '#aaa',
-  //   },
-  // });

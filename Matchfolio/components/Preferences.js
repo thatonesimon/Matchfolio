@@ -44,9 +44,7 @@ export default class Preferences extends React.Component {
   }
 
   multiSliderValuesChange = (values) => {
-    this.setState({
-      multiSliderValue: values,
-    });
+    this.multiSliderValue = values;
   }
 
   static navigationOptions = {
@@ -78,6 +76,7 @@ export default class Preferences extends React.Component {
         </Header>
 
         <Text style={styles.blacktext}>Rent</Text>
+        <View style={styles.slider}><Text>Min: ${this.rentState.multiSliderValue[0]}</Text><Text>Max: ${this.rentState.multiSliderValue[1]}</Text></View>
         <View style={styles.slider}>
           <MultiSlider
             values={[this.rentState.multiSliderValue[0], this.rentState.multiSliderValue[1]]}
@@ -91,6 +90,8 @@ export default class Preferences extends React.Component {
         </View>
 
         <Text style={styles.blacktext}>Square Feet</Text>
+        <View style={styles.slider}><Text>Min: {this.sqftState.multiSliderValue[0]}</Text><Text>Max: {this.sqftState.multiSliderValue[1]}</Text></View>
+
         <View style={styles.slider}>
           <MultiSlider
             values={[this.sqftState.multiSliderValue[0], this.sqftState.multiSliderValue[1]]}
@@ -243,6 +244,7 @@ const styles = StyleSheet.create({
   },
   slider: {
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    paddingVertical: 10
   },
 });
