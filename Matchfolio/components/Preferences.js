@@ -16,6 +16,7 @@ import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import { Container, Header, Left, Right, Button, Content, ListItem, Icon, CheckBox, Text, Body } from 'native-base';
 import { Ionicons } from '@expo/vector-icons'; // 6.1.0
 import { NavigationActions } from 'react-navigation';
+import { Dropdown } from 'react-native-material-dropdown';
 
 
 export default class Preferences extends React.Component {
@@ -54,13 +55,22 @@ export default class Preferences extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.bedRef = this.updateRef.bind(this, 'bed');
+    this.bathRef = this.updateRef.bind(this, 'bath');
+
     this.state = {
-      value: false,
-      switchValue: true
+      bed: '1',
+      bath: '1',
     };
   }
 
+  updateRef(name, ref) {
+     this[name] = ref;
+   }
+
   render() {
+    let {bed, bath} = this.state;
     return (
       <ScrollView backgroundColor='white'>
         <Header style= {{backgroundColor: 'transparent', borderBottomWidth: 0}}>
@@ -105,28 +115,22 @@ export default class Preferences extends React.Component {
         </View>
 
         <Text style={styles.blacktext}>Bed</Text>
-        <Picker style={{ width: 100 }}
-          mode = 'dropdown'
-          selectedValue={this.state.bedlanguage}
-          onValueChange={(bedVal, itemIndex) =>this.setState({ bedlanguage: bedVal })}>
-          <Picker.Item label="1" value="bed_one" />
-          <Picker.Item label="2" value="bed_two" />
-          <Picker.Item label="3" value="bed_three" />
-          <Picker.Item label="4" value="bed_four" />
-          <Picker.Item label="5+" value="bed_five" />
-        </Picker>
+          <Dropdown
+                ref={this.bedRef}
+                value={bed}
+                onChangeText={this.onChangeText}
+                label='Bed'
+                data={bedData}
+              />
 
         <Text style={styles.blacktext}>Baths</Text>
-        <Picker style={{ width: 100 }}
-          mode = 'dropdown'
-          selectedValue={this.state.bathlanguage}
-          onValueChange={(bathValue, itemIndex) =>this.setState({ bathlanguage: bathValue })}>
-          <Picker.Item label="1" value="bath_one" />
-          <Picker.Item label="2" value="bath_two" />
-          <Picker.Item label="3" value="bath_three" />
-          <Picker.Item label="4" value="bath_four" />
-          <Picker.Item label="5+" value="bath_five" />
-        </Picker>
+          <Dropdown
+                ref={this.bathRef}
+                value={bath}
+                onChangeText={this.onChangeText}
+                label='Bath'
+                data={bathData}
+              />
 
         <Text style={styles.blacktext}>Amenities Included</Text>
         <ListItem>
@@ -248,3 +252,19 @@ const styles = StyleSheet.create({
     paddingVertical: 10
   },
 });
+
+const bedData = [
+  { value: '1' },
+  { value: '2' },
+  { value: '3' },
+  { value: '4' },
+  { value: '5+' },
+];
+
+const bathData = [
+  { value: '1' },
+  { value: '2' },
+  { value: '3' },
+  { value: '4' },
+  { value: '5+' },
+];
