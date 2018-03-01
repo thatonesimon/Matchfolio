@@ -66,8 +66,8 @@ export default class Preferences extends React.Component {
   }
 
   updateRef(name, ref) {
-     this[name] = ref;
-   }
+    this[name] = ref;
+  }
 
   render() {
     let {bed, bath} = this.state;
@@ -99,6 +99,8 @@ export default class Preferences extends React.Component {
             />
         </View>
 
+        <View style={styles.separator} />
+
         <Text style={styles.blacktext}>Square Feet</Text>
         <View style={styles.slider}><Text>Min: {this.sqftState.multiSliderValue[0]}</Text><Text>Max: {this.sqftState.multiSliderValue[1]}</Text></View>
 
@@ -114,23 +116,39 @@ export default class Preferences extends React.Component {
             />
         </View>
 
-        <Text style={styles.blacktext}>Bed</Text>
-          <Dropdown
-                ref={this.bedRef}
-                value={bed}
-                onChangeText={this.onChangeText}
-                label='Bed'
-                data={bedData}
-              />
+        <View style={styles.separator} />
 
-        <Text style={styles.blacktext}>Baths</Text>
-          <Dropdown
-                ref={this.bathRef}
-                value={bath}
-                onChangeText={this.onChangeText}
-                label='Bath'
-                data={bathData}
+        <View style={{flexDirection: 'row'}}>
+          <View style={{flex: 1}}>
+            <Text style={styles.blacktext}>Bed</Text>
+          </View>
+          <View style={styles.numPicker}>
+            <Dropdown
+              ref={this.bedRef}
+              value={bed}
+              onChangeText={this.onChangeText}
+              data={bedData}
               />
+          </View>
+        </View>
+
+        <View style={styles.separator} />
+
+        <View style={{flexDirection: 'row'}}>
+          <View style={{flex: 1}}>
+            <Text style={styles.blacktext}>Bath</Text>
+          </View>
+          <View style={styles.numPicker}>
+            <Dropdown
+              ref={this.bathRef}
+              value={bath}
+              onChangeText={this.onChangeText}
+              data={bathData}
+              />
+          </View>
+        </View>
+
+        <View style={styles.separator} />
 
         <Text style={styles.blacktext}>Amenities Included</Text>
         <ListItem>
@@ -245,6 +263,16 @@ const styles = StyleSheet.create({
   },
   margin: {
     margin: 10,
+  },
+  numPicker: {
+    width: 96,
+    paddingLeft: 8,
+    borderLeftColor: '#000d',
+    borderLeftWidth: 0.5,
+  },
+  separator: {
+    borderBottomColor: '#bbb',
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   slider: {
     flexDirection: 'row',
