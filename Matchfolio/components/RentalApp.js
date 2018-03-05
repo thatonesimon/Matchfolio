@@ -72,15 +72,6 @@ export default class App extends Component<{}> {
         <Content>
           <Form>
             <Item floatingLabel>
-              <Label>Phone Number</Label>
-            </Item>
-            <Item floatingLabel>
-              <Label>Driver's License Number</Label>
-            </Item>
-            <Item floatingLabel>
-              <Label>SSN</Label>
-            </Item>
-            <Item floatingLabel>
               <Label>Previous Address (1st line)</Label>
             </Item>
             <Item floatingLabel>

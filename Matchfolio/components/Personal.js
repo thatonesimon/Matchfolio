@@ -66,16 +66,31 @@ export default class Personal extends React.Component {
          </Header>
         <Content>
           <Form>
-            <Item floatingLabel>
-              <Label>First Name</Label>
-            </Item>
-            <Item floatingLabel>
-              <Label>Last Name</Label>
-            </Item>
-            <Item floatingLabel>
-              <Label>Social Security #</Label>
-            </Item>
-            <Item />
+            <View style={styles.info}>
+                <Item style={{marginBottom: 5}} floatingLabel>
+                  <Label>First Name</Label>
+                </Item>
+                <Item style={{marginBottom: 5}} floatingLabel>
+                  <Label>Last Name</Label>
+                </Item>
+                <Item style={{marginBottom: 5}} floatingLabel>
+                  <Label>Social Security #</Label>
+                </Item>
+                <Item style={{marginBottom: 5}} floatingLabel>
+                  <Label>Driver License Number</Label>
+                </Item>
+                <Item style={{marginBottom: 5}} floatingLabel>
+                  <Label>Birthday</Label>
+                </Item>
+            </View>
+            <View style={styles.info}>
+                <Item style={{marginBottom: 5}} floatingLabel>
+                  <Label>Phone Number</Label>
+                </Item>
+                <Item style={{marginBottom: 5}} floatingLabel>
+                  <Label>Email</Label>
+                </Item>
+            </View>
           </Form>
           <Button bordered block onPress={() => this.props.navigation.navigate('rentalapp')} style={styles.button} >
             <Text>Save</Text>
@@ -104,6 +119,15 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: 10,
-    margin: 20,
+    margin: 10,
   },
+  info: {
+    padding: 10,
+    borderColor: '#4286f4',
+    borderWidth: 1,
+    // backgroundColor: '#eef8fd',
+    borderRadius: 5,
+    margin: 10,
+    marginBottom: 0,
+  }
 });
