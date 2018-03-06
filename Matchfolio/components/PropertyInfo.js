@@ -144,6 +144,7 @@ export default class PropertyInfo extends Component {
             style={styles.map}
         >
             <MapView.Marker
+              image={require('../res/blue-pin.png')}
               coordinate={{latitude: property.address_latitude, longitude: property.address_longitude}}
               title={property.address_address1}
               description={property.marketing_title}

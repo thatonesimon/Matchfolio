@@ -23,6 +23,9 @@ import { Drawer,
          ListItem } from 'native-base';
 import ActionButton from 'react-native-action-button';
 import MapView from 'react-native-maps';
+import SLIcon from 'react-native-vector-icons/SimpleLineIcons';
+import EVIcon from 'react-native-vector-icons/EvilIcons';
+import ENIcon from 'react-native-vector-icons/Entypo';
 import * as firebase from 'firebase';
 
 const baseUrl = 'http://pa.cdn.appfolio.com/';
@@ -170,7 +173,7 @@ export default class Matches extends Component {
              <Text>{item.address_address1}</Text>
              <Text note>{"Rent: $" + item.market_rent}</Text>
           </Body>
-          <Thumbnail square style={{marginLeft: 15}} size={80} source={{uri: "https://cdn.pixabay.com/photo/2016/03/31/14/37/check-mark-1292787_1280.png"}} />
+          <Thumbnail square style={{marginLeft: 15}} size={80} source={{uri: "https://cdn0.iconfinder.com/data/icons/round-ui-icons/128/tick_blue.png"}} />
 
        </ListItem>);
       else
@@ -188,7 +191,7 @@ export default class Matches extends Component {
    _renderRightRemoveField(data, secId, rowId, rowMap) {
     return (
       <Button full danger onPress={_ => this._deleteRow(secId, rowId, rowMap)}>
-       <Icon active name='trash' />
+       <EVIcon active size={40} name='trash' color='white'/>
       </Button>
     );
    }
@@ -236,11 +239,11 @@ export default class Matches extends Component {
                  {list}
                </Content>
                <ActionButton
-                 buttonColor="#3179cd"
+                 buttonColor="#0097ef"
                  onPress={() => { this.setState({listView: !this.state.listView})}}
                  position="right"
                  style={styles.button}
-                 renderIcon={() => {return <Icon name="ios-map-outline" />}} />
+                 renderIcon={() => {return <ENIcon name="map" size={24} color="white" />}} />
                    <Footer>
                      <FooterTab>
                        <Button vertical onPress={()=>this.props.navigation.navigate('home', {homeSavedMatches: this.state.data, remainingInfos: this.state.remainingInfos})}>
@@ -288,6 +291,7 @@ export default class Matches extends Component {
 
                      {this.state.data.map(marker => (
                          <MapView.Marker
+                           image={require('../res/blue-pin.png')}
                            key={marker.listable_uid}
                            coordinate={{
                                latitude: marker.address_latitude,
@@ -306,17 +310,17 @@ export default class Matches extends Component {
                  </MapView>
                  </Content>
                  <ActionButton
-                   buttonColor="#3179cd"
+                   buttonColor="#0097ef"
                    onPress={() => this.zoomToNext()}
                    position="left"
                    style={styles.button}
-                   renderIcon={() => {return <Icon name="ios-arrow-round-forward" />}} />
+                   renderIcon={() => {return <ENIcon name="arrow-right" color="white" size={28} />}} />
                  <ActionButton
-                   buttonColor="#3179cd"
+                   buttonColor="#0097ef"
                    onPress={() => { this.setState({listView: !this.state.listView})}}
                    position="right"
                    style={styles.button}
-                   renderIcon={() => {return <Icon name="ios-list" />}} />
+                   renderIcon={() => {return <ENIcon name="list" color="white" size={28} />}} />
                      <Footer>
                        <FooterTab>
                          <Button vertical onPress={()=>this.props.navigation.navigate('home', {homeSavedMatches: this.state.data, remainingInfos: this.state.remainingInfos})}>
