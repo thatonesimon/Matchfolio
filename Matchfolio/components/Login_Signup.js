@@ -111,6 +111,13 @@ export class Login extends Component<{}> {
         console.log(error.message)
       })
 
+      global.applied = {};
+      await fb.child("users/"+user.uid+"/applied").once("value").then(function(snapshot){
+          snapshot.forEach(function(childsnap){
+              global.applied[childsnap.key] = 1;
+          });
+      })
+
       //var score;
       await fb.child("users/"+user.uid+"/interested").once("value").then(function(snapshot){
           snapshot.forEach(function(childsnap){
@@ -123,6 +130,8 @@ export class Login extends Component<{}> {
               noInterest.push(childsnap.key);
           });
       })
+
+
       /*
       await fb.child("users/"+user.uid+"/userScore").once("value").then(function(snapshot){
           score = snapshot.val();

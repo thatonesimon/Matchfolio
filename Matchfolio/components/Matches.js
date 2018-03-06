@@ -52,7 +52,11 @@ export default class Matches extends Component {
 
     userDB_interested = firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/interested/');
     userDB_uninterested = firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/uninterested/');
+    userDB_applied = firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/applied/');
+
     userDB_interested.on('child_removed', this.onDbInterestedDataChanged);
+    userDB_applied.on('child_added', this.onDbInterestedDataChanged);
+    userDB_applied.on('child_changed', this.onDbInterestedDataChanged);
 
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     var data = []
@@ -158,6 +162,17 @@ export default class Matches extends Component {
    {
       if(item == null)
          return null;
+      else if(global.applied[item.listable_uid])
+          return (
+       <ListItem button onPress={()=>this.props.navigation.navigate('propertyInfo', {item: item, showApply: true})}>
+          <Thumbnail square style={{marginLeft: 15}} size={80} source={{uri: baseUrl + item.image_urls.split(',')[0]}} />
+          <Body>
+             <Text>{item.address_address1}</Text>
+             <Text note>{"Rent: $" + item.market_rent}</Text>
+          </Body>
+          <Thumbnail square style={{marginLeft: 15}} size={80} source={{uri: "https://cdn.pixabay.com/photo/2016/03/31/14/37/check-mark-1292787_1280.png"}} />
+
+       </ListItem>);
       else
          return (
       <ListItem button onPress={()=>this.props.navigation.navigate('propertyInfo', {item: item, showApply: true})}>
@@ -166,6 +181,7 @@ export default class Matches extends Component {
             <Text>{item.address_address1}</Text>
             <Text note>{"Rent: $" + item.market_rent}</Text>
          </Body>
+
       </ListItem>);
    }
 

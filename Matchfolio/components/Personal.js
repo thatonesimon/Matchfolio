@@ -123,11 +123,11 @@ const styles = StyleSheet.create({
   },
   info: {
     padding: 10,
-    borderColor: '#4286f4',
+    borderColor: '#888888',
     borderWidth: 1,
-    // backgroundColor: '#eef8fd',
-    borderRadius: 5,
-    margin: 10,
-    marginBottom: 0,
+    backgroundColor: '#ffffff',
+    // borderRadius: 5,
+    marginTop: 10,
+    // marginBottom: 0,
   }
 });

@@ -46,10 +46,12 @@ export default class PropertyInfo extends Component {
       loadQ.push(0)
     }
     if(this.props.navigation.state.params.showApply) {
-        applyButton = <View>
+        if(global.applied[property.listable_uid])
+        {
+            applyButton = <View>
                       <View style={{flexDirection: 'row', flex: 1}}>
-                          <Button success style={{flex: 1, marginBottom: 10}} onPress={() => this._apply() } >
-                              <Text style={{textAlign: 'center'}}>Apply to Property</Text>
+                          <Button disabled style={{flex: 1, marginBottom: 10}} >
+                              <Text style={{textAlign: 'center'}}>Apply to property</Text>
                           </Button>
                       </View>
                       <View style={{flexDirection: 'row', flex: 1}}>
@@ -58,7 +60,21 @@ export default class PropertyInfo extends Component {
                           </Button>
                       </View>
                       </View>;
-
+        }
+        else {
+            applyButton = <View>
+                      <View style={{flexDirection: 'row', flex: 1}}>
+                          <Button success style={{flex: 1, marginBottom: 10}} onPress={() => this._apply() } >
+                              <Text style={{textAlign: 'center'}}>Apply to property</Text>
+                          </Button>
+                      </View>
+                      <View style={{flexDirection: 'row', flex: 1}}>
+                          <Button danger style={{flex: 1}} onPress={() => this._unmatch() } >
+                              <Text style={{textAlign: 'center'}}>Unmatch from property</Text>
+                          </Button>
+                      </View>
+                      </View>;
+        }
     } else {
         applyButton = <View style={{flexDirection: 'row', flex: 1}}/>;
     }
@@ -90,14 +106,18 @@ export default class PropertyInfo extends Component {
       Communications.phonecall(phoneNumber, false);
   }
 
-  _apply() {
+  async _apply() {
+
       if(property.additional_questions) {
           console.log("additional questions");
           this.props.navigation.navigate('additionalQuestions', {questions: property.additional_questions});
-      } else {
-          Alert.alert("Your application has been sent to " + property.vhost + "!");
-          // this.props.navigation.navigate('additionalQuestions', {questions: ["Do you like cows?", "How many cows do you have?"]});
       }
+      global.applied[property.listable_uid] = 1;
+      //Alert.alert("Your application has been sent to " + property.vhost + "!");
+      await this.props.navigation.goBack();
+      firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/applied/' + property.listable_uid).set(1);
+          // this.props.navigation.navigate('additionalQuestions', {questions: ["Do you like cows?", "How many cows do you have?"]});
+
   }
 
   async _unmatch() {

@@ -15,6 +15,7 @@ export default class AdditionalQuestions extends Component {
 
     _apply() {
         Alert.alert("Your application has been completed!");
+        // firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/applied/' + property.listable_uid).set(1);
         this.props.navigation.navigate('main');
     }
 
