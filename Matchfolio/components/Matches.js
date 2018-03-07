@@ -173,7 +173,7 @@ export default class Matches extends Component {
              <Text>{item.address_address1}</Text>
              <Text note>{"Rent: $" + item.market_rent}</Text>
           </Body>
-          <Thumbnail square style={{marginLeft: 15}} size={80} source={{uri: "https://cdn0.iconfinder.com/data/icons/round-ui-icons/128/tick_blue.png"}} />
+          <Icon name="ios-checkmark-circle-outline" size={30} style={{color:"#1DA664"}}/>
 
        </ListItem>);
       else
