@@ -173,7 +173,7 @@ export default class Matches extends Component {
              <Text>{item.address_address1}</Text>
              <Text note>{"Rent: $" + item.market_rent}</Text>
           </Body>
-          <Icon name="ios-checkmark-circle-outline" size={30} style={{color:"#1DA664"}}/>
+          <Icon name="ios-checkmark-circle-outline" size={30} style={{color:"#0097ef"}}/>
 
        </ListItem>);
       else
