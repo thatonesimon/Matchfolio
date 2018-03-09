@@ -15,6 +15,7 @@ import Swiper from 'react-native-swiper';
 import Communications from 'react-native-communications';
 import MapView from 'react-native-maps';
 import * as firebase from 'firebase';
+import Feather from 'react-native-vector-icons/Feather'
 
 const baseUrl = 'http://pa.cdn.appfolio.com/';
 const { width } = Dimensions.get('window')
@@ -51,12 +52,16 @@ export default class PropertyInfo extends Component {
             applyButton = <View>
                       <View style={{flexDirection: 'row', flex: 1}}>
                           <Button disabled style={{flex: 1, marginBottom: 10}} >
-                              <Text style={{textAlign: 'center'}}>Apply to property</Text>
+                              <Feather name='check-circle' size={24} color='white' style={{marginLeft: 10, flex: 1}} />
+                              <Text style={{flex: 5, textAlign: 'center'}}>Applied</Text>
+                              <Text style={{flex: 1}} />
                           </Button>
                       </View>
                       <View style={{flexDirection: 'row', flex: 1}}>
                           <Button danger style={{flex: 1}} onPress={() => this._unmatch() } >
-                              <Text style={{textAlign: 'center'}}>Unmatch from property</Text>
+                              <Feather name='x-circle' size={26} color='white' style={{marginLeft: 10, flex: 1}} />
+                              <Text style={{flex: 5, textAlign: 'center'}}>Unmatch from property</Text>
+                              <Text style={{flex: 1}} />
                           </Button>
                       </View>
                       </View>;
@@ -65,12 +70,16 @@ export default class PropertyInfo extends Component {
             applyButton = <View>
                       <View style={{flexDirection: 'row', flex: 1}}>
                           <Button success style={{flex: 1, marginBottom: 10}} onPress={() => this._apply() } >
-                              <Text style={{textAlign: 'center'}}>Apply to property</Text>
+                              <Feather name='mail' size={24} color='white' style={{marginLeft: 10, flex: 1}} />
+                              <Text style={{flex: 5, textAlign: 'center'}}>Apply to property</Text>
+                              <Text style={{flex: 1}} />
                           </Button>
                       </View>
                       <View style={{flexDirection: 'row', flex: 1}}>
                           <Button danger style={{flex: 1}} onPress={() => this._unmatch() } >
-                              <Text style={{textAlign: 'center'}}>Unmatch from property</Text>
+                              <Feather name='x-circle' size={26} color='white' style={{marginLeft: 10, flex: 1}} />
+                              <Text style={{flex: 5, textAlign: 'center'}}>Unmatch from property</Text>
+                              <Text style={{flex: 1}} />
                           </Button>
                       </View>
                       </View>;
@@ -173,7 +182,9 @@ export default class PropertyInfo extends Component {
           <Text style={styles.info}>{"Amenities: " + property.amenities}</Text>
           <View style={{flexDirection: 'row', flex: 1, marginBottom: 10}}>
               <Button info style={{flex: 1}} onPress={() => this._callNumber(property.contact_phone_number) } >
-                <Text style={{textAlign: 'center'}}>Contact Owner</Text>
+                <Feather name='phone' size={24} color='white' style={{marginLeft: 10, flex: 1}} />
+                <Text style={{flex: 5, textAlign: 'center'}}>Contact Owner</Text>
+                <Text style={{flex: 1}} />
               </Button>
           </View>
           {applyButton}
