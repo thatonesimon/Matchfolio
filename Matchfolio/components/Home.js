@@ -20,7 +20,7 @@ import { Drawer,
   FooterTab,
   Icon,
   Spinner } from 'native-base';
-  import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'; // 6.1.0
+  import { FontAwesome, Ionicons, MaterialCommunityIcons, Foundation } from '@expo/vector-icons'; // 6.1.0
   import * as firebase from 'firebase';
 
   var mainDataRef = firebase.database().ref();
@@ -213,7 +213,7 @@ import { Drawer,
                       <Text style={styles.rentPropertyInfo}>{"$" + item.market_rent + "/month"}</Text>
                       <Text style={styles.otherPropertyInfo}><FontAwesome name="bed" size={16} color="gray" />{"\n" + item.bedrooms}</Text>
                       <Text style={styles.otherPropertyInfo}><FontAwesome name="bath" size={16} color="gray" />{"\n" + item.bathrooms}</Text>
-                      <Text style={styles.otherPropertyInfo}><Ionicons name="ios-expand-outline" size={16} color="gray" />{"\n" + item.square_feet}</Text>
+                      <Text style={styles.otherPropertyInfo}><Foundation name="arrows-out" size={16} color="gray" />{"\n" + item.square_feet}</Text>
                     </View>
                   </CardItem>
 

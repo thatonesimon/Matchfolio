@@ -26,6 +26,8 @@ import MapView from 'react-native-maps';
 import SLIcon from 'react-native-vector-icons/SimpleLineIcons';
 import EVIcon from 'react-native-vector-icons/EvilIcons';
 import ENIcon from 'react-native-vector-icons/Entypo';
+import FAIcon from 'react-native-vector-icons/FontAwesome'
+import IOIcon from 'react-native-vector-icons/Ionicons'
 import * as firebase from 'firebase';
 
 const baseUrl = 'http://pa.cdn.appfolio.com/';
@@ -49,6 +51,7 @@ export default class Matches extends Component {
 		super(props);
 		this._onRenderRow = this._onRenderRow.bind(this);
     this._renderRightRemoveField = this._renderRightRemoveField.bind(this);
+    this._renderLeftApplyField = this._renderLeftApplyField.bind(this);
     this._deleteRow = this._deleteRow.bind(this);
     this.onDbInterestedDataChanged = this.onDbInterestedDataChanged.bind(this);
     this.zoomToNext = this.zoomToNext.bind(this);
@@ -191,7 +194,30 @@ export default class Matches extends Component {
    _renderRightRemoveField(data, secId, rowId, rowMap) {
     return (
       <Button full danger onPress={_ => this._deleteRow(secId, rowId, rowMap)}>
-       <EVIcon active size={40} name='trash' color='white'/>
+       <IOIcon active size={40} name='ios-trash' color='white'/>
+      </Button>
+    );
+   }
+
+   _renderLeftApplyField(property) {
+
+     function applyToProperty() {
+       global.applied[property.listable_uid] = 1;
+       //Alert.alert("Your application has been sent to " + property.vhost + "!");
+       firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/applied/' + property.listable_uid).set(1);
+     }
+     applyToProperty = applyToProperty.bind(this);
+
+     if (global.applied[property.listable_uid]) {
+       return (
+        <Button full disabled onPress={ applyToProperty }>
+         <IOIcon active size={35} name='md-send' color='white'/>
+        </Button>
+      );
+     }
+     return (
+      <Button full success onPress={ applyToProperty }>
+       <IOIcon active size={35} name='md-send' color='white'/>
       </Button>
     );
    }
@@ -217,9 +243,10 @@ export default class Matches extends Component {
              list = <List dataSource={this.ds.cloneWithRows(this.state.data)}
                           renderRow={this._onRenderRow}
                           renderRightHiddenRow={this._renderRightRemoveField}
-                          renderLeftHiddenRow={()=>{}}
-                          disableRightSwipe={true}
-                          rightOpenValue={-75} />;
+                          renderLeftHiddenRow={this._renderLeftApplyField}
+                          disableRightSwipe={false}
+                          rightOpenValue={-75}
+                          leftOpenValue={75} />;
            }
            return (
              <Container backgroundColor='white'>
