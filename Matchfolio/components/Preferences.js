@@ -24,14 +24,6 @@ export default class Preferences extends React.Component {
     Alert.alert('You tapped the button!');
   }
 
-  rentState = {
-    multiSliderValue:[1500, 5000]
-  };
-
-  sqftState = {
-    multiSliderValue:[2000, 3000]
-  };
-
   sliderValuesChangeStart = () => {
     this.setState({
       sliderOneChanging: true,
@@ -44,9 +36,16 @@ export default class Preferences extends React.Component {
     });
   }
 
-  multiSliderValuesChange = (values) => {
-    this.multiSliderValue = values;
+  rentValuesChange = (values) => {
+
+    this.setState({rentState:values});
   }
+
+  sqftValuesChange = (values) => {
+
+    this.setState({sqftState:values});
+  }
+
 
   static navigationOptions = {
     drawerIcon: ({ tintColor }) => (<Icon name="ios-color-filter-outline" size={15} style={{ color: tintColor }} />),
@@ -62,6 +61,8 @@ export default class Preferences extends React.Component {
     this.state = {
       bed: '1',
       bath: '1',
+      rentState: [1500, 5000],
+      sqftState: [1500, 5000],
     };
   }
 
@@ -86,12 +87,12 @@ export default class Preferences extends React.Component {
         </Header>
 
         <Text style={styles.blacktext}>Rent</Text>
-        <View style={styles.slider}><Text>Min: ${this.rentState.multiSliderValue[0]}</Text><Text>Max: ${this.rentState.multiSliderValue[1]}</Text></View>
+        <View style={styles.slider}><Text>Min: ${this.state.rentState[0]}</Text><Text>Max: ${this.state.rentState[1]}</Text></View>
         <View style={styles.slider}>
           <MultiSlider
-            values={[this.rentState.multiSliderValue[0], this.rentState.multiSliderValue[1]]}
+            values={[this.state.rentState[0], this.state.rentState[1]]}
             sliderLength={280}
-            onValuesChange={this.multiSliderValuesChange}
+            onValuesChange={this.rentValuesChange}
             min={500}
             max={10000}
             step={100}
@@ -102,13 +103,13 @@ export default class Preferences extends React.Component {
         <View style={styles.separator} />
 
         <Text style={styles.blacktext}>Square Feet</Text>
-        <View style={styles.slider}><Text>Min: {this.sqftState.multiSliderValue[0]}</Text><Text>Max: {this.sqftState.multiSliderValue[1]}</Text></View>
+        <View style={styles.slider}><Text>Min: {this.state.sqftState[0]}</Text><Text>Max: {this.state.sqftState[1]}</Text></View>
 
         <View style={styles.slider}>
           <MultiSlider
-            values={[this.sqftState.multiSliderValue[0], this.sqftState.multiSliderValue[1]]}
+            values={[this.state.sqftState[0], this.state.sqftState[1]]}
             sliderLength={280}
-            onValuesChange={this.multiSliderValuesChange}
+            onValuesChange={this.sqftValuesChange}
             min={500}
             max={7500}
             step={250}
@@ -128,6 +129,7 @@ export default class Preferences extends React.Component {
               value={bed}
               onChangeText={this.onChangeText}
               data={bedData}
+              label=" "
               />
           </View>
         </View>
@@ -144,6 +146,7 @@ export default class Preferences extends React.Component {
               value={bath}
               onChangeText={this.onChangeText}
               data={bathData}
+              label=" "
               />
           </View>
         </View>
