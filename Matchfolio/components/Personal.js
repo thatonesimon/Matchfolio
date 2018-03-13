@@ -66,6 +66,7 @@ export default class Personal extends React.Component {
          </Header>
         <Content>
           <Form>
+            <Text style={{marginLeft: 10, marginRight: 10}}>Personal Information</Text>
             <View style={styles.info}>
                 <Item style={{marginBottom: 5}} floatingLabel>
                   <Label>First Name</Label>
@@ -83,6 +84,7 @@ export default class Personal extends React.Component {
                   <Label>Birthday</Label>
                 </Item>
             </View>
+            <Text style={{marginLeft: 10, marginTop: 10}}>Contact Information</Text>
             <View style={styles.info}>
                 <Item style={{marginBottom: 5}} floatingLabel>
                   <Label>Phone Number</Label>
