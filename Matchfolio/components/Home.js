@@ -29,10 +29,12 @@ import { Drawer,
 
   var propertyInfo;
   var remainingInfos;
+
   propertyRef.once("value")
   .then(function(dataSnapshot){
     propertyInfo = dataSnapshot.val();
   })
+
   const baseUrl = 'http://pa.cdn.appfolio.com/';
   var propertyPictures;
 
@@ -52,6 +54,10 @@ import { Drawer,
       this._nextProperty = this._nextProperty.bind(this);
       this._onInterested = this._onInterested.bind(this);
       this._onMoreInfo = this._onMoreInfo.bind(this);
+      this._refreshProperties = this._refreshProperties.bind(this);
+      this.shouldShow = this.shouldShow.bind(this);
+      firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/preferences/').on('value', this._refreshProperties, function(error){console.log(error)});
+      this.triedToRefreshWhileUnmounted = null;
     }
 
     async componentWillMount() {
@@ -74,7 +80,7 @@ import { Drawer,
       remainingInfos = global.UserPropertyListing;
 
       user = firebase.auth().currentUser;
-      userDataRef = firebase.database().ref("users/" +user.uid);
+      userDataRef = firebase.database().ref("users/" + user.uid);
 
       if(user) {
         console.log("dispname: ", user.displayName);
@@ -92,7 +98,103 @@ import { Drawer,
         remainingInfos = this.props.navigation.state.params.remainingInfos;
       }
 
+      this._mounted = true;
+      if (this.triedToRefreshWhileUnmounted) {
+        await this._refreshProperties(this.triedToRefreshWhileUnmounted)
+      }
+      else {
+        console.log("triedToRefreshWhileUnmounted was not true")
+      }
       this.setState({loading: false});
+    }
+
+    componentWillUnmount() {
+      this._mounted = false;
+    }
+
+    shouldShow(listing, prefs) {
+      // filter based on preferences
+      console.log("In home, shouldShow, prefs: ", prefs)
+      if(!prefs)
+        return true;
+      if (parseInt(listing.bedrooms) < parseInt(prefs.bed[0]))
+        return false;
+      if (parseInt(listing.bathrooms) < parseInt(prefs.bath[0]))
+        return false;
+      if (listing.market_rent < prefs.rentState[0] || listing.market_rent > prefs.rentState[1])
+        return false;
+      if (listing.square_feet < prefs.sqftState[0] || listing.square_feet > prefs.sqftState[1])
+        return false;
+
+      return true
+    }
+
+    async _refreshProperties(snapshot) {
+
+      console.log("refreshProperties callback fired in home");
+
+      if(!this._mounted) {
+        this.triedToRefreshWhileUnmounted = snapshot;
+        console.log("home was not mounted");
+        return;
+      }
+
+      this.triedToRefreshWhileUnmounted = null;
+
+      console.log("home was mounted")
+      this.setState({loading: true});
+
+      var user = firebase.auth().currentUser;
+      var fb = firebase.database().ref();
+      var completeListing;
+      var interest = [];
+      var noInterest= [];
+      var savedMatches = [];
+      var pref = null;
+      if (snapshot) {
+        pref = snapshot.val()
+      }
+
+      console.log("In home, prefs is: ", pref)
+
+      await fb.child("properties_new").once('value').then(function(dataSnapshot) {
+        completeListing = dataSnapshot.val();
+      }, function(error){
+        console.log(error.message)
+      })
+
+      await fb.child("users/"+user.uid+"/applied").once("value").then(function(snapshot){
+          snapshot.forEach(function(childsnap){
+              //treat applied properties as noInterest (in case they applied then unmatched) so they don't reappear on home screen
+              noInterest.push([childsnap.key]);
+          });
+      })
+
+      await fb.child("users/"+user.uid+"/interested").once("value").then(function(snapshot){
+          snapshot.forEach(function(childsnap){
+              interest.push(childsnap.key);
+              savedMatches.push(completeListing[childsnap.key])
+          });
+      })
+
+      await fb.child("users/"+user.uid+"/uninterested").once("value").then(function(snapshot){
+          snapshot.forEach(function(childsnap){
+              noInterest.push(childsnap.key);
+          });
+      })
+
+      var seen = interest.concat(noInterest);
+      var filtered =[];
+      for(var i in completeListing){
+          if(!seen.includes(i) && this.shouldShow(completeListing[i], pref)) {
+              filtered.push(completeListing[i]);
+          }
+      }
+
+      global.UserPropertyListing = filtered.slice();
+      global.matched = savedMatches.slice();
+
+      this.setState({loading: false})
     }
 
     _nextProperty() {
@@ -165,7 +267,7 @@ import { Drawer,
       }
 
       else {
-        //remainingInfos = propertyInfo.slice();
+        //remainingInfos = propertyInfo.slice();SaveSave
         this._updatePropertyImages(this.state.currentProperty);
 
         return (
