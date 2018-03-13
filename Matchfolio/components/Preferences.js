@@ -69,7 +69,6 @@ export default class Preferences extends React.Component {
 
   updateRef(name, ref) {
     this[name] = ref;
-    this.state[name] = ref;
   }
 
   renderMenuButton() {
