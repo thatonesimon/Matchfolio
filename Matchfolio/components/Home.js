@@ -193,6 +193,7 @@ import { Drawer,
 
       global.UserPropertyListing = filtered.slice();
       global.matched = savedMatches.slice();
+      remainingInfos = filtered.slice();
 
       this.setState({loading: false})
     }
