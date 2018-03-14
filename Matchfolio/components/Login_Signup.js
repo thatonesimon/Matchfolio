@@ -264,33 +264,37 @@ export class Login extends Component<{}> {
       <BackgroundImage>
           <View style={styles.container}>
 
-            <Text style={{color: '#5f97ef', fontSize: 40, textAlign: 'center', fontWeight: 'bold',backgroundColor: 'rgba(0,0,0,0)',}}>
+            <Text style={{fontSize: 40, textAlign: 'center', fontWeight: 'bold',backgroundColor: 'rgba(0,0,0,0)',}}>
               {'MatchFolio'}
             </Text>
             <Text style={{height:180,backgroundColor: 'rgba(0,0,0,0)'}}/>
              <View style={styles.buttonContainer}>
-                  <Button  style={styles.buttonUserPass} rounded block >
-                      <TextInput
+                  <Button style={styles.buttonUserPass} rounded block >
+                    <Image style={styles.logIcon}
+                             source={require('../res/user-outlined-symbol.png')}/>
+                      <TextInput style={styles.textUserPass}
                         placeholder="Username"
                         onChangeText={(text) => this.setState({ username: text.replace(' ', '') })}
                         value={this.state.username}
                       />
                   </Button>
-                  <Text style={{height:20}} />
+                  <Text style={{height:25}} />
                   <Button style={styles.buttonUserPass} rounded block>
-                      <TextInput
+                      <Image style={styles.logIcon}
+                             source={require('../res/unlocked.png')}/>
+                      <TextInput style={styles.textUserPass}
                         placeholder="Password"
                         onChangeText={(text) => this.setState({ password: text })}
                         secureTextEntry={true}
                         value={this.state.password}
                       />
                   </Button>
-                  <Text style={{height:20}}>
+                  <Text style={{height:25}}>
                   </Text>
-                  <Button style={styles.button} rounded block onPress={this._onLoginButtonPress} >
+                  <Button style={styles.login} rounded block onPress={this._onLoginButtonPress} >
                       <Text style={{color:'#e6ecf7'}}>LOGIN</Text>
                   </Button>
-                  <Text style={{height:20}}>
+                  <Text style={{height:25}}>
                   </Text>
                   <Text style={{textAlign: 'center'}}>
                     {'Don\'t have an account? '}
@@ -434,9 +438,22 @@ export default class App extends Component<{}> {
 
 const styles = StyleSheet.create({
   buttonUserPass: {
-    backgroundColor: "rgba(255,255,255,0.3)"
+    backgroundColor: "rgba(255,255,255,0.3)",
+    justifyContent: 'left',
+    //flex: 1,
   },
-  button: {
+  textUserPass: {
+    marginLeft: 10,
+    color: "rgba(0,0,0,0.6)",
+    flex: 1,
+  },
+  logIcon: {
+    height: 20,
+    width: 20,
+    color: 'rgba(234,234,234,0.5)',
+    marginLeft: 13,
+  },
+  login: {
     backgroundColor: "#5f97ef"
   },
   container: {
