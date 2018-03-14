@@ -92,13 +92,13 @@ export class Login extends Component<{}> {
     // filter based on preferences
     if(!global.prefs)
       return true;
-    if (parseInt(listing.bedrooms) < parseInt(global.prefs.bed[0]))
+    if (global.prefs.bed && parseFloat(listing.bedrooms) < parseFloat(global.prefs.bed[0]))
       return false;
-    if (parseInt(listing.bathrooms) < parseInt(global.prefs.bath[0]))
+    if (global.prefs.bath && parseFloat(listing.bathrooms) < parseFloat(global.prefs.bath[0]))
       return false;
-    if (listing.market_rent < global.prefs.rentState[0] || listing.market_rent > global.prefs.rentState[1])
+    if (global.prefs.rentState && listing.market_rent < global.prefs.rentState[0] || listing.market_rent > global.prefs.rentState[1])
       return false;
-    if (listing.square_feet < global.prefs.sqftState[0] || listing.square_feet > global.prefs.sqftState[1])
+    if (global.prefs.sqftState && listing.square_feet < global.prefs.sqftState[0] || listing.square_feet > global.prefs.sqftState[1])
       return false;
 
     return true
@@ -124,6 +124,12 @@ export class Login extends Component<{}> {
       var interest = [];
       var noInterest= [];
       var savedMatches = [];
+      var prefs = {
+        bed: '1',
+        bath: '1',
+        rentState: [500, 10000],
+        sqftState: [500, 7500],
+      };
       await fb.child("properties_new").once('value').then(function(dataSnapshot) {
         completeListing = dataSnapshot.val();
         //Make sure this function callback does not happen after the checking of the state params below
@@ -154,12 +160,12 @@ export class Login extends Component<{}> {
       })
 
       await fb.child("users/"+user.uid+"/preferences").once("value").then(function(snapshot){
-          global.prefs = snapshot.val()
-          console.log("In signup/login, preferences callback returned: ", global.prefs)
-          console.log("prefs.rentState[0]", global.prefs.rentState[0])
+          if(snapshot.val())
+            prefs = snapshot.val()
       })
 
-
+      global.prefs = prefs
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~PREFS:", prefs)
 
       /*
       await fb.child("users/"+user.uid+"/userScore").once("value").then(function(snapshot){

@@ -117,13 +117,13 @@ import { Drawer,
       console.log("In home, shouldShow, prefs: ", prefs)
       if(!prefs)
         return true;
-      if (parseFloat(listing.bedrooms) < parseFloat(prefs.bed[0]))
+      if (prefs.bed && parseFloat(listing.bedrooms) < parseFloat(prefs.bed[0]))
         return false;
-      if (parseFloat(listing.bathrooms) < parseFloat(prefs.bath[0]))
+      if (prefs.bath && parseFloat(listing.bathrooms) < parseFloat(prefs.bath[0]))
         return false;
-      if (listing.market_rent < prefs.rentState[0] || listing.market_rent > prefs.rentState[1])
+      if (prefs.rentState && listing.market_rent < prefs.rentState[0] || listing.market_rent > prefs.rentState[1])
         return false;
-      if (listing.square_feet < prefs.sqftState[0] || listing.square_feet > prefs.sqftState[1])
+      if (prefs.sqftState && listing.square_feet < prefs.sqftState[0] || listing.square_feet > prefs.sqftState[1])
         return false;
 
       return true
