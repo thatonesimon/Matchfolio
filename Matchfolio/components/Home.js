@@ -20,7 +20,7 @@ import { Drawer,
   FooterTab,
   Icon,
   Spinner } from 'native-base';
-  import { FontAwesome, Ionicons, MaterialCommunityIcons, Foundation } from '@expo/vector-icons'; // 6.1.0
+  import { FontAwesome, Ionicons, MaterialCommunityIcons, Foundation, Entypo} from '@expo/vector-icons'; // 6.1.0
   import * as firebase from 'firebase';
 
   var mainDataRef = firebase.database().ref();
@@ -292,8 +292,10 @@ import { Drawer,
                 looping={false}
                 ref={(c) => this.deck = c}
                 dataSource={remainingInfos}
-                renderEmpty={ () => <View style={{ alignSelf: "center" }}>
-                <Text>Currently, there are no available properties. :(</Text></View>
+                renderEmpty={ () => <View style={{ height: 500, flexDirection: 'column', alignSelf: "center", alignItems: "center", justifyContent: "center" }}>
+                <Text style={{fontSize: 24, textAlign: 'center', flexDirection: "column", alignSelf: "center", marginRight: 15, marginLeft: 15}}>{'Currently, there are no \navailable properties.\n'}</Text>
+                <Image style={{height: 80, width: 80}} source={require('../res/sad.png')}/>
+                </View>
               }
               renderItem={item =>
                 <Card style={{ elevation: 3 }}>
