@@ -154,10 +154,15 @@ export default class PropertyInfo extends Component {
         >
             <MapView.Marker
               image={require('../res/blue-pin.png')}
-              coordinate={{latitude: property.address_latitude, longitude: property.address_longitude}}
-              title={property.address_address1}
-              description={property.marketing_title}
-              />
+              coordinate={{latitude: property.address_latitude, longitude: property.address_longitude}}>
+              <MapView.Callout
+                onPress={()=>this.props.navigation.navigate('propertyInfo', {item: marker, showApply: true})}>
+                <View>
+                  <Text style={{textAlign: "center", fontSize: 15}}>{property.address_address1}</Text>
+                  <Text style={{textAlign: "center", fontSize: 12}}>{property.marketing_title}</Text>
+                </View>
+              </MapView.Callout>
+            </MapView.Marker>
 
         </MapView>
 
