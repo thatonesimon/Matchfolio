@@ -67,6 +67,7 @@ export default class Preferences extends React.Component {
     this.renderMenuButton = this.renderMenuButton.bind(this);
     this.saveData = this.saveData.bind(this);
     this.loadData = this.loadData.bind(this);
+    this.onSaveButtonPress = this.onSaveButtonPress.bind(this);
 
     this.state = {
       bed: '1',
@@ -80,7 +81,9 @@ export default class Preferences extends React.Component {
     this[name] = ref;
   }
 
-
+  componentWillMount() {
+      this.loadData();
+  }
 
   renderMenuButton() {
     params = this.props.navigation.state.params
@@ -97,8 +100,9 @@ export default class Preferences extends React.Component {
 
   }
 
-  componentWillMount() {
-    this.loadData()
+  async componentWillUnmount() {
+      console.log("Leaving preferences");
+    await this.saveData();
   }
 
   loadData() {
@@ -119,17 +123,31 @@ export default class Preferences extends React.Component {
     }
     else {
       //Alert.alert("Preferences Updated")
-      const resetAction = NavigationActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({routeName: 'main'})
-        ]
-      })
-      await this.props.navigation.dispatch(resetAction);
+      // const resetAction = NavigationActions.reset({
+      //   index: 0,
+      //   actions: [
+      //     NavigationActions.navigate({routeName: 'main'})
+      //   ]
+      // })
+      // await this.props.navigation.dispatch(resetAction);
     }
 
     firebase.database().ref('users/' + user.uid + '/preferences').set(this.state)
 
+  }
+
+  onSaveButtonPress() {
+      function okay() {
+          const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({routeName: 'main'})
+            ]
+          })
+          this.props.navigation.dispatch(resetAction);
+        }
+    okay = okay.bind(this);
+    Alert.alert("Preferences Updated", "", [{text: 'OK', onPress: okay}])
   }
 
   render() {
@@ -283,7 +301,7 @@ export default class Preferences extends React.Component {
         </ListItem>
 
         <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', alignSelf: 'center', marginTop: 10, marginBottom: 10}}>
-          <Button bordered onPress={this.saveData} style={{flex: 1, marginLeft: 10, marginRight: 10}} >
+          <Button bordered onPress={this.onSaveButtonPress} style={{flex: 1, marginLeft: 10, marginRight: 10}} >
             <Text style={{flex:1, textAlign: 'center'}}> Save </Text>
           </Button>
         </View>
