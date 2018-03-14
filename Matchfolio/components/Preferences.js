@@ -43,6 +43,15 @@ export default class Preferences extends React.Component {
     this.setState({sqftState:values});
   }
 
+  bedValueChange = (value) => {
+      console.log(value);
+      this.setState({bed: value});
+  }
+
+  bathValueChange = (value) => {
+      console.log(value);
+      this.setState({bath: value});
+  }
 
   static navigationOptions = {
     drawerIcon: ({ tintColor }) => (<Icon name="ios-color-filter-outline" size={15} style={{ color: tintColor }} />),
@@ -53,8 +62,8 @@ export default class Preferences extends React.Component {
   constructor(props) {
     super(props);
 
-    this.bedRef = this.updateRef.bind(this, 'bed');
-    this.bathRef = this.updateRef.bind(this, 'bath');
+    // this.bedRef = this.updateRef.bind(this, 'bed');
+    // this.bathRef = this.updateRef.bind(this, 'bath');
     this.renderMenuButton = this.renderMenuButton.bind(this);
     this.saveData = this.saveData.bind(this);
     this.loadData = this.loadData.bind(this);
@@ -70,6 +79,8 @@ export default class Preferences extends React.Component {
   updateRef(name, ref) {
     this[name] = ref;
   }
+
+
 
   renderMenuButton() {
     params = this.props.navigation.state.params
@@ -175,8 +186,8 @@ export default class Preferences extends React.Component {
           <View style={styles.numPicker}>
             <Dropdown
               ref={this.bedRef}
-              value={bed}
-              onChangeText={this.onChangeText}
+              value={this.state.bed}
+              onChangeText={this.bedValueChange}
               data={bedData}
               label=" "
               />
@@ -192,8 +203,8 @@ export default class Preferences extends React.Component {
           <View style={styles.numPicker}>
             <Dropdown
               ref={this.bathRef}
-              value={bath}
-              onChangeText={this.onChangeText}
+              value={this.state.bath}
+              onChangeText={this.bathValueChange}
               data={bathData}
               label=" "
               />
