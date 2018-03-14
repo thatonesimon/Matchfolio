@@ -328,17 +328,15 @@ import { Drawer,
           </View>
           <View style={{ flexDirection: "column", flex: 1, position: "absolute", bottom: 0, left: 0, right: 0, justifyContent: 'space-around'}}>
             <View style={styles.horizontalHolder}>
-              <Button></Button>
-              <Button bordered rounded danger onPress={() => this._onNotInterestedButton() } >
-                <Icon name="md-close" size={40} color="red"/>
+              <Button rounded style={{backgroundColor: "#25B7D300"}} onPress={() => this._onNotInterestedButton() } >
+                <Image style={{height: 50, width: 50}} source={require("../res/close-circular-button-of-a-cross.png")}/>
               </Button>
-              <Button rounded bordered onPress={() => this._onMoreInfo() } >
-                <Text>More Info</Text>
+              <Button rounded style={{backgroundColor: "#25B7D300", justifyContent: "center"}}  onPress={() => this._onMoreInfo() } >
+                <Image style={{height: 50, width: 50, alignSelf: "center"}} source={require("../res/exclamation-sign-in-a-circle.png")}/>
               </Button>
-              <Button bordered rounded success onPress={() => this._onInterestedButton() } >
-                <Icon name="md-heart-outline" size={30} color="green"/>
+              <Button rounded style={{backgroundColor: "#25B7D300"}} onPress={() => this._onInterestedButton() } >
+                <Image style={{height: 50, width: 50}} source={require("../res/like-heart-circular-outlined-button.png")}/>
               </Button>
-              <Button></Button>
             </View>
             <Footer>
               <FooterTab>
@@ -378,7 +376,7 @@ const styles = StyleSheet.create({
   horizontalHolder: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     padding: 10,
   },
   propertyInfo: {
