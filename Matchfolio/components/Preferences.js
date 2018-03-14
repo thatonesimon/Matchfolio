@@ -17,12 +17,9 @@ import { Container, Header, Left, Right, Button, Content, ListItem, Icon, CheckB
 import { Ionicons } from '@expo/vector-icons'; // 6.1.0
 import { NavigationActions } from 'react-navigation';
 import { Dropdown } from 'react-native-material-dropdown';
-
+import * as firebase from 'firebase';
 
 export default class Preferences extends React.Component {
-  _onButtonPress() {
-    Alert.alert('You tapped the button!');
-  }
 
   sliderValuesChangeStart = () => {
     this.setState({
@@ -50,6 +47,7 @@ export default class Preferences extends React.Component {
   static navigationOptions = {
     drawerIcon: ({ tintColor }) => (<Icon name="ios-color-filter-outline" size={15} style={{ color: tintColor }} />),
     header: null,
+    gesturesEnabled: false,
   }
 
   constructor(props) {
@@ -57,6 +55,9 @@ export default class Preferences extends React.Component {
 
     this.bedRef = this.updateRef.bind(this, 'bed');
     this.bathRef = this.updateRef.bind(this, 'bath');
+    this.renderMenuButton = this.renderMenuButton.bind(this);
+    this.saveData = this.saveData.bind(this);
+    this.loadData = this.loadData.bind(this);
 
     this.state = {
       bed: '1',
@@ -70,15 +71,63 @@ export default class Preferences extends React.Component {
     this[name] = ref;
   }
 
+  renderMenuButton() {
+    params = this.props.navigation.state.params
+    if(!params || !params.signup) {
+      return (
+        <Button transparent onPress={() => this.props.navigation.navigate('DrawerToggle')}>
+          <Icon name='menu' />
+        </Button>
+      )
+    }
+    else {
+      return null
+    }
+
+  }
+
+  componentWillMount() {
+    this.loadData()
+  }
+
+  loadData() {
+    user = firebase.auth().currentUser;
+    function setData(snapshot) {
+      this.setState(snapshot.val())
+    }
+    setData = setData.bind(this)
+    firebase.database().ref('users/' + user.uid + '/preferences').once('value').then(setData)
+  }
+
+  async saveData() {
+    user = firebase.auth().currentUser;
+
+    params = this.props.navigation.params;
+    if(params && params.signup) {
+      this.props.navigation.navigate('rentalapp', {signup: true})
+    }
+    else {
+      //Alert.alert("Preferences Updated")
+      const resetAction = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({routeName: 'main'})
+        ]
+      })
+      await this.props.navigation.dispatch(resetAction);
+    }
+
+    firebase.database().ref('users/' + user.uid + '/preferences').set(this.state)
+
+  }
+
   render() {
     let {bed, bath} = this.state;
     return (
       <ScrollView backgroundColor='white'>
         <Header style= {{backgroundColor: 'transparent', borderBottomWidth: 0}}>
           <Left style={{flex: 1}}>
-            <Button transparent onPress={() => this.props.navigation.navigate('DrawerToggle')}>
-              <Icon name='menu' />
-            </Button>
+            {this.renderMenuButton()}
           </Left>
           <Body style={{flex: 4, alignItems: 'center', justifyContent: 'center'}}>
             <Text style={styles.header}><Ionicons name="ios-cog" size={40} color="skyblue" padding = {40}/> Preferences</Text>
@@ -222,9 +271,9 @@ export default class Preferences extends React.Component {
           </Body>
         </ListItem>
 
-        <View style={{justifyContent: 'center', alignItems: 'center', alignSelf: 'center'}}>
-          <Button bordered onPress={() => {this.props.navigation.navigate('rentalapp')} } >
-            <Text> Save </Text>
+        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', alignSelf: 'center', marginTop: 10, marginBottom: 10}}>
+          <Button bordered onPress={this.saveData} style={{flex: 1, marginLeft: 10, marginRight: 10}} >
+            <Text style={{flex:1, textAlign: 'center'}}> Save </Text>
           </Button>
         </View>
       </ScrollView>

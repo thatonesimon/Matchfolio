@@ -62,7 +62,6 @@ export default class Matches extends Component {
 
     userDB_interested.on('child_removed', this.onDbInterestedDataChanged);
     userDB_applied.on('child_added', this.onDbInterestedDataChanged);
-    userDB_applied.on('child_changed', this.onDbInterestedDataChanged);
 
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     var data = []
@@ -193,11 +192,12 @@ export default class Matches extends Component {
 
    _renderRightRemoveField(data, secId, rowId, rowMap) {
     return (
-      <Button full danger onPress={_ => this._deleteRow(secId, rowId, rowMap)}>
+      <Button full danger onPress={_ => this._deleteRow(secId, rowId, rowMap)} style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}} >
        <IOIcon active size={40} name='ios-trash' color='white'/>
+       <Text style={{fontSize: 11}}>UNMATCH</Text>
       </Button>
     );
-   }
+  }10
 
    _renderLeftApplyField(property) {
 
@@ -210,14 +210,16 @@ export default class Matches extends Component {
 
      if (global.applied[property.listable_uid]) {
        return (
-        <Button full disabled onPress={ applyToProperty }>
+        <Button full disabled onPress={ applyToProperty } style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
          <IOIcon active size={35} name='md-send' color='white'/>
+         <Text style={{fontSize: 11}}>APPLIED</Text>
         </Button>
       );
      }
      return (
-      <Button full success onPress={ applyToProperty }>
+      <Button full success onPress={ applyToProperty } style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
        <IOIcon active size={35} name='md-send' color='white'/>
+       <Text style={{fontSize: 12}}>APPLY</Text>
       </Button>
     );
    }
@@ -245,8 +247,8 @@ export default class Matches extends Component {
                           renderRightHiddenRow={this._renderRightRemoveField}
                           renderLeftHiddenRow={this._renderLeftApplyField}
                           disableRightSwipe={false}
-                          rightOpenValue={-75}
-                          leftOpenValue={75} />;
+                          rightOpenValue={-90}
+                          leftOpenValue={80} />;
            }
            return (
              <Container backgroundColor='white'>

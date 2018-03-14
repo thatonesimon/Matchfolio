@@ -56,6 +56,7 @@ export class Login extends Component<{}> {
   static navigationOptions = {
     title: 'Login',
     header: null,
+    gesturesEnabled: false,
   };
 
   constructor(props) {
@@ -63,6 +64,7 @@ export class Login extends Component<{}> {
     this.state = { username: '', password: ''};
     this._onLoginButtonPress = this._onLoginButtonPress.bind(this);
     this._onSignupButtonPress = this._onSignupButtonPress.bind(this);
+    this.shouldShow = this.shouldShow.bind(this);
     //this.checkUserLoggedIn = this.checkUserLoggedIn.bind(this);
 
   }
@@ -76,11 +78,30 @@ export class Login extends Component<{}> {
 
     //username password for testing purposes
     this.setState({done: true, username: 'useme', password: 'hello123'});
+    if(global.suname) {
+      this.setState({done: true, username: global.suname})
+    }
   }
 
   componentDidMount()
   {
 
+  }
+
+  shouldShow(listing) {
+    // filter based on preferences
+    if(!global.prefs)
+      return true;
+    if (parseInt(listing.bedrooms) < parseInt(global.prefs.bed[0]))
+      return false;
+    if (parseInt(listing.bathrooms) < parseInt(global.prefs.bath[0]))
+      return false;
+    if (listing.market_rent < global.prefs.rentState[0] || listing.market_rent > global.prefs.rentState[1])
+      return false;
+    if (listing.square_feet < global.prefs.sqftState[0] || listing.square_feet > global.prefs.sqftState[1])
+      return false;
+
+    return true
   }
 
   async _onLoginButtonPress(){
@@ -125,11 +146,19 @@ export class Login extends Component<{}> {
               savedMatches.push(completeListing[childsnap.key])
           });
       })
+
       await fb.child("users/"+user.uid+"/uninterested").once("value").then(function(snapshot){
           snapshot.forEach(function(childsnap){
               noInterest.push(childsnap.key);
           });
       })
+
+      await fb.child("users/"+user.uid+"/preferences").once("value").then(function(snapshot){
+          global.prefs = snapshot.val()
+          console.log("In signup/login, preferences callback returned: ", global.prefs)
+          console.log("prefs.rentState[0]", global.prefs.rentState[0])
+      })
+
 
 
       /*
@@ -145,7 +174,7 @@ export class Login extends Component<{}> {
       var filtered =[];
       // var prefetches = [];
       for(var i in completeListing){
-          if(!seen.includes(i)){
+          if(!seen.includes(i) && this.shouldShow(completeListing[i])) {
               filtered.push(completeListing[i]);
 
               // imageurls = completeListing[i].image_urls.split(',');
@@ -168,7 +197,7 @@ export class Login extends Component<{}> {
       global.matched = savedMatches.slice();
 
       if(global.justSignedUp)
-        navi.navigate('personal');
+        navi.navigate('personal', {signup: true});
       else
         navi.dispatch(resetAction);
 
@@ -233,6 +262,7 @@ export class Login extends Component<{}> {
         placeholder="Password"
         onChangeText={(text) => this.setState({ password: text })}
         secureTextEntry={true}
+        value={this.state.password}
       />
       <Text style={{height:25}}>
       </Text>
@@ -302,6 +332,7 @@ export class Signup extends Component<{}> {
        var user = firebase.auth().currentUser;
        writeUserData(user.uid, user.email);
        global.justSignedUp = true;
+       global.suname = user.email.replace(emailsuffix,  '')
        Alert.alert('Registered!', "",
        [{text: 'OK', onPress: () => navi.goBack() }]);
      }

@@ -13,7 +13,10 @@ const resetAction = NavigationActions.reset({
 
 export default class BackgroundCheckLoading extends Component {
 
-	static navigationOptions = { header: null };
+  static navigationOptions = {
+    header: null,
+    gesturesEnabled: false,
+  }
 
 	constructor(props) {
 		super(props);

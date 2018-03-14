@@ -50,7 +50,36 @@ export default class App extends Component<{}> {
 		header: null,
 		drawerLabel: 'Rental App',
 		drawerIcon: ({ tintColor }) => (<Icon name="ios-list-box-outline" size={15} style={{ color: tintColor }} />),
+    gesturesEnabled: false,
 	}
+
+
+  constructor(props) {
+    super(props)
+    this.saveData = this.saveData.bind(this)
+    this.renderMenuButton = this.renderMenuButton.bind(this)
+  }
+
+renderMenuButton() {
+  params = this.props.navigation.state.params
+  if(!params || !params.signup) {
+    return (
+      <Button transparent onPress={() => this.props.navigation.navigate('DrawerToggle')}>
+        <Icon name='menu' />
+      </Button>
+    )
+  }
+  else {
+    return null
+  }
+}
+
+  saveData() {
+    params = this.props.navigation.state.params
+    if(params && params.signup) {
+      this.props.navigation.navigate('backgroundcheck', {signup: true})
+    }
+  }
 
 	render() {
 		return (
@@ -59,10 +88,7 @@ export default class App extends Component<{}> {
 					style= {{backgroundColor: 'transparent',
 					borderBottomWidth: 0}}>
 					<Left>
-						<Button transparent
-						onPress={() => this.props.navigation.navigate('DrawerToggle')}>
-							<Icon name='menu' />
-						</Button>
+						{this.renderMenuButton()}
 					</Left>
           <Body style={{flex: 3, alignItems: 'center', justifyContent: 'center'}}>
            <Text style={styles.header}><Ionicons name="ios-list-box-outline" size={30} color="skyblue" padding = {40}/> Rental Application</Text>
@@ -102,7 +128,7 @@ export default class App extends Component<{}> {
               <Label>Credit Card Debt and Loan Balance</Label>
             </Item>
           </Form>
-          <Button bordered block onPress={() => this.props.navigation.navigate('backgroundcheck')} style={styles.button} >
+          <Button bordered block onPress={this.saveData} style={styles.button} >
             <Text>Submit</Text>
           </Button>
         </Content>

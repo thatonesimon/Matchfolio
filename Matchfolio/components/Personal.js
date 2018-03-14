@@ -48,16 +48,42 @@ export default class Personal extends React.Component {
 		header: null,
 		drawerLabel: 'Personal',
 		drawerIcon: ({ tintColor }) => (<Icon name="ios-contact-outline" size={15} style={{ color: tintColor }} />),
+    gesturesEnabled: false,
 	}
+
+  constructor(props) {
+    super(props)
+    this.saveData = this.saveData.bind(this)
+    this.renderMenuButton = this.renderMenuButton.bind(this)
+  }
+
+renderMenuButton() {
+  params = this.props.navigation.state.params
+  if(!params || !params.signup) {
+    return (
+      <Button transparent onPress={() => this.props.navigation.navigate('DrawerToggle')}>
+        <Icon name='menu' />
+      </Button>
+    )
+  }
+  else {
+    return null
+  }
+}
+
+  saveData() {
+    params = this.props.navigation.state.params
+    if(params && params.signup) {
+      this.props.navigation.navigate('rentalapp', {signup: true})
+    }
+  }
+
 	render() {
 		return (
 			<Container>
         <Header style= {{backgroundColor: 'transparent', borderBottomWidth: 0}}>
            <Left style={{flex: 1}}>
-             <Button transparent
-             onPress={() => this.props.navigation.navigate('DrawerToggle')}>
-                     <Icon name='menu' />
-             </Button>
+             {this.renderMenuButton()}
              </Left>
                  <Body style={{flex: 3, alignItems: 'center', justifyContent: 'center'}}>
                   <Text style={styles.header}><Ionicons name="ios-contact" size={40} color="skyblue" padding = {40}/> Personal</Text>
@@ -94,7 +120,7 @@ export default class Personal extends React.Component {
                 </Item>
             </View>
           </Form>
-          <Button bordered block onPress={() => this.props.navigation.navigate('rentalapp')} style={styles.button} >
+          <Button bordered block onPress={this.saveData} style={styles.button} >
             <Text>Save</Text>
           </Button>
         </Content>
