@@ -44,7 +44,7 @@ const resetAction = NavigationActions.reset({
 })
 
 /*              code to write properites to uuid !!!!!!!!!!!!!!!!!!!          do not delete
-p = require('../res/property-info_clean.json');
+p = require('../res/good-property-info.json');
 var fb = firebase.database().ref();
 for(i = 0; i < p.length; i++){
     fb.child('properties_new/' + p[i].listable_uid).set(p[i])
