@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@ptomasroos/react-native-multi-slider": "0.0.12",
+    "disable-react-devtools": "^1.0.0",
     "expo": "^22.0.2",
     "firebase": "^4.9.0",
     "native-base": "^2.3.3",
