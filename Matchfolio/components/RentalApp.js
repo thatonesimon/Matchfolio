@@ -72,18 +72,6 @@ export default class App extends Component<{}> {
         <Content>
           <Form>
             <Item floatingLabel>
-              <Label>Phone Number</Label>
-              <Input placeholder="123-456-7890"/>
-            </Item>
-            <Item floatingLabel>
-              <Label>Driver's License Number</Label>
-              <Input placeholder="A1234567"/>
-            </Item>
-            <Item floatingLabel>
-              <Label>SSN</Label>
-              <Input placeholder="123456789"/>
-            </Item>
-            <Item floatingLabel>
               <Label>Previous Address (1st line)</Label>
               <Input placeholder="123 Street Dr."/>
             </Item>
