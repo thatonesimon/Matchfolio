@@ -69,7 +69,7 @@ export default class PropertyInfo extends Component {
         else {
             applyButton = <View>
                       <View style={{flexDirection: 'row', flex: 1}}>
-                          <Button success style={{flex: 1, marginBottom: 10}} onPress={() => this._apply() } >
+                          <Button success style={{flex: 1, marginTop:10, marginBottom: 10}} onPress={() => this._apply() } >
                               <Feather name='mail' size={24} color='white' style={{marginLeft: 10, flex: 1}} />
                               <Text style={{flex: 5, textAlign: 'center'}}>Apply to property</Text>
                               <Text style={{flex: 1}} />
@@ -185,7 +185,7 @@ export default class PropertyInfo extends Component {
           </View>
   	      <Text style={styles.info}>{"Description: " + property.marketing_description}</Text>
           <Text style={styles.info}>{"Amenities: " + property.amenities}</Text>
-          <View style={{flexDirection: 'row', flex: 1, marginBottom: 10}}>
+          <View style={{flexDirection: 'row', flex: 1}}>
               <Button info style={{flex: 1}} onPress={() => this._callNumber(property.contact_phone_number) } >
                 <Feather name='phone' size={24} color='white' style={{marginLeft: 10, flex: 1}} />
                 <Text style={{flex: 5, textAlign: 'center'}}>Contact Owner</Text>
