@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Dimensions, Image, ScrollView, StyleSheet, } from 'react-native';
+import { Alert, Dimensions, Image, ScrollView, StyleSheet, ListView } from 'react-native';
 import { Button,
          Drawer,
          Container,
@@ -126,7 +126,6 @@ export default class PropertyInfo extends Component {
       await this.props.navigation.goBack();
       firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/applied/' + property.listable_uid).set(1);
           // this.props.navigation.navigate('additionalQuestions', {questions: ["Do you like cows?", "How many cows do you have?"]});
-
   }
 
   async _unmatch() {
@@ -141,8 +140,8 @@ export default class PropertyInfo extends Component {
 
   render() {
     return (
-      <ScrollView>
-  	    <View style={styles.container}>
+      <ScrollView style={{backgroundColor: '#FFFFFF'}}>
+  	    <View style={styles.margin}>
         <MapView
             initialRegion={{
               latitude: property.address_latitude,
@@ -155,8 +154,7 @@ export default class PropertyInfo extends Component {
             <MapView.Marker
               image={require('../res/blue-pin.png')}
               coordinate={{latitude: property.address_latitude, longitude: property.address_longitude}}>
-              <MapView.Callout
-                onPress={()=>this.props.navigation.navigate('propertyInfo', {item: marker, showApply: true})}>
+              <MapView.Callout>
                 <View>
                   <Text style={{textAlign: "center", fontSize: 15}}>{property.address_address1}</Text>
                   <Text style={{textAlign: "center", fontSize: 12}}>{property.marketing_title}</Text>
@@ -165,26 +163,31 @@ export default class PropertyInfo extends Component {
             </MapView.Marker>
 
         </MapView>
-
-        <Swiper loadMinimal loadMinimalSize={1} style={styles.wrapper} loop={false}>
-          {
-            this.state.imgList.map((item, i) => <Slide
-              loadHandle={this.loadHandle}
-              loaded={this.state.loadQueue[i]}
-              uri={item}
-              i={i}
-              key={i} />)
-          }
-        </Swiper>
-
-          <Text style={styles.mainInfo}>{property.address_address1 + "\n" + property.address_city + ", " + property.address_country}</Text>
+        <View style={{borderRadius: 5}}>
+          <Swiper loadMinimal loadMinimalSize={1} style={styles.wrapper} loop={true}>
+            {
+              this.state.imgList.map((item, i) => <Slide
+                loadHandle={this.loadHandle}
+                loaded={this.state.loadQueue[i]}
+                uri={item}
+                i={i}
+                key={i} />)
+            }
+          </Swiper>
+        </View>
+          <View style={styles.line}>
+            <Text style={styles.mainInfo}>{property.address_address1 + "\n" + property.address_city + ", " + property.address_country}</Text>
+          </View>
           <View style={styles.horizontalHolder}>
   	        <Text style={styles.leftPropertyInfo}>{"Rent:\n$" + property.market_rent + "/month"}</Text>
             <Text style={styles.propertyInfo}>{"# of Rooms: \n" + property.bedrooms + " Bed/" + property.bathrooms + " Bath"}</Text>
             <Text style={styles.rightPropertyInfo}>{"Square Feet: \n" + property.square_feet + " sq ft." }</Text>
           </View>
-  	      <Text style={styles.info}>{"Description: " + property.marketing_description}</Text>
-          <Text style={styles.info}>{"Amenities: " + property.amenities}</Text>
+          <View style={styles.line}>
+    	      <Text style={styles.info}>{"Description: " + property.marketing_description}</Text>
+          </View>
+            <Text style={styles.info}>{"Amenities: " + property.amenities}</Text>
+
           <View style={{flexDirection: 'row', flex: 1}}>
               <Button info style={{flex: 1}} onPress={() => this._callNumber(property.contact_phone_number) } >
                 <Feather name='phone' size={24} color='white' style={{marginLeft: 10, flex: 1}} />
@@ -209,6 +212,7 @@ const styles = StyleSheet.create({
   map: {
       height: 240,
       marginBottom: 10,
+      backgroundColor: '#FFFFFF',
       borderRadius: 5,
   },
 
@@ -266,42 +270,37 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'center',
     fontSize: 15,
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
   },
   mainInfo: {
     fontSize: 20,
     padding: 10,
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
     textAlign: 'center',
-    borderWidth: 1,
-    backgroundColor: '#eef8fd',
-    borderRadius: 5,
-    marginBottom: 10,
     marginTop: 10,
   },
   info: {
-  	fontSize: 15,
-  	padding: 10,
-    borderColor: 'black',
-    borderWidth: 1,
-    backgroundColor: '#eef8fd',
-    borderRadius: 5,
-    marginBottom: 10,
+    fontSize: 15,
+    padding: 10,
+  },
+  line: {
+    borderBottomColor: '#9aa1ad',
+    borderBottomWidth: 1,
   },
   phoneNumber: {
     flex: 1,
     textAlign: 'center',
     color: '#aaa',
   },
+  margin:{
+    margin: 15,
+  },
   horizontalHolder: {
     flexDirection: 'row',
+    borderBottomColor: '#9aa1ad',
+    borderBottomWidth: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 10,
-    borderColor: 'black',
-    borderWidth: 1,
-    backgroundColor: '#eef8fd',
-    borderRadius: 5,
-    marginBottom: 10,
   },
 });
