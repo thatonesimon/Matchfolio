@@ -94,56 +94,38 @@ renderMenuButton() {
            <Text style={styles.header}><Ionicons name="ios-list-box-outline" size={30} color="skyblue" padding = {40}/> Rental Application</Text>
           </Body>
           <Right style={{flex: 1}} />
-	</Header>
+				</Header>
         <Content>
           <Form>
             <Item floatingLabel>
               <Label>Previous Address (1st line)</Label>
-              <Input placeholder="123 Street Dr."/>
             </Item>
             <Item floatingLabel>
               <Label>Previous Address (2nd line)</Label>
-              <Input placeholder="New York, NY 13579"/>
             </Item>
             <Item floatingLabel>
               <Label>Previous Rent</Label>
-              <Input placeholder="$700"/>
             </Item>
             <Item floatingLabel>
               <Label>Annualized Salary</Label>
-              <Input placeholder="$27000"/>
             </Item>
             <Item floatingLabel>
               <Label>Occupation</Label>
-              <Input placeholder="Barista"/>
             </Item>
             <Item floatingLabel>
               <Label>Employer</Label>
-              <Input placeholder="Starbucks"/>
             </Item>
-            <Item floatingLabel>
-              <Label>Vehicle Make</Label>
-              <Input placeholder="Chevy"/>
-            </Item>
-            <Item floatingLabel>
-              <Label>Vehicle Model</Label>
-              <Input placeholder="Malibu"/>
-            </Item>
-            <Item floatingLabel>
-              <Label>Vehicle Year</Label>
-              <Input placeholder="2006"/>
+	    <Item floatingLabel>
+              <Label>Vehicle Make, Model, Year</Label>
             </Item>
             <Item floatingLabel>
               <Label>Savings Account Balance</Label>
-              <Input placeholder="$8000"/>
             </Item>
             <Item floatingLabel>
               <Label>Checking Account Balance</Label>
-              <Input placeholder="$400"/>
             </Item>
             <Item floatingLabel>
               <Label>Credit Card Debt and Loan Balance</Label>
-              <Input placeholder="$2700"/>
             </Item>
           </Form>
           <Button bordered block onPress={this.saveData} style={styles.button} >
