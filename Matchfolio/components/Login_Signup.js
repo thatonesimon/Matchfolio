@@ -264,7 +264,7 @@ export class Login extends Component<{}> {
       <BackgroundImage>
           <View style={styles.container}>
 
-            <Text style={{fontSize: 40, textAlign: 'center', fontWeight: 'bold',backgroundColor: 'rgba(0,0,0,0)',}}>
+            <Text style={{color: 'white', fontSize: 40, textAlign: 'center', fontWeight: 'bold',backgroundColor: 'rgba(0,0,0,0)',}}>
               {'MatchFolio'}
             </Text>
             <Text style={{height:180,backgroundColor: 'rgba(0,0,0,0)'}}/>
@@ -396,36 +396,50 @@ export class Signup extends Component<{}> {
 
   render() {
     return (
+        <BackgroundImage>
     <View style={styles.container}>
-      <Text style={{height:40}} />
-      <Text style={{color: 'steelblue', fontSize: 40, textAlign: 'center', fontWeight: 'bold'}}>
+    <Text style={{color: 'white', fontSize: 40, textAlign: 'center', fontWeight: 'bold',backgroundColor: 'rgba(0,0,0,0)',}}>
       {'MatchFolio'}
     </Text>
+    <Text style={{height:180,backgroundColor: 'rgba(0,0,0,0)'}}/>
+
         <View style={styles.buttonContainer}>
-      <TextInput
-        placeholder="Username"
-        onChangeText={(text) => this.setState({username: text.replace(' ', '')})}
-        value={this.state.username}
-      />
-      <Text style={{height:5}} />
-      <TextInput
-        placeholder="Password"
-        onChangeText={(text) => this.setState({password: text})}
-        secureTextEntry={true}
-        value={this.state.password}
-      />
-      <TextInput
-        placeholder="Verify Password"
-        onChangeText={(text) => this.setState({verifyPass: text})}
-        secureTextEntry={true}
-      />
+        <Button style={styles.buttonUserPass} rounded block >
+          <Image style={styles.logIcon}
+                   source={require('../res/user-outlined-symbol.png')}/>
+            <TextInput style={styles.textUserPass}
+              placeholder="Username"
+              onChangeText={(text) => this.setState({ username: text.replace(' ', '') })}
+            />
+        </Button>
+      <Text style={{height:15}} />
+      <Button style={styles.buttonUserPass} rounded block>
+          <Image style={styles.logIcon}
+                 source={require('../res/unlocked.png')}/>
+          <TextInput style={styles.textUserPass}
+            placeholder="Password"
+            onChangeText={(text) => this.setState({ password: text })}
+            secureTextEntry={true}
+          />
+      </Button>
+      <Text style={{height:15}} />
+      <Button style={styles.buttonUserPass} rounded block>
+          <Image style={styles.logIcon}
+                 source={require('../res/unlocked.png')}/>
+          <TextInput style={styles.textUserPass}
+            placeholder="Verify Password"
+            onChangeText={(text) => this.setState({ verifyPass: text })}
+            secureTextEntry={true}
+          />
+      </Button>
       <Text style={{height:25}}>
       </Text>
-      <Button bordered block
-        onPress={this._onSignupButtonPress}
-      ><Text>Sign up</Text></Button>
+      <Button style={styles.login} rounded block onPress={this._onSignupButtonPress} >
+          <Text style={{color:'#e6ecf7'}}>SIGN UP</Text>
+      </Button>
         </View>
       </View>
+      </BackgroundImage>
     );
   }
 }
@@ -439,7 +453,7 @@ export default class App extends Component<{}> {
 const styles = StyleSheet.create({
   buttonUserPass: {
     backgroundColor: "rgba(255,255,255,0.3)",
-    justifyContent: 'left',
+    justifyContent: 'center',
     //flex: 1,
   },
   textUserPass: {
@@ -450,7 +464,7 @@ const styles = StyleSheet.create({
   logIcon: {
     height: 20,
     width: 20,
-    color: 'rgba(234,234,234,0.5)',
+    // color: 'rgba(234,234,234,0.5)',
     marginLeft: 13,
   },
   login: {
