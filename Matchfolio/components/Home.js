@@ -259,6 +259,15 @@ import { Drawer,
       }
     }
 
+    _resetProperties() {
+        console.log("simon");
+        userDataRef.child("interested").remove();
+        userDataRef.child("uninterested").remove();
+        userDataRef.child("applied").remove();
+        userDataRef.child("preferences").remove();
+
+    }
+
     render() {
       if (this.state.loading || propertyInfo === undefined) {
         return (
@@ -285,7 +294,8 @@ import { Drawer,
                 <Title>MatchFolio</Title>
               </Body>
               <Right>
-              <Button rounded style={{backgroundColor: "#25B7D300"}} onPress={() => this.setState({reload: !this.state.reload}) } >
+              <Button rounded style={{backgroundColor: "#25B7D300"}} onPress={() => this.setState({reload: !this.state.reload}) }
+              delayLongPress={3000} onLongPress={() => this._resetProperties()}>
                 <Ionicons color="#0097ef" size={35} name="ios-refresh"/>
               </Button>
               </Right>
