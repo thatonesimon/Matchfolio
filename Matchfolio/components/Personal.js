@@ -94,28 +94,35 @@ renderMenuButton() {
           <Form>
             <Text style={{marginLeft: 10, marginRight: 10}}>Personal Information</Text>
             <View style={styles.info}>
-                <Item style={{marginBottom: 5}} floatingLabel>
+                <Item style={{marginBottom: 10}} floatingLabel>
+                  <Input value="Mr."/>
                   <Label>First Name</Label>
                 </Item>
-                <Item style={{marginBottom: 5}} floatingLabel>
+                <Item style={{marginBottom: 10}} floatingLabel>
+                <Input value="Meeseeks"/>
                   <Label>Last Name</Label>
                 </Item>
-                <Item style={{marginBottom: 5}} floatingLabel>
+                <Item style={{marginBottom: 10}} floatingLabel>
+                <Input value="123-45-6789"/>
                   <Label>Social Security #</Label>
                 </Item>
-                <Item style={{marginBottom: 5}} floatingLabel>
+                <Item style={{marginBottom: 10}} floatingLabel>
+                <Input value="A12345678"/>
                   <Label>Driver License Number</Label>
                 </Item>
-                <Item style={{marginBottom: 5}} floatingLabel>
+                <Item style={{marginBottom: 10}} floatingLabel>
+                <Input value="01/01/1990"/>
                   <Label>Birthday</Label>
                 </Item>
             </View>
             <Text style={{marginLeft: 10, marginTop: 10}}>Contact Information</Text>
             <View style={styles.info}>
-                <Item style={{marginBottom: 5}} floatingLabel>
+                <Item style={{marginBottom: 10}} floatingLabel>
+                <Input value="(123)-456-7890"/>
                   <Label>Phone Number</Label>
                 </Item>
-                <Item style={{marginBottom: 5}} floatingLabel>
+                <Item style={{marginBottom: 10}} floatingLabel>
+                <Input value="immrmeeseeks@lookatme.com"/>
                   <Label>Email</Label>
                 </Item>
             </View>

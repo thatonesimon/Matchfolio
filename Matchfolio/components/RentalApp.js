@@ -96,35 +96,45 @@ renderMenuButton() {
           <Right style={{flex: 1}} />
 				</Header>
         <Content>
-          <Form>
+          <Form style={{marginRight: 10}}>
             <Item floatingLabel>
-              <Label>Previous Address (1st line)</Label>
+                <Input value="123 Street Dr."/>
+                <Label>Previous Address (1st line)</Label>
             </Item>
             <Item floatingLabel>
+              <Input value="New York, NY 13579"/>
               <Label>Previous Address (2nd line)</Label>
             </Item>
             <Item floatingLabel>
+              <Input value="$700"/>
               <Label>Previous Rent</Label>
             </Item>
             <Item floatingLabel>
+              <Input value="$27000"/>
               <Label>Annualized Salary</Label>
             </Item>
             <Item floatingLabel>
+              <Input value="Barista"/>
               <Label>Occupation</Label>
             </Item>
             <Item floatingLabel>
+              <Input value="Starbucks"/>
               <Label>Employer</Label>
             </Item>
 	    <Item floatingLabel>
+            <Input value="Chevy Maliby 2006"/>
               <Label>Vehicle Make, Model, Year</Label>
             </Item>
             <Item floatingLabel>
+            <Input value="$8000"/>
               <Label>Savings Account Balance</Label>
             </Item>
             <Item floatingLabel>
+            <Input value="$400"/>
               <Label>Checking Account Balance</Label>
             </Item>
             <Item floatingLabel>
+            <Input value="$2700"/>
               <Label>Credit Card Debt and Loan Balance</Label>
             </Item>
           </Form>
