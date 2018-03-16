@@ -58,6 +58,7 @@ import { Drawer,
       this.shouldShow = this.shouldShow.bind(this);
       firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/preferences/').on('value', this._refreshProperties, function(error){console.log(error)});
       this.triedToRefreshWhileUnmounted = null;
+      this.state.reload = true;
     }
 
     async componentWillMount() {
@@ -283,7 +284,11 @@ import { Drawer,
               <Body>
                 <Title>MatchFolio</Title>
               </Body>
-              <Right />
+              <Right>
+              <Button rounded style={{backgroundColor: "#25B7D300"}} onPress={() => this.setState({reload: !this.state.reload}) } >
+                <Ionicons color="#0097ef" size={35} name="ios-refresh"/>
+              </Button>
+              </Right>
             </Header>
             <View>
               <DeckSwiper
