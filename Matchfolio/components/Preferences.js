@@ -70,10 +70,10 @@ export default class Preferences extends React.Component {
     this.onSaveButtonPress = this.onSaveButtonPress.bind(this);
 
     this.state = {
-      bed: '1',
-      bath: '1',
-      rentState: [1500, 5000],
-      sqftState: [1500, 5000],
+      bed: '1+',
+      bath: '1+',
+      rentState: [500, 10000],
+      sqftState: [500, 7500],
     };
   }
 
@@ -363,17 +363,17 @@ const styles = StyleSheet.create({
 });
 
 const bedData = [
-  { value: '1' },
-  { value: '2' },
-  { value: '3' },
-  { value: '4' },
+  { value: '1+' },
+  { value: '2+' },
+  { value: '3+' },
+  { value: '4+' },
   { value: '5+' },
 ];
 
 const bathData = [
-  { value: '1' },
-  { value: '2' },
-  { value: '3' },
-  { value: '4' },
+  { value: '1+' },
+  { value: '2+' },
+  { value: '3+' },
+  { value: '4+' },
   { value: '5+' },
 ];
