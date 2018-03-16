@@ -86,7 +86,7 @@ export class Login extends Component<{}> {
     });
 
     //username password for testing purposes
-    this.setState({done: true, username: 'useme', password: 'hello123'});
+    // this.setState({done: true, username: 'useme', password: 'hello123'});
     if(global.suname) {
       this.setState({done: true, username: global.suname})
     }
@@ -410,6 +410,7 @@ export class Signup extends Component<{}> {
             <TextInput style={styles.textUserPass}
               placeholder="Username"
               onChangeText={(text) => this.setState({ username: text.replace(' ', '') })}
+              value={this.state.username}
             />
         </Button>
       <Text style={{height:15}} />
@@ -420,6 +421,7 @@ export class Signup extends Component<{}> {
             placeholder="Password"
             onChangeText={(text) => this.setState({ password: text })}
             secureTextEntry={true}
+            value={this.state.password}
           />
       </Button>
       <Text style={{height:15}} />
@@ -430,6 +432,7 @@ export class Signup extends Component<{}> {
             placeholder="Verify Password"
             onChangeText={(text) => this.setState({ verifyPass: text })}
             secureTextEntry={true}
+            value={this.state.verifyPass}
           />
       </Button>
       <Text style={{height:25}}>
