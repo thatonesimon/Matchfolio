@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {AsyncStorage, Platform, StyleSheet, TextInput, Alert, Image} from 'react-native';
+import {AsyncStorage, Platform, StyleSheet, TextInput, Alert, Image, KeyboardAvoidingView} from 'react-native';
 import { Drawer,
          Container,
          Header,
@@ -262,8 +262,8 @@ export class Login extends Component<{}> {
 
     return (
       <BackgroundImage>
-          <View style={styles.container}>
 
+      <KeyboardAvoidingView behavior='padding' style={styles.container}>
             <Text style={{color: 'white', fontSize: 40, textAlign: 'center', fontWeight: 'bold',backgroundColor: 'rgba(0,0,0,0)',}}>
               {'MatchFolio'}
             </Text>
@@ -306,7 +306,7 @@ export class Login extends Component<{}> {
                       </Text>
              </View>
 
-          </View>
+          </KeyboardAvoidingView>
        </BackgroundImage>
     ); }
   }
@@ -397,7 +397,7 @@ export class Signup extends Component<{}> {
   render() {
     return (
         <BackgroundImage>
-    <View style={styles.container}>
+    <KeyboardAvoidingView behavior='padding' style={styles.container}>
     <Text style={{color: 'white', fontSize: 40, textAlign: 'center', fontWeight: 'bold',backgroundColor: 'rgba(0,0,0,0)',}}>
       {'MatchFolio'}
     </Text>
@@ -441,7 +441,7 @@ export class Signup extends Component<{}> {
           <Text style={{color:'#e6ecf7'}}>SIGN UP</Text>
       </Button>
         </View>
-      </View>
+      </KeyboardAvoidingView>
       </BackgroundImage>
     );
   }

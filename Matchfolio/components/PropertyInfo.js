@@ -51,7 +51,7 @@ export default class PropertyInfo extends Component {
         {
             applyButton = <View>
                       <View style={{flexDirection: 'row', flex: 1}}>
-                          <Button disabled style={{flex: 1, marginBottom: 10}} >
+                          <Button disabled style={{flex: 1, marginBottom: 10, marginTop: 10}} >
                               <Feather name='check-circle' size={24} color='white' style={{marginLeft: 10, flex: 1}} />
                               <Text style={{flex: 5, textAlign: 'center'}}>Applied</Text>
                               <Text style={{flex: 1}} />
