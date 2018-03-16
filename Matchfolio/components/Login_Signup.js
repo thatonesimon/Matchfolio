@@ -50,7 +50,16 @@ for(i = 0; i < p.length; i++){
     fb.child('properties_new/' + p[i].listable_uid).set(p[i])
 }
 */
-
+export class BackgroundImage extends Component {
+    render() {
+        return (
+            <Image source={require('../res/blur-blue-uu-1366x768.jpg')}
+                  style={{flex: 1, width: null, height: null, resizeMode: 'cover'}}>
+                  {this.props.children}
+            </Image>
+        )
+    }
+}
 
 export class Login extends Component<{}> {
   static navigationOptions = {
@@ -252,41 +261,53 @@ export class Login extends Component<{}> {
     else {
 
     return (
-      <View style={styles.container}>
-    <Text style={{height:40}} />
-    <Text style={{color: 'steelblue', fontSize: 40, textAlign: 'center', fontWeight: 'bold'}}>
-      {'MatchFolio'}
-    </Text>
-        <View style={styles.buttonContainer}>
-      <TextInput
-        placeholder="Username"
-        onChangeText={(text) => this.setState({ username: text.replace(' ', '') })}
-        value={this.state.username}
-      />
-      <Text style={{height:5}} />
-      <TextInput
-        placeholder="Password"
-        onChangeText={(text) => this.setState({ password: text })}
-        secureTextEntry={true}
-        value={this.state.password}
-      />
-      <Text style={{height:25}}>
-      </Text>
-      <Button bordered block
-        onPress={this._onLoginButtonPress}
-      ><Text>Log In</Text></Button>
-      <Text style={{height:35}}>
-      </Text>
-      <Text style={{textAlign: 'center'}}>
-        {'Don\'t have an account? '}
-        <Text style={{  //fontWeight: 'bold',
-                color: 'blue'}}
-            onPress={this._onSignupButtonPress}>
-          {'Sign up'}
-          </Text>
-          </Text>
-        </View>
-      </View>
+      <BackgroundImage>
+          <View style={styles.container}>
+
+            <Text style={{color: 'white', fontSize: 40, textAlign: 'center', fontWeight: 'bold',backgroundColor: 'rgba(0,0,0,0)',}}>
+              {'MatchFolio'}
+            </Text>
+            <Text style={{height:180,backgroundColor: 'rgba(0,0,0,0)'}}/>
+             <View style={styles.buttonContainer}>
+                  <Button style={styles.buttonUserPass} rounded block >
+                    <Image style={styles.logIcon}
+                             source={require('../res/user-outlined-symbol.png')}/>
+                      <TextInput style={styles.textUserPass}
+                        placeholder="Username"
+                        onChangeText={(text) => this.setState({ username: text.replace(' ', '') })}
+                        value={this.state.username}
+                      />
+                  </Button>
+                  <Text style={{height:25}} />
+                  <Button style={styles.buttonUserPass} rounded block>
+                      <Image style={styles.logIcon}
+                             source={require('../res/unlocked.png')}/>
+                      <TextInput style={styles.textUserPass}
+                        placeholder="Password"
+                        onChangeText={(text) => this.setState({ password: text })}
+                        secureTextEntry={true}
+                        value={this.state.password}
+                      />
+                  </Button>
+                  <Text style={{height:25}}>
+                  </Text>
+                  <Button style={styles.login} rounded block onPress={this._onLoginButtonPress} >
+                      <Text style={{color:'#e6ecf7'}}>LOGIN</Text>
+                  </Button>
+                  <Text style={{height:25}}>
+                  </Text>
+                  <Text style={{textAlign: 'center'}}>
+                    {'Don\'t have an account? '}
+                    <Text style={{  //fontWeight: 'bold',
+                            color: 'blue'}}
+                        onPress={this._onSignupButtonPress}>
+                      {'Sign up'}
+                      </Text>
+                      </Text>
+             </View>
+
+          </View>
+       </BackgroundImage>
     ); }
   }
 }
@@ -375,36 +396,50 @@ export class Signup extends Component<{}> {
 
   render() {
     return (
+        <BackgroundImage>
     <View style={styles.container}>
-      <Text style={{height:40}} />
-      <Text style={{color: 'steelblue', fontSize: 40, textAlign: 'center', fontWeight: 'bold'}}>
+    <Text style={{color: 'white', fontSize: 40, textAlign: 'center', fontWeight: 'bold',backgroundColor: 'rgba(0,0,0,0)',}}>
       {'MatchFolio'}
     </Text>
+    <Text style={{height:180,backgroundColor: 'rgba(0,0,0,0)'}}/>
+
         <View style={styles.buttonContainer}>
-      <TextInput
-        placeholder="Username"
-        onChangeText={(text) => this.setState({username: text.replace(' ', '')})}
-        value={this.state.username}
-      />
-      <Text style={{height:5}} />
-      <TextInput
-        placeholder="Password"
-        onChangeText={(text) => this.setState({password: text})}
-        secureTextEntry={true}
-        value={this.state.password}
-      />
-      <TextInput
-        placeholder="Verify Password"
-        onChangeText={(text) => this.setState({verifyPass: text})}
-        secureTextEntry={true}
-      />
+        <Button style={styles.buttonUserPass} rounded block >
+          <Image style={styles.logIcon}
+                   source={require('../res/user-outlined-symbol.png')}/>
+            <TextInput style={styles.textUserPass}
+              placeholder="Username"
+              onChangeText={(text) => this.setState({ username: text.replace(' ', '') })}
+            />
+        </Button>
+      <Text style={{height:15}} />
+      <Button style={styles.buttonUserPass} rounded block>
+          <Image style={styles.logIcon}
+                 source={require('../res/unlocked.png')}/>
+          <TextInput style={styles.textUserPass}
+            placeholder="Password"
+            onChangeText={(text) => this.setState({ password: text })}
+            secureTextEntry={true}
+          />
+      </Button>
+      <Text style={{height:15}} />
+      <Button style={styles.buttonUserPass} rounded block>
+          <Image style={styles.logIcon}
+                 source={require('../res/unlocked.png')}/>
+          <TextInput style={styles.textUserPass}
+            placeholder="Verify Password"
+            onChangeText={(text) => this.setState({ verifyPass: text })}
+            secureTextEntry={true}
+          />
+      </Button>
       <Text style={{height:25}}>
       </Text>
-      <Button bordered block
-        onPress={this._onSignupButtonPress}
-      ><Text>Sign up</Text></Button>
+      <Button style={styles.login} rounded block onPress={this._onSignupButtonPress} >
+          <Text style={{color:'#e6ecf7'}}>SIGN UP</Text>
+      </Button>
         </View>
       </View>
+      </BackgroundImage>
     );
   }
 }
@@ -416,6 +451,25 @@ export default class App extends Component<{}> {
 }
 
 const styles = StyleSheet.create({
+  buttonUserPass: {
+    backgroundColor: "rgba(255,255,255,0.3)",
+    justifyContent: 'center',
+    //flex: 1,
+  },
+  textUserPass: {
+    marginLeft: 10,
+    color: "rgba(0,0,0,0.6)",
+    flex: 1,
+  },
+  logIcon: {
+    height: 20,
+    width: 20,
+    // color: 'rgba(234,234,234,0.5)',
+    marginLeft: 13,
+  },
+  login: {
+    backgroundColor: "#5f97ef"
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -429,9 +483,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   buttonContainer: {
-  flex: 2,
-  justifyContent: 'center',
-  margin: 20,
+    backgroundColor: 'rgba(0,0,0,0)',
+    justifyContent: 'center',
+    margin: 25,
   }
 
 });
